@@ -1,0 +1,4360 @@
+[{
+  "_id": "1682088327327",
+  "ruleName": "cross border rule",
+  "description": "cross border rule",
+  "ruleSelectionID": "1682087147709",
+  "version": "V1",
+  "status": true,
+  "weightage": "10",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "-1",
+  "conditions": [
+    {
+      "groupId": "1682088345462",
+      "class": "andGate",
+      "queryid": "1682088390582",
+      "OR": [
+        {
+          "id": "1682088390582",
+          "name": "acquiringcountrycode",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682088390582|currentobject"
+        },
+        {
+          "id": "1682088390582",
+          "name": "acquiringcountrycode",
+          "operator": "LTE",
+          "valueType": "String",
+          "value": "ONETOMANY|1682088390582|1|currentobject"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682088346622",
+              "name": "transactionorigin",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "POS",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088357107",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088364291",
+              "name": "acquiringcountrycode",
+              "operator": "NEQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088372347",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "acquiringcountrycode",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "acquiringcountrycode",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "join": "OR",
+      "id": "1682088436473",
+      "name": "transactionorigin",
+      "operator": "NEQ",
+      "valueType": "String",
+      "value": "POS",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,acquiringcountrycode",
+      "queryId": "1682088390582"
+    }
+  ],
+  "ifCondition": "((acquiringcountrycode.equals('ONETOONE|1682088390582|currentobject')||acquiringcountrycode<=ONETOMANY|1682088390582|1|currentobject)||!transactionorigin.equals('POS'))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682088468567",
+  "ruleName": "Same Card usage on Same POS/Merchant",
+  "description": "Same Card usage on Same POS/Merchant",
+  "ruleSelectionID": "1682087719390",
+  "version": "V1",
+  "status": true,
+  "weightage": "10",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "-1",
+  "conditions": [
+    {
+      "groupId": "1682088503175",
+      "class": "andGate",
+      "queryid": "1682088565028",
+      "OR": [
+        {
+          "id": "1682088565028",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682088565028"
+        },
+        {
+          "id": "1682088565028",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1682088565028|3"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682088504919",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088515645",
+              "name": "transactionorigin",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088529382",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088537735",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "join": "OR",
+      "id": "1682088605148",
+      "name": "transactionorigin",
+      "operator": "NEQ",
+      "valueType": "String",
+      "value": "POS",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,transactionorigin,cardacceptornamelocation",
+      "queryId": "1682088565028"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1682088565028')||pan<ONETOMANY|1682088565028|3)||!transactionorigin.equals('POS'))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682088656972",
+  "ruleName": "max amount rule",
+  "description": "max amount rule",
+  "ruleSelectionID": "1682087824164",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682088857323",
+      "class": "andGate",
+      "queryid": "1682088896999",
+      "OR": [
+        {
+          "id": "1682088896999",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1682088896999"
+        },
+        {
+          "id": "1682088896999",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1682088896999"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682088860614",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088869151",
+              "name": "transactioncurrencycode",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "0356",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682088888807",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "max",
+              "valuexn": "2",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682088896999"
+    }
+  ],
+  "ifCondition": "((transactionamount<=ONETOONE|1682088896999||transactionamount<=ONETOMANY|1682088896999))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682089408851",
+  "ruleName": "count of txn>3 & sum of amt <50000",
+  "description": "count of txn>3 & sum of amt <50000",
+  "ruleSelectionID": "1682087867798",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682089440693",
+      "class": "andGate",
+      "queryid": "1682089462931",
+      "OR": [
+        {
+          "id": "1682089462931",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682089462931"
+        },
+        {
+          "id": "1682089462931",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1682089462931|3"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682089443552",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682089448586",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1682089509273",
+      "join": "OR",
+      "class": "orGate",
+      "queryid": "1682089528187",
+      "OR": [
+        {
+          "id": "1682089528187",
+          "name": "transactionamount",
+          "operator": "LT",
+          "valueType": "Double",
+          "value": "ONETOONE|1682089528187|50000"
+        },
+        {
+          "id": "1682089528187",
+          "name": "transactionamount",
+          "operator": "LT",
+          "valueType": "Double",
+          "value": "ONETOMANY|1682089528187|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682089511032",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682089519160",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682089462931"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682089528187"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1682089462931')||pan<ONETOMANY|1682089462931|3)||(transactionamount<ONETOONE|1682089528187|50000||transactionamount<ONETOMANY|1682089528187|50000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682089579933",
+  "ruleName": "Transaction rule using single merchant",
+  "description": "Transaction rule using single merchant",
+  "ruleSelectionID": "1682087905254",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682089606082",
+      "class": "andGate",
+      "queryid": "1682089634581",
+      "OR": [
+        {
+          "id": "1682089634581",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682089634581"
+        },
+        {
+          "id": "1682089634581",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1682089634581|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682089607277",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682089613793",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682089621150",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,cardacceptornamelocation",
+      "queryId": "1682089634581"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1682089634581')||pan<ONETOMANY|1682089634581|5))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682089734005",
+  "ruleName": "Transaction rule (count>5)",
+  "description": "Transaction rule (count>5)",
+  "ruleSelectionID": "1682087963236",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682089755051",
+      "class": "andGate",
+      "queryid": "1682089785792",
+      "OR": [
+        {
+          "id": "1682089785792",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682089785792"
+        },
+        {
+          "id": "1682089785792",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1682089785792|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682089756389",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682089775414",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682089785792"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1682089785792')||pan<ONETOMANY|1682089785792|5))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682089866611",
+  "ruleName": "Max amount Rule -Rupay",
+  "description": "Max amount Rule -Rupay",
+  "ruleSelectionID": "1682088119417",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682089881576",
+      "class": "andGate",
+      "queryid": "1682089919840",
+      "OR": [
+        {
+          "id": "1682089919840",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1682089919840"
+        },
+        {
+          "id": "1682089919840",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1682089919840"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682089883073",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682089894821",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682089905506",
+              "name": "transactioncurrencycode",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "0356",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "max",
+              "valuexn": "2",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682089919840"
+    }
+  ],
+  "ifCondition": "((transactionamount<=ONETOONE|1682089919840||transactionamount<=ONETOMANY|1682089919840))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682090037004",
+  "ruleName": "count of txn>3 & sum of amt <50000",
+  "description": "count of txn>3 & sum of amt <50000",
+  "ruleSelectionID": "1682088176982",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682090089386",
+      "class": "andGate",
+      "queryid": "1682090123101",
+      "OR": [
+        {
+          "id": "1682090123101",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682090123101"
+        },
+        {
+          "id": "1682090123101",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1682090123101|3"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682090093531",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682090101003",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1682090174065",
+      "join": "OR",
+      "class": "orGate",
+      "queryid": "1682090204796",
+      "OR": [
+        {
+          "id": "1682090204796",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1682090204796|50000"
+        },
+        {
+          "id": "1682090204796",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1682090204796|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682090186916",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682090193856",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682090123101"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682090204796"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1682090123101')||pan<ONETOMANY|1682090123101|3)||(transactionamount<=ONETOONE|1682090204796|50000||transactionamount<=ONETOMANY|1682090204796|50000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682090317818",
+  "ruleName": "Transaction rule using single merchant-Rupay",
+  "description": "Transaction rule using single merchant-Rupay",
+  "ruleSelectionID": "1682088210806",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682090341661",
+      "class": "andGate",
+      "queryid": "1682090374429",
+      "OR": [
+        {
+          "id": "1682090374429",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682090374429"
+        },
+        {
+          "id": "1682090374429",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1682090374429|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682090342866",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682090351378",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682090362439",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,cardacceptornamelocation",
+      "queryId": "1682090374429"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1682090374429')||pan<ONETOMANY|1682090374429|5))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1682090440467",
+  "ruleName": "Transaction rule (count>5)",
+  "description": "Transaction rule (count>5)",
+  "ruleSelectionID": "1682088263520",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1682090464527",
+      "class": "andGate",
+      "queryid": "1682090486972",
+      "OR": [
+        {
+          "id": "1682090486972",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1682090486972"
+        },
+        {
+          "id": "1682090486972",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1682090486972|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1682090467352",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1682090475245",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1682090486972"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1682090486972')||pan<ONETOMANY|1682090486972|5))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1683802352118",
+  "ruleName": "High velocity-visa",
+  "description": "High velocity-visa",
+  "ruleSelectionID": "1683801793713",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1683802374968",
+      "class": "andGate",
+      "queryid": "1683802487474",
+      "OR": [
+        {
+          "id": "1683802487474",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1683802487474"
+        },
+        {
+          "id": "1683802487474",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1683802487474|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683802376316",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ],
+      "req": false
+    },
+    {
+      "groupId": "1683802549424",
+      "join": "OR",
+      "class": "orGate",
+      "queryid": "1683802560400",
+      "OR": [
+        {
+          "id": "1683802560400",
+          "name": "transactionamount",
+          "operator": "LT",
+          "valueType": "Double",
+          "value": "ONETOONE|1683802560400|150000"
+        },
+        {
+          "id": "1683802560400",
+          "name": "transactionamount",
+          "operator": "LT",
+          "valueType": "Double",
+          "value": "ONETOMANY|1683802560400|150000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683802552946",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ],
+      "req": false
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683802487474"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683802560400"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1683802487474')||pan<ONETOMANY|1683802487474|5)||(transactionamount<ONETOONE|1683802560400|150000||transactionamount<ONETOMANY|1683802560400|150000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1683802647369",
+  "ruleName": "Bin attack rule Visa",
+  "description": "Bin attack rule Visa",
+  "ruleSelectionID": "1683801833785",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1690362607703",
+      "class": "andGate",
+      "req": false,
+      "queryid": "1690362656990",
+      "OR": [
+        {
+          "id": "1690362656990",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690362656990"
+        },
+        {
+          "id": "1690362656990",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690362656990|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690362609052",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362609252",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362609525",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362637091",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362637582",
+              "name": "cardacceptorterminalid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "groupId": "1690362731546",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1690362783948",
+      "OR": [
+        {
+          "id": "1690362783948",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690362783948"
+        },
+        {
+          "id": "1690362783948",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690362783948|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690362734021",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362734247",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362734401",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362757935",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690362758457",
+              "name": "cardacceptorid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "join": "OR",
+      "id": "1690362855434",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "0",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,cardacceptornamelocation,cardacceptorterminalid",
+      "queryId": "1690362656990"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,cardacceptornamelocation,cardacceptorid",
+      "queryId": "1690362783948"
+    }
+  ],
+  "ifCondition": "(((pan.equals('ONETOONE|1690362656990')||pan<ONETOMANY|1690362656990|5)&&(pan.equals('ONETOONE|1690362783948')||pan<ONETOMANY|1690362783948|5))||transactionamount<=0)",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1683802739092",
+  "ruleName": "Odd velocity rule-visa",
+  "description": "Odd velocity rule-visa",
+  "ruleSelectionID": "1683801953163",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1683802772942",
+      "class": "andGate",
+      "req": false,
+      "queryid": "1683802799309",
+      "OR": [
+        {
+          "id": "1683802799309",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1683802799309"
+        },
+        {
+          "id": "1683802799309",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1683802799309|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683802777313",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683802784592",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|23|24",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1683802852911",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1683802960223",
+      "OR": [
+        {
+          "id": "1683802960223",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1683802960223"
+        },
+        {
+          "id": "1683802960223",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1683802960223|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683802854802",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683802866270",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|0|6",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1683803017937",
+      "join": "OR",
+      "class": "orGate",
+      "req": false,
+      "queryid": "1683803060303",
+      "OR": [
+        {
+          "id": "1683803060303",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1683803060303|50000"
+        },
+        {
+          "id": "1683803060303",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1683803060303|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683803021980",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683803037472",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|23|24",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1683804063734",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1683804127323",
+      "OR": [
+        {
+          "id": "1683804127323",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1683804127323|50000"
+        },
+        {
+          "id": "1683804127323",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1683804127323|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683804067430",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683804084299",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|0|6",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683802799309"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683802960223"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683803060303"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683804127323"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1683802799309')||pan<ONETOMANY|1683802799309|5)&&(pan.equals('ONETOONE|1683802960223')||pan<ONETOMANY|1683802960223|5)||(transactionamount<=ONETOONE|1683803060303|50000||transactionamount<=ONETOMANY|1683803060303|50000)&&(transactionamount<=ONETOONE|1683804127323|50000||transactionamount<=ONETOMANY|1683804127323|50000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1683804332704",
+  "ruleName": "High velocity",
+  "description": "High velocity",
+  "ruleSelectionID": "1683802120229",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1683804348942",
+      "class": "andGate",
+      "req": false,
+      "queryid": "1683804456840",
+      "OR": [
+        {
+          "id": "1683804456840",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1683804456840"
+        },
+        {
+          "id": "1683804456840",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1683804456840|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683804439961",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1683804488760",
+      "join": "OR",
+      "class": "orGate",
+      "req": false,
+      "queryid": "1683804500119",
+      "OR": [
+        {
+          "id": "1683804500119",
+          "name": "transactionamount",
+          "operator": "LT",
+          "valueType": "Double",
+          "value": "ONETOONE|1683804500119|150000"
+        },
+        {
+          "id": "1683804500119",
+          "name": "transactionamount",
+          "operator": "GT",
+          "valueType": "Double",
+          "value": "ONETOMANY|1683804500119|150000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683804490328",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683804456840"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683804500119"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1683804456840')||pan<ONETOMANY|1683804456840|5)||(transactionamount<ONETOONE|1683804500119|150000||transactionamount>ONETOMANY|1683804500119|150000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1683804589334",
+  "ruleName": "Bin attack rule Rupay",
+  "description": "Bin attack rule Rupay",
+  "ruleSelectionID": "1683802239079",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1690872057090",
+      "class": "andGate",
+      "queryid": "1690872129872",
+      "OR": [
+        {
+          "id": "1690872129872",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690872129872"
+        },
+        {
+          "id": "1690872129872",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690872129872|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690872060459",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872060971",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872061371",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872063321",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872109075",
+              "name": "cardacceptorterminalid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ],
+      "req": false
+    },
+    {
+      "groupId": "1690872189820",
+      "class": "andGate",
+      "join": "AND",
+      "queryid": "1690872242357",
+      "OR": [
+        {
+          "id": "1690872242357",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690872242357"
+        },
+        {
+          "id": "1690872242357",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690872242357|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690872199594",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872199939",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872200311",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872200711",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690872229439",
+              "name": "cardacceptorid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "5"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ],
+      "req": false
+    },
+    {
+      "join": "OR",
+      "id": "1690872305006",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "0",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,cardacceptornamelocation,cardacceptorterminalid",
+      "queryId": "1690872129872"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan,cardacceptornamelocation,cardacceptorid",
+      "queryId": "1690872242357"
+    }
+  ],
+  "ifCondition": "(((pan.equals('ONETOONE|1690872129872')||pan<ONETOMANY|1690872129872|5)&&(pan.equals('ONETOONE|1690872242357')||pan<ONETOMANY|1690872242357|5))||transactionamount<=0)",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1683804688047",
+  "ruleName": "Odd velocity rule-rupay",
+  "description": "Odd velocity rule-rupay",
+  "ruleSelectionID": "1683802267015",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1683804984479",
+      "class": "andGate",
+      "req": false,
+      "queryid": "1683805010409",
+      "OR": [
+        {
+          "id": "1683805010409",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1683805010409"
+        },
+        {
+          "id": "1683805010409",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1683805010409|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683804987601",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683804994911",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|23|24",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1683805055516",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1683805089843",
+      "OR": [
+        {
+          "id": "1683805089843",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1683805089843"
+        },
+        {
+          "id": "1683805089843",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1683805089843|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683805059348",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683805068850",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|0|7",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1683805172439",
+      "join": "OR",
+      "class": "orGate",
+      "req": false,
+      "queryid": "1683805216068",
+      "OR": [
+        {
+          "id": "1683805216068",
+          "name": "transactionamount",
+          "operator": "LT",
+          "valueType": "Double",
+          "value": "ONETOONE|1683805216068|50000"
+        },
+        {
+          "id": "1683805216068",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1683805216068|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683805174837",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683805194748",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|23|24",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "8"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1683805294224",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1683805340061",
+      "OR": [
+        {
+          "id": "1683805340061",
+          "name": "transactionamount",
+          "operator": "LT",
+          "valueType": "Double",
+          "value": "ONETOONE|1683805340061|50000"
+        },
+        {
+          "id": "1683805340061",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1683805340061|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1683805300245",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1683805314324",
+              "name": "created_datetime",
+              "operator": "BT",
+              "valueType": "Date",
+              "value": "HOUR|0|7",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "7"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683805010409"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683805089843"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683805216068"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1683805340061"
+    }
+  ],
+  "ifCondition": "(((pan.equals('ONETOONE|1683805010409')||pan<ONETOMANY|1683805010409|5)&&(pan.equals('ONETOONE|1683805089843')||pan<ONETOMANY|1683805089843|5))||((transactionamount<ONETOONE|1683805216068|50000||transactionamount<=ONETOMANY|1683805216068|50000)&&(transactionamount<ONETOONE|1683805340061|50000||transactionamount<=ONETOMANY|1683805340061|50000)))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687440495525",
+  "ruleName": "Transaction count > 4 and Cumulative amount > 2000 in 10 min",
+  "description": "Transaction count > 4 and Cumulative amount > 2000 in 10 min",
+  "ruleSelectionID": "1687439705331",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1700575775414",
+      "class": "andGate",
+      "join": "AND",
+      "OR": [
+        {
+          "id": "1700575790890",
+          "name": "customposentrymode",
+          "operator": "NIN",
+          "valueType": "String",
+          "value": "91,07",
+          "class": "andGate",
+          "objCheck": "0",
+          "req": false
+        },
+        {
+          "join": "OR",
+          "id": "1700575813247",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "2000",
+          "class": "orGate",
+          "objCheck": "0",
+          "req": false
+        }
+      ]
+    },
+    {
+      "groupId": "1700575837581",
+      "class": "andGate",
+      "join": "AND",
+      "queryid": "1700575898585",
+      "OR": [
+        {
+          "id": "1700575898585",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1700575898585"
+        },
+        {
+          "id": "1700575898585",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1700575898585|4"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1700575845604",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575845832",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575862083",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575877699",
+              "name": "posentrymode",
+              "operator": "CONTAINS",
+              "valueType": "String",
+              "value": "91",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575877916",
+              "name": "posentrymode",
+              "operator": "CONTAINS",
+              "valueType": "String",
+              "value": "07",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ],
+      "req": false
+    },
+    {
+      "groupId": "1700575949183",
+      "class": "andGate",
+      "join": "AND",
+      "queryid": "1700576014014",
+      "OR": [
+        {
+          "id": "1700576014014",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1700576014014|2000"
+        },
+        {
+          "id": "1700576014014",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1700576014014|2000|currentobject"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1700575957231",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575957449",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575957646",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575994748",
+              "name": "posentrymode",
+              "operator": "CONTAINS",
+              "valueType": "String",
+              "value": "91",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1700575995509",
+              "name": "posentrymode",
+              "operator": "CONTAINS",
+              "valueType": "String",
+              "value": "07",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ],
+      "req": false
+    },
+    {
+      "join": "OR",
+      "id": "1700576092657",
+      "name": "customposentrymode",
+      "operator": "NIN",
+      "valueType": "String",
+      "value": "91,07",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "posentrymode": "07|CONTAINS",
+        "transactionamount": "0|GT",
+        "risktranstatus": "Y|EQ"
+      },
+      "INPUT_DATA": "pan",
+      "queryId": "1700575898585"
+    },
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "posentrymode": "07|CONTAINS",
+        "transactionamount": "0|GT",
+        "risktranstatus": "Y|EQ"
+      },
+      "INPUT_DATA": "pan",
+      "queryId": "1700576014014"
+    }
+  ],
+  "ifCondition": "((!customposentrymode.in('91,07')||transactionamount<=2000)&&(pan.equals('ONETOONE|1700575898585')||pan<ONETOMANY|1700575898585|4)&&(transactionamount<=ONETOONE|1700576014014|2000||transactionamount<=ONETOMANY|1700576014014|2000|currentobject)||!customposentrymode.in('91,07'))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687440885985",
+  "ruleName": "Transaction count > 3 in 15 mins and Cumulative amount > 10000 in 15 min",
+  "description": "Transaction count > 3 in 15 mins and Cumulative amount > 10000 in 15 min",
+  "ruleSelectionID": "1687439873882",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1687440946234",
+      "class": "andGate",
+      "queryid": "1687440994457",
+      "OR": [
+        {
+          "id": "1687440994457",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1687440994457"
+        },
+        {
+          "id": "1687440994457",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1687440994457|3"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687440951013",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1687440951281",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ],
+      "req": false
+    },
+    {
+      "groupId": "1687532732463",
+      "class": "andGate",
+      "join": "AND",
+      "queryid": "1687532736297",
+      "OR": [
+        {
+          "id": "1687532736297",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1687532736297|10000"
+        },
+        {
+          "id": "1687532736297",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1687532736297|10000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687532734347",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1687532734763",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687440994457"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687532736297"
+    }
+  ],
+  "ifCondition": "((pan.equals('ONETOONE|1687440994457')||pan<ONETOMANY|1687440994457|3)&&(transactionamount<=ONETOONE|1687532736297|10000||transactionamount<=ONETOMANY|1687532736297|10000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687532245321",
+  "ruleName": "High Value single Txn",
+  "description": "High Value single Txn",
+  "ruleSelectionID": "1687532020735",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "id": "1687532284816",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "150000",
+      "class": "andGate",
+      "objCheck": "0"
+    }
+  ],
+  "ifCondition": "(transactionamount<=150000)",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687532332784",
+  "ruleName": "High Value single Txn",
+  "description": "High Value single Txn",
+  "ruleSelectionID": "1687532098134",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "id": "1687532360416",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "150000",
+      "class": "andGate",
+      "objCheck": "0"
+    }
+  ],
+  "ifCondition": "(transactionamount<=150000)",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687533761478",
+  "ruleName": "Transaction rule (count>10 in 15 mins for particular mcc)",
+  "description": "Transaction rule (count>10 in 15 mins for particular mcc)",
+  "ruleSelectionID": "1687533156001",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1690363152786",
+      "class": "andGate",
+      "req": false,
+      "queryid": "1690363203899",
+      "OR": [
+        {
+          "id": "1690363203899",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690363203899"
+        },
+        {
+          "id": "1690363203899",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690363203899|10"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690363154268",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690363154451",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690363154633",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690363185352",
+              "name": "mcc",
+              "operator": "IN",
+              "valueType": "String",
+              "value": "5122,5912,5962,5966,5967,5993,7273,7995,4816,5816,6051,4112,4121,4131,4411,4511,4722,4812,4814,4829,5094,5592,5712,5933,5960,5963,5964,5965,5969,5972,5999,6211,6540,7012,7277,7361,7519,7841,7922,7993,7994,7997,9223,9399,3001,3002,3003",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "groupId": "1690363254658",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1690363324535",
+      "OR": [
+        {
+          "id": "1690363324535",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690363324535"
+        },
+        {
+          "id": "1690363324535",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690363324535|10"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690363262069",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690363262321",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690363262815",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690363291019",
+              "name": "mcc",
+              "operator": "IN",
+              "valueType": "String",
+              "value": "3004,3005,3006,3007,3008,3009,3010,6513,5944,8999,6300,5719,5651,5945,5817,5499,5818,5735,5300,7996,8220,5734,5942,5085,0780,7379,5977,5661,7392,7299,3247,8299,5722,7372,5946,5968,3357,5541,5699,4900,5399,7399,5732,6010,9406",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "join": "OR",
+      "id": "1690363424953",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "0",
+      "class": "orGate",
+      "objCheck": "0"
+    },
+    {
+      "join": "OR",
+      "id": "1690364116244",
+      "name": "mcc",
+      "operator": "NIN",
+      "valueType": "String",
+      "value": "BID-320732027830",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "transactionamount": "0",
+        "mcc": "5122,5912,5962,5966,5967,5993,7273,7995,4816,5816,6051,4112,4121,4131,4411,4511,4722,4812,4814,4829,5094,5592,5712,5933,5960,5963,5964,5965,5969,5972,5999,6211,6540,7012,7277,7361,7519,7841,7922,7993,7994,7997,9223,9399,3001,3002,3003",
+        "risktranstatus": "Y"
+      },
+      "INPUT_DATA": "pan",
+      "queryId": "1690363203899"
+    },
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "transactionamount": "0",
+        "mcc": "3004,3005,3006,3007,3008,3009,3010,6513,5944,8999,6300,5719,5651,5945,5817,5499,5818,5735,5300,7996,8220,5734,5942,5085,0780,7379,5977,5661,7392,7299,3247,8299,5722,7372,5946,5968,3357,5541,5699,4900,5399,7399,5732,6010,9406",
+        "risktranstatus": "Y"
+      },
+      "INPUT_DATA": "pan",
+      "queryId": "1690363324535"
+    }
+  ],
+  "ifCondition": "(((pan.equals('ONETOONE|1690363203899')||pan<ONETOMANY|1690363203899|10)&&(pan.equals('ONETOONE|1690363324535')||pan<ONETOMANY|1690363324535|10))||transactionamount<=0||!mcc.in('BID-320732027830'))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687533941298",
+  "ruleName": "Transaction rule (count>10 in 15 mins for particular mcc)",
+  "description": "Transaction rule (count>10 in 15 mins for particular mcc)",
+  "ruleSelectionID": "1687533241257",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1690873065889",
+      "class": "andGate",
+      "req": false,
+      "queryid": "1690873136721",
+      "OR": [
+        {
+          "id": "1690873136721",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690873136721"
+        },
+        {
+          "id": "1690873136721",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690873136721|10"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690873068072",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690873068238",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690873068388",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690873098640",
+              "name": "mcc",
+              "operator": "IN",
+              "valueType": "String",
+              "value": "5122,5912,5962,5966,5967,5993,7273,7995,4816,5816,6051,4112,4121,4131,4411,4511,4722,4812,4814,4829,5094,5592,5712,5933,5960,5963,5964,5965,5969,5972,5999,6211,6540,7012,7277,7361,7519,7841,7922,7993,7994,7997,9223,9399,3001,3002,3003",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "groupId": "1690873184273",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1690873242188",
+      "OR": [
+        {
+          "id": "1690873242188",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1690873242188"
+        },
+        {
+          "id": "1690873242188",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1690873242188|10"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1690873192274",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690873192439",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690873192633",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1690873220589",
+              "name": "mcc",
+              "operator": "IN",
+              "valueType": "String",
+              "value": "3004,3005,3006,3007,3008,3009,3010,6513,5944,8999,6300,5719,5651,5945,5817,5499,5818,5735,5300,7996,8220,5734,5942,5085,0780,7379,5977,5661,7392,7299,3247,8299,5722,7372,5946,5968,3357,5541,5699,4900,5399,7399,5732,6010,9406",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "join": "OR",
+      "id": "1690873315424",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "0",
+      "class": "orGate",
+      "objCheck": "0"
+    },
+    {
+      "join": "OR",
+      "id": "1690873540682",
+      "name": "mcc",
+      "operator": "NIN",
+      "valueType": "String",
+      "value": "BID-321363245419",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "transactionamount": "0",
+        "mcc": "5122,5912,5962,5966,5967,5993,7273,7995,4816,5816,6051,4112,4121,4131,4411,4511,4722,4812,4814,4829,5094,5592,5712,5933,5960,5963,5964,5965,5969,5972,5999,6211,6540,7012,7277,7361,7519,7841,7922,7993,7994,7997,9223,9399,3001,3002,3003",
+        "risktranstatus": "Y"
+      },
+      "INPUT_DATA": "pan",
+      "queryId": "1690873136721"
+    },
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "transactionamount": "0",
+        "mcc": "3004,3005,3006,3007,3008,3009,3010,6513,5944,8999,6300,5719,5651,5945,5817,5499,5818,5735,5300,7996,8220,5734,5942,5085,0780,7379,5977,5661,7392,7299,3247,8299,5722,7372,5946,5968,3357,5541,5699,4900,5399,7399,5732,6010,9406",
+        "risktranstatus": "Y"
+      },
+      "INPUT_DATA": "pan",
+      "queryId": "1690873242188"
+    }
+  ],
+  "ifCondition": "(((pan.equals('ONETOONE|1690873136721')||pan<ONETOMANY|1690873136721|10)&&(pan.equals('ONETOONE|1690873242188')||pan<ONETOMANY|1690873242188|10))||transactionamount<=0||!mcc.in('BID-321363245419'))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687539227826",
+  "ruleName": "max amount rule",
+  "description": "max amount rule",
+  "ruleSelectionID": "1687534093349",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1687539257604",
+      "class": "andGate",
+      "queryid": "1687539266805",
+      "OR": [
+        {
+          "id": "1687539266805",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1687539266805|50000"
+        },
+        {
+          "id": "1687539266805",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1687539266805|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687539263891",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1687539264187",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "max",
+              "valuexn": "2",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687539266805"
+    }
+  ],
+  "ifCondition": "((transactionamount<=ONETOONE|1687539266805|50000||transactionamount<=ONETOMANY|1687539266805|50000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687539374354",
+  "ruleName": "max amount rule",
+  "description": "max amount rule",
+  "ruleSelectionID": "1687534234570",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1687539396105",
+      "class": "andGate",
+      "queryid": "1687539403586",
+      "OR": [
+        {
+          "id": "1687539403586",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOONE|1687539403586|50000"
+        },
+        {
+          "id": "1687539403586",
+          "name": "transactionamount",
+          "operator": "LTE",
+          "valueType": "Double",
+          "value": "ONETOMANY|1687539403586|50000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687539397836",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1687539398518",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "max",
+              "valuexn": "2",
+              "name": "transactionamount",
+              "timeSeries": "minutes",
+              "timegranularity": "30"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687539403586"
+    }
+  ],
+  "ifCondition": "((transactionamount<=ONETOONE|1687539403586|50000||transactionamount<=ONETOMANY|1687539403586|50000))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687540094438",
+  "ruleName": "Dormant account - Activation",
+  "description": "Dormant account - Activation",
+  "ruleSelectionID": "1687539529252",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "0",
+  "conditions": [
+    {
+      "groupId": "1687540139537",
+      "class": "andGate",
+      "queryid": "1687540146338",
+      "OR": [
+        {
+          "id": "1687540146338",
+          "name": "transactionamount",
+          "operator": "GT",
+          "valueType": "Double",
+          "value": "ONETOONE|1687540146338|15000"
+        },
+        {
+          "id": "1687540146338",
+          "name": "transactionamount",
+          "operator": "GT",
+          "valueType": "Double",
+          "value": "ONETOMANY|1687540146338|15000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687540144270",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1687540144522",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "24"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "24"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1687540284071",
+      "class": "andGate",
+      "join": "AND",
+      "queryid": "1687540307047",
+      "OR": [
+        {
+          "id": "1687540307047",
+          "name": "entityid",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1687540307047"
+        },
+        {
+          "id": "1687540307047",
+          "name": "entityid",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1687540307047|1"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687540286788",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1687540287034",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "entityid",
+              "timeSeries": "days",
+              "timegranularity": "90"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "entityid",
+              "timeSeries": "days",
+              "timegranularity": "90"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687540146338"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687540307047"
+    }
+  ],
+  "ifCondition": "((transactionamount>ONETOONE|1687540146338|15000||transactionamount>ONETOMANY|1687540146338|15000)&&(entityid.equals('ONETOONE|1687540307047')||entityid<ONETOMANY|1687540307047|1))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687541964686",
+  "ruleName": "Dormant account - Activation",
+  "description": "Dormant account - Activation",
+  "ruleSelectionID": "1687539618349",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "0",
+  "conditions": [
+    {
+      "groupId": "1687541997707",
+      "class": "andGate",
+      "queryid": "1687542003232",
+      "OR": [
+        {
+          "id": "1687542003232",
+          "name": "transactionamount",
+          "operator": "GT",
+          "valueType": "Double",
+          "value": "ONETOONE|1687542003232|15000|currentobject"
+        },
+        {
+          "id": "1687542003232",
+          "name": "transactionamount",
+          "operator": "GT",
+          "valueType": "Double",
+          "value": "ONETOMANY|1687542003232|15000"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687541998948",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1687541999131",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "24"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "sum",
+              "name": "transactionamount",
+              "timeSeries": "hour",
+              "timegranularity": "24"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "groupId": "1687542070282",
+      "class": "andGate",
+      "join": "AND",
+      "queryid": "1687542085330",
+      "OR": [
+        {
+          "id": "1687542085330",
+          "name": "entityid",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1687542085330"
+        },
+        {
+          "id": "1687542085330",
+          "name": "entityid",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1687542085330|1"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687542073054",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate"
+            },
+            {
+              "join": "AND",
+              "id": "1687542073332",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate"
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "entityid",
+              "timeSeries": "days",
+              "timegranularity": "90"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "entityid",
+              "timeSeries": "days",
+              "timegranularity": "90"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687542003232"
+    },
+    {
+      "result": "true",
+      "INPUT_DATA": "pan",
+      "queryId": "1687542085330"
+    }
+  ],
+  "ifCondition": "((transactionamount>ONETOONE|1687542003232|15000|currentobject||transactionamount>ONETOMANY|1687542003232|15000)&&(entityid.equals('ONETOONE|1687542085330')||entityid<ONETOMANY|1687542085330|1))",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687542441647",
+  "ruleName": "Same Card usage on Same POS/Merchant",
+  "description": "Same Card usage on Same POS/Merchant",
+  "ruleSelectionID": "1687542216075",
+  "version": "V1",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1687542473739",
+      "class": "andGate",
+      "req": false,
+      "queryid": "1693892587151",
+      "OR": [
+        {
+          "id": "1693892587151",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1693892587151"
+        },
+        {
+          "id": "1693892587151",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1693892587151|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687542475929",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1687542476212",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1687542476510",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1687542476927",
+              "name": "transactionorigin",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "POS",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693892532347",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693892546780",
+              "name": "cardacceptorterminalid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "groupId": "1693892657131",
+      "class": "andGate",
+      "join": "AND",
+      "req": false,
+      "queryid": "1693893586112",
+      "OR": [
+        {
+          "id": "1693893586112",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1693893586112"
+        },
+        {
+          "id": "1693893586112",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1693893586112|10"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1693892739013",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693892739634",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693892740059",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693892740478",
+              "name": "transactionorigin",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "ECOM",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693892740771",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693892743507",
+              "name": "cardacceptorid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ]
+    },
+    {
+      "join": "OR",
+      "id": "1693893646691",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "0",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "transactionorigin": "ECOM",
+        "transactionamount": "0",
+        "risktranstatus": "Y"
+      },
+      "INPUT_DATA": "pan,cardacceptornamelocation,cardacceptorid",
+      "queryId": "1693893586112"
+    }
+  ],
+  "ifCondition": "(((pan.equals('ONETOONE|1693892587151')||pan<ONETOMANY|1693892587151|5)&&(pan.equals('ONETOONE|1693893586112')||pan<ONETOMANY|1693893586112|10))||transactionamount<=0)",
+  "_class": "com.m2p.config.model.RuleTemplate"
+},
+{
+  "_id": "1687542614062",
+  "ruleName": "Same Card usage on Same POS/Merchant",
+  "description": "Same Card usage on Same POS/Merchant",
+  "ruleSelectionID": "1687542316779",
+  "version": "V2",
+  "status": true,
+  "weightage": "0",
+  "bankCode": "10013",
+  "productCode": "03",
+  "productName": "cms",
+  "caseRequired": "1",
+  "conditions": [
+    {
+      "groupId": "1687542640103",
+      "class": "andGate",
+      "queryid": "1693894464982",
+      "OR": [
+        {
+          "id": "1693894464982",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1693894464982"
+        },
+        {
+          "id": "1693894464982",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1693894464982|5"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1687542642177",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1687542642429",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1687542642709",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1687542642926",
+              "name": "transactionorigin",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "POS",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693894361001",
+              "name": "cardacceptorterminalid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693894361602",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "15"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ],
+      "req": false
+    },
+    {
+      "groupId": "1693894532994",
+      "class": "andGate",
+      "join": "AND",
+      "queryid": "1693894624258",
+      "OR": [
+        {
+          "id": "1693894624258",
+          "name": "pan",
+          "operator": "EQ",
+          "valueType": "String",
+          "value": "ONETOONE|1693894624258"
+        },
+        {
+          "id": "1693894624258",
+          "name": "pan",
+          "operator": "LT",
+          "valueType": "String",
+          "value": "ONETOMANY|1693894624258|10"
+        }
+      ],
+      "QUERY": [
+        {
+          "INPUT": [
+            {
+              "id": "1693894535599",
+              "name": "pan",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693894536052",
+              "name": "cardacceptornamelocation",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693894536374",
+              "name": "risktranstatus",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "Y",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693894538303",
+              "name": "transactionorigin",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "ECOM",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693894538581",
+              "name": "cardacceptorid",
+              "operator": "EQ",
+              "valueType": "String",
+              "value": "REQ",
+              "class": "andGate",
+              "req": false
+            },
+            {
+              "join": "AND",
+              "id": "1693894541626",
+              "name": "transactionamount",
+              "operator": "GT",
+              "valueType": "Double",
+              "value": "0",
+              "class": "andGate",
+              "req": false
+            }
+          ]
+        },
+        {
+          "EXECUTION": [
+            {
+              "relation": "ONETOONE",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            },
+            {
+              "relation": "ONETOMANY",
+              "operation": "count",
+              "name": "pan",
+              "timeSeries": "minutes",
+              "timegranularity": "10"
+            }
+          ]
+        },
+        {
+          "derivedFunction": {}
+        }
+      ],
+      "req": false
+    },
+    {
+      "join": "OR",
+      "id": "1693894762853",
+      "name": "transactionamount",
+      "operator": "LTE",
+      "valueType": "Double",
+      "value": "0",
+      "class": "orGate",
+      "objCheck": "0"
+    }
+  ],
+  "query": [
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "transactionorigin": "POS",
+        "transactionamount": "0",
+        "risktranstatus": "Y"
+      },
+      "INPUT_DATA": "pan,cardacceptornamelocation,cardacceptorterminalid",
+      "queryId": "1693894464982"
+    },
+    {
+      "result": "true",
+      "STATIC_INPUT_DATA": {
+        "transactionorigin": "ECOM",
+        "transactionamount": "0",
+        "risktranstatus": "Y"
+      },
+      "INPUT_DATA": "pan,cardacceptornamelocation,cardacceptorid",
+      "queryId": "1693894624258"
+    }
+  ],
+  "ifCondition": "(((pan.equals('ONETOONE|1693894464982')||pan<ONETOMANY|1693894464982|5)&&(pan.equals('ONETOONE|1693894624258')||pan<ONETOMANY|1693894624258|10))||transactionamount<=0)",
+  "_class": "com.m2p.config.model.RuleTemplate"
+}]

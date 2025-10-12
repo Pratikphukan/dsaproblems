@@ -1,0 +1,40 @@
+You are given an array A of integers that represent the lengths of ropes.
+You need to connect these ropes into one rope. The cost of joining two ropes equals the sum of their lengths.
+Find and return the minimum cost to connect these ropes into one rope.
+1 <= length of the array <= 100000
+1 <= A[i] <= 1000
+ A = [1, 2, 3, 4, 5]->33
+ A = [5, 17, 100, 11]->182
+ 
+Given N bags, each bag contains Bi chocolates. There is a kid and a magician.
+In a unit of time, the kid can choose any bag i, and eat Bi chocolates from it, then the magician will fill the ith bag with floor(Bi/2) chocolates.
+Find the maximum number of chocolates that the kid can eat in A units of time.
+1 <= N <= 100000
+0 <= B[i] <= INT_MAX
+0 <= A <= 105
+ A = 3
+ B = [6, 5]
+ output->14
+ A = 5
+ B = [2, 4, 6, 8, 10]
+ output->33
+ 
+Given an integer array A of size N.
+You have to find the product of the three largest integers in array A from range 1 to i, where i goes from 1 to N.
+Return an array B where B[i] is the product of the largest 3 integers in range 1 to i in array A. If i < 3, then the integer at index i in B should be -1.
+1 <= N <= 105
+0 <= A[i] <= 103
+A = [1, 2, 3, 4, 5]-> [-1, -1, 6, 24, 60]
+A = [10, 2, 13, 4]-> [-1, -1, 260, 520]
+
+Given an array of integers A and an integer B. You must modify the array exactly B number of times. In a single modification, we can replace any one array element A[i] by -A[i].
+You need to perform these modifications in such a way that after exactly B modifications, sum of the array must be maximum.
+1 <= length of the array <= 5*105
+1 <= B <= 5 * 106
+-100 <= A[i] <= 100
+ A = [24, -68, -29, -9, 84]
+ B = 4
+ output->196
+ A = [57, 3, -14, -87, 42, 38, 31, -7, -28, -61]
+ B = 10
+ output->362

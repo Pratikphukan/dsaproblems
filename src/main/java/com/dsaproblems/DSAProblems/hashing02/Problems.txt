@@ -1,0 +1,30 @@
+Given a string B, find if it is possible to re-order the characters of the string B so that it can be represented as a concatenation of A similar strings.
+Eg: B = aabb and A = 2, then it is possible to re-arrange the string as "abab" which is a concatenation of 2 similar strings "ab".
+If it is possible, return 1, else return -1.
+Example Input
+Input 1:
+ A = 2
+ B = "bbaabb"
+Input 2:
+ A = 2
+ B = "bc"
+
+Example Output
+Output 1:
+ 1
+Output 2:
+ -1
+ 
+ 
+Return an integer denoting the maximum possible length of substring without repeating characters.
+Example Input
+Input 1:
+ A = "abcabcbb"
+Input 2:
+ A = "AaaA"
+
+Example Output
+Output 1:
+ 3
+Output 2:
+ 2
