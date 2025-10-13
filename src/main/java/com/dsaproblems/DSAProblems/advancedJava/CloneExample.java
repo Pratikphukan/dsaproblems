@@ -1,8 +1,5 @@
 package com.dsaproblems.DSAProblems.advancedJava;
 
-import lombok.Getter;
-import lombok.Setter;
-
 class Test {
     int x, y;
 }
@@ -19,4 +16,13 @@ class Test2 implements Cloneable {
 }
 
 public class CloneExample {
+    public static void main(String[] args) throws CloneNotSupportedException {
+        Test2 t = new Test2();
+        Test2 tClone = t.clone();
+        //Both t and tClone have their own Test2 objects, but their c fields (of type Test) point to the same Test instance.
+        // This is a shallow copy.
+        //A deep copy would require cloning the Test object as well, so each Test2 has its own separate Test instance.
+        System.out.println(t);
+        System.out.println(tClone);
+    }
 }

@@ -34,6 +34,7 @@ public class FutureSubmitExample {
         Future<Integer> future = executor.submit(task);
 
         boolean isDone = future.isDone();
+        System.out.println(isDone);
         Integer result = future.get(); //retrieving the result
         System.out.println("Result: " + result);
 

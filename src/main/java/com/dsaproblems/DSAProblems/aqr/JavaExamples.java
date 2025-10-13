@@ -2,20 +2,70 @@ package com.dsaproblems.DSAProblems.aqr;
 
 import java.util.ArrayList;
 
+class Student {
+    String name;
+    int rollNo;
+
+    Student(int num) {
+        this.rollNo = num;
+        this.name = "abc";
+    }
+
+    Student(int num, String str) {
+        this.rollNo = num;
+        this.name = str;
+    }
+
+    public void print() {
+        System.out.print(this.name + " " + this.rollNo + " ");
+    }
+}
+
+class Book {
+    int price;
+    static int count;
+
+    public Book(int price) {
+        this.price = price;
+        count++;
+    }
+}
+
 class Box {
 
     int width;
-
     int height;
-
     int length;
 
     void volume() {
-
         System.out.println(length * width * height);
-
     }
 }
+
+class IB {
+    protected void getData() {
+        System.out.println("Inside IB");
+    }
+}
+
+class InterviewBit extends IB {
+    protected void getData() {
+        System.out.println("Inside InterviewBit");
+    }
+}
+
+class Derived {
+    protected void getDetails() {
+        System.out.println("Derived class");
+    }
+}
+
+class Test extends Derived {
+    protected final void getDetails() {
+        System.out.println("Test class");
+    }
+}
+
 
 public class JavaExamples {
 
@@ -59,6 +109,27 @@ public class JavaExamples {
         b.height = 5;
         b.width = 4;
         b.volume();
+
+
+        Student s1 = new Student(101);
+        s1.print();
+        Student s2 = new Student(150, "xyz");
+        s2.print();
+
+        System.out.print(Book.count + " ");
+        Book b1 = new Book(500);
+        Book b2 = new Book(600);
+        System.out.println(Book.count);
+
+
+        IB o = new InterviewBit();
+        o.getData();
+
+        Derived x = new Derived();
+        x.getDetails();
+
+        Derived y = new Test();
+        y.getDetails();
     }
 
     private static void modify(Integer i, ArrayList<Integer> l) {
