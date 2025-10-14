@@ -10,7 +10,31 @@ public class RotateFromRight {
         head.next.next.next.next = new ListNode(5);
 
         int k = 2;
-        System.out.println(rotateRightv1(head, k));
+        //System.out.println(rotateRightv1(head, k));
+        System.out.println(rotateRightv2(head, k));
+    }
+
+    private static ListNode rotateRightv2(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) return head;
+        ListNode tail = head;
+        int count = 1;
+        while (tail.next != null) {
+            tail = tail.next;
+            count++;
+        }
+        k = k % count;
+        if (k == 0) return head;
+        // Make it circular
+        tail.next = head;
+        // Find new tail: (count - k - 1)th node
+        ListNode newTail = head;
+        for (int i = 0; i < count - k - 1; i++) {
+            newTail = newTail.next;
+        }
+        // New head is next of newTail
+        ListNode newHead = newTail.next;
+        newTail.next = null;
+        return newHead;
     }
 
     private static ListNode rotateRightv1(ListNode head, int k) {
