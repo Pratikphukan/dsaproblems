@@ -19,7 +19,7 @@ public class MinSumPathInMatrix {
     }
 
     private static int minSumPathInMatrixv4(ArrayList<ArrayList<Integer>> A, int rows, int cols) {
-        Integer[] minSumPathForMXNMatrix = new Integer[cols + 1];
+        int[] minSumPathForMXNMatrix = new int[cols + 1];
         for (int i = 1; i <= rows; i++) {
             for (int j = 1; j <= cols; j++) {
                 if (i == 1 && j == 1) {

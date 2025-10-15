@@ -66,6 +66,53 @@ class Test extends Derived {
     }
 }
 
+class Vehicle {
+    int seats;
+    int speed;
+
+    Vehicle(int seats, int speed) {
+        System.out.println("Vehicle ");
+        this.seats = seats;
+        this.speed = speed;
+    }
+}
+
+class Car extends Vehicle {
+
+    int id;
+
+    //The Car class needs a constructor like Vehicle because Vehicle does not
+    // have a no-argument (default) constructor. In Java, if a superclass
+    // defines only parameterized constructors, subclasses must explicitly
+    // call one of them using super(...) in their own constructors. Otherwise,
+    // the code will not compile.
+    Car(int seats, int speed) {
+        super(seats, speed);
+        System.out.println("Car ");
+    }
+}
+
+interface Scaler {
+    void myMethod();
+
+    void getInfo();
+}
+
+abstract class InterviewReady implements Scaler {
+    void getData() {
+        System.out.println("IB");
+    }
+}
+
+class InterviewReadyExt extends InterviewReady {
+    public void myMethod() {
+        System.out.println("InterviewBit");
+    }
+
+    public void getInfo() {
+        System.out.println("Scaler");
+    }
+}
 
 public class JavaExamples {
 
@@ -130,6 +177,9 @@ public class JavaExamples {
 
         Derived y = new Test();
         y.getDetails();
+
+        InterviewReady ir = new InterviewReadyExt();
+        ir.getInfo();
     }
 
     private static void modify(Integer i, ArrayList<Integer> l) {

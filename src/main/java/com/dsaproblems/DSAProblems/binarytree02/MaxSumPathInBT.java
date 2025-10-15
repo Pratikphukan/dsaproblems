@@ -6,6 +6,8 @@ public class MaxSumPathInBT {
 
     static int gMax = Integer.MIN_VALUE;
 
+    private static int maxSum;
+
     public static void main(String[] args) {
         TreeNode root = new TreeNode(26);
         root.left = new TreeNode(10);
@@ -15,6 +17,44 @@ public class MaxSumPathInBT {
         root.right.right = new TreeNode(3);
         //System.out.println(maxSumPathv1(root));
         System.out.println(maxSumPathv2(root));
+
+
+//        TreeNode root1 = new TreeNode(1);
+//        root1.left = new TreeNode(2);
+//        root1.right = new TreeNode(3);
+//        System.out.println(maxPathSumv3(root1));
+
+        TreeNode root4 = new TreeNode(10);
+        root4.left = new TreeNode(2);
+        root4.right = new TreeNode(10);
+        root4.right.left = new TreeNode(20);
+        root4.right.right = new TreeNode(1);
+        System.out.println(maxPathSumv3(root4));
+    }
+
+    //working code
+    private static int maxPathSumv3(TreeNode A) {
+        maxSum = Integer.MIN_VALUE;
+        dfs(A);
+        return maxSum;
+    }
+
+    private static int dfs(TreeNode A) {
+        if (A == null) return 0;
+        // Recursively get the maximum branch sum from the left child.
+        // If the left branch sum is negative, we ignore it by taking max with 0.
+        int leftMax = Math.max(dfs(A.left), 0);
+
+        // Recursively get the maximum branch sum from the right child.
+        // Similarly, ignore negative contribution.
+        int rightMax = Math.max(dfs(A.right), 0);
+        int currentPathSum = A.val + leftMax + rightMax;
+        maxSum = Math.max(maxSum, currentPathSum);
+
+        // For recursion: return the maximum sum branch that can be extended to the parent.
+        // We add the current node's value to the maximum of the left or right branch.
+        // Only one branch can be chosen to extend upward.
+        return A.val + Math.max(leftMax, rightMax);
     }
 
     private static int maxSumPathv2(TreeNode A) {

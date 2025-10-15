@@ -9,6 +9,21 @@ public class UniquePathsInAGrid {
         System.out.println(noOfUniquePathsv2(rows, cols));
         System.out.println(noOfUniquePathsv3(rows, cols));
         System.out.println(noOfUniquePathsv4(rows - 1, cols - 1));
+        System.out.println(noOfUniquePathsv5(rows, cols));
+    }
+
+    //working code
+    private static int noOfUniquePathsv5(int rows, int cols) {
+        int[] uniquePaths = new int[cols];
+        if (rows == 1) return 1;
+        uniquePaths[0] = 1;
+        for (int i = 1; i < rows; i++) {
+            for (int j = 1; j < cols; j++) {
+                if (i == 1) uniquePaths[j] = j + 1;
+                else uniquePaths[j] = uniquePaths[j - 1] + uniquePaths[j];
+            }
+        }
+        return uniquePaths[cols - 1];
     }
 
     private static int noOfUniquePathsv3(int rows, int cols) {
