@@ -8,7 +8,8 @@ public class SimplifyDirectoryPath {
     public static void main(String[] args) {
         //-> /home//foo/
         //-> /a/./b/../../c/
-        String A = "/home//foo/";
+        //-> /home/user/Documents/../Pictures
+        String A = "/home/user/Documents/../Pictures//";
         System.out.println(simplifyPathv1(A));
         System.out.println(simplifyPathv2(A));
     }

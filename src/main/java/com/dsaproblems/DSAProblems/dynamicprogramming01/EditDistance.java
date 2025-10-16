@@ -3,15 +3,17 @@ package com.dsaproblems.DSAProblems.dynamicprogramming01;
 public class EditDistance {
 
     public static void main(String[] args) {
-        String A = "ac";
-        String B = "abc";
-//		String A = "abdxyl";
-//		String B = "abgxl";
-//		String A = "aaa";
-//		String B = "aa";
+//        String A = "ac";
+//        String B = "abc";
+//        String A = "abdxyl";
+//        String B = "abgxl";
+        String A = "aaa";
+        String B = "aa";
         //System.out.println(noOfStepsToChangeAtoB(A, B, A.length() - 1, B.length() - 1));
         System.out.println(noOfStepsToChangeAtoBv1(A, B));
         System.out.println(noOfStepsToChangeAtoBv2(A, B, A.length(), B.length()));
+        System.out.println(noOfStepsToChangeAtoBv3(A, B));
+        System.out.println(noOfStepsToChangeAtoBv4(A, B));
     }
 
     //working code but throws TLE
@@ -82,6 +84,58 @@ public class EditDistance {
             }
         }
         return arr[n][m];
+    }
+
+    //working code: O(n*m) and uses bottom-up DP
+    //You can reduce space complexity from O(n*m) to O(m) by only
+    // keeping two rows (current and previous), since each DP state
+    // only depends on the previous row and current row
+    private static int noOfStepsToChangeAtoBv3(String A, String B) {
+        int n = A.length(), m = B.length();
+        //dp[i][j] stores the minimum number of operations
+        // (insert, delete, replace) needed to convert the first i
+        // characters of string A to the first j characters of string B.
+        int[][] dp = new int[n + 1][m + 1];
+        for (int j = 0; j < m + 1; j++) {
+            dp[0][j] = j;
+        }
+        for (int i = 0; i < n + 1; i++) {
+            dp[i][0] = i;
+        }
+        for (int i = 1; i < n + 1; i++) {
+            for (int j = 1; j < m + 1; j++) {
+                //If characters match, only dp[i-1][j-1] should be considered (no operation needed).
+                //If not, you should take the minimum of insert, delete, or replace.
+                if (A.charAt(i - 1) == B.charAt(j - 1))
+                    dp[i][j] = dp[i - 1][j - 1];
+                else
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1]));
+            }
+        }
+        return dp[n][m];
+    }
+
+    //working code
+    private static int noOfStepsToChangeAtoBv4(String A, String B) {
+        int n = A.length(), m = B.length();
+        int[] prev = new int[m + 1];
+        int[] curr = new int[m + 1];
+
+        for (int j = 0; j <= m; j++) prev[j] = j;
+
+        for (int i = 1; i <= n; i++) {
+            curr[0] = i;
+            for (int j = 1; j <= m; j++) {
+                if (A.charAt(i - 1) == B.charAt(j - 1))
+                    curr[j] = prev[j - 1];
+                else
+                    curr[j] = 1 + Math.min(prev[j - 1], Math.min(prev[j], curr[j - 1]));
+            }
+            int[] temp = prev;
+            prev = curr;
+            curr = temp;
+        }
+        return prev[m];
     }
 
 }
