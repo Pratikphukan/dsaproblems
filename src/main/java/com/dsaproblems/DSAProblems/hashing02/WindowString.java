@@ -1,9 +1,6 @@
 package com.dsaproblems.DSAProblems.hashing02;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class WindowString {
@@ -14,9 +11,6 @@ public class WindowString {
 
         String a = "timetopractice";
         String b = "toc";
-        findWindowWithMinLengthv1(a, b);
-        findWindowWithMinLengthv2(a, b);
-        findWindowWithMinLengthv3(a, b);
         // findWindowWithMinLengthv4(a, b);
         System.out.println(findWindowWithMinLengthv5(a, b));
         System.out.println(findWindowWithMinLengthv6(a, b));
@@ -26,6 +20,7 @@ public class WindowString {
         System.out.println(findSubStringv3(a, b));
     }
 
+    //working code
     private static String findSubStringv3(String A, String B) {
         if (A.length() < B.length())
             return "";
@@ -95,7 +90,6 @@ public class WindowString {
                 while (counts.get(A.charAt(head)) == null || counts.get(A.charAt(head)) < 0) {
                     if (counts.get(A.charAt(head)) != null)
                         counts.put(A.charAt(head), counts.get(A.charAt(head)) + 1);
-                    ;
                     head++;
                 }
                 // Now [head - 1, tail] is a valid substring. Update the answer.
@@ -109,33 +103,31 @@ public class WindowString {
 
     }
 
+    //working code and better
+    //TC: O(N), where N is the length of string A. Each character is processed at most twice (once by tail, once by head)
+    //SC: O(M), where M is the number of unique characters in string B (stored in the counts map)
     private static String findSubStringv1(String A, String B) {
-        if (A.length() < B.length())
-            return "";
-        HashMap<Character, Integer> counts = new HashMap<Character, Integer>();
+        if (A.length() < B.length()) return "";
+        Map<Character, Integer> counts = new HashMap<>();
         for (int i = 0; i < B.length(); i++) {
-            if (counts.get(B.charAt(i)) == null) {
-                counts.put(B.charAt(i), 1);
-            } else {
-                counts.put(B.charAt(i), counts.get(B.charAt(i)) + 1);
-            }
+            counts.put(B.charAt(i), counts.getOrDefault(B.charAt(i), 0) + 1);
         }
-        int start = 0;
-        int length = 0;
-        int total = 0;
+        int start = 0, length = 0, total = 0;
         for (int head = 0, tail = 0; tail < A.length(); tail++) {
-            if (counts.get(A.charAt(tail)) == null) {
+            char t = A.charAt(tail);
+            if (!counts.containsKey(t)) {
                 continue;
             }
-            counts.put(A.charAt(tail), counts.get(A.charAt(tail)) - 1);
-            if (counts.get(A.charAt(tail)) >= 0) {
+            counts.put(t, counts.get(t) - 1);
+            if (counts.get(t) >= 0) {
                 total++;
             }
             if (total == B.length()) {
-                while (counts.get(A.charAt(head)) == null || counts.get(A.charAt(head)) < 0) {
-                    if (counts.get(A.charAt(head)) != null)
-                        counts.put(A.charAt(head), counts.get(A.charAt(head)) + 1);
-                    head++;
+                char h = A.charAt(head);
+                while (!counts.containsKey(h) || counts.get(h) < 0) {
+                    if (counts.containsKey(h))
+                        counts.put(h, counts.get(h) + 1);
+                    h = A.charAt(++head);
                 }
                 if (length == 0 || tail - head + 1 < length) {
                     length = tail - head + 1;
@@ -191,41 +183,40 @@ public class WindowString {
         return input.substring(start_idx, start_idx + min_len);
     }
 
+    //working code and optimal
+    // optimal in time (O(N)) and space (O(1))
     private static String findWindowWithMinLengthv5(String input, String pattern) {
-        int len1 = input.length();
-        int len2 = pattern.length();
+        int len1 = input.length(), len2 = pattern.length();
         if (len1 < len2) {
             return "";
         }
-        int hash_pat[] = new int[256];
-        int hash_str[] = new int[256];
-        int start = 0, start_index = -1, min_len = Integer.MAX_VALUE;
+        int[] hash_pat = new int[256];
+        int[] hash_str = new int[256];
+        int start = 0, startIdx = -1, minLen = Integer.MAX_VALUE;
         for (int i = 0; i < len2; i++)
             hash_pat[pattern.charAt(i)]++;
         int count = 0;
-        for (int j = 0; j < len1; j++) {
-            hash_str[input.charAt(j)]++;
-            if (hash_str[input.charAt(j)] <= hash_pat[input.charAt(j)])
+        for (int end = 0; end < len1; end++) {
+            char c = input.charAt(end);
+            hash_str[c]++;
+            if (hash_str[c] <= hash_pat[c])
                 count++;
             if (count == len2) {
-                while (hash_str[input.charAt(start)] > hash_pat[input.charAt(start)]
-                        || hash_pat[input.charAt(start)] == 0) {
-
-                    if (hash_str[input.charAt(start)] > hash_pat[input.charAt(start)])
-                        hash_str[input.charAt(start)]--;
-                    start++;
+                char sc = input.charAt(start);
+                while (hash_str[sc] > hash_pat[sc]
+                        || hash_pat[sc] == 0) {
+                    if (hash_str[sc] > hash_pat[sc])
+                        hash_str[sc]--;
+                    sc = input.charAt(++start);
                 }
-                int len_window = j - start + 1;
-                if (min_len > len_window) {
-                    min_len = len_window;
-                    start_index = start;
+                int windowLen = end - start + 1;
+                if (minLen > windowLen) {
+                    minLen = windowLen;
+                    startIdx = start;
                 }
             }
         }
-        if (start_index == -1) {
-            return "";
-        }
-        return input.substring(start_index, start_index + min_len);
+        return startIdx == -1 ? "" : input.substring(startIdx, startIdx + minLen);
     }
 
     static String findSubString(String str, String pat) {
@@ -234,8 +225,8 @@ public class WindowString {
         if (len1 < len2) {
             return "";
         }
-        int hash_pat[] = new int[256];
-        int hash_str[] = new int[256];
+        int[] hash_pat = new int[256];
+        int[] hash_str = new int[256];
         for (int i = 0; i < len2; i++)
             hash_pat[pat.charAt(i)]++;
 
@@ -290,50 +281,5 @@ public class WindowString {
 //		}
 //		return countList;
 //	}
-
-    private static int findWindowWithMinLengthv3(String a, String b) {
-        int head = 0;
-        int tail = 0;
-        int charsTouched = 0;
-        Map<Character, Integer> charToFrequency = new HashMap<>();
-        for (int i = 0; i < b.length(); i++) {
-            charToFrequency.put(b.charAt(i), charToFrequency.getOrDefault(b.charAt(i), 0) + 1);
-        }
-        for (int i = 0; i < a.length(); i++) {
-            if (charToFrequency.containsKey(a.charAt(i))) {
-                charsTouched += 1;
-            }
-            if (charsTouched == 0) {
-                head++;
-                tail++;
-            } else {
-
-            }
-        }
-        return 0;
-    }
-
-    private static void findWindowWithMinLengthv2(String a, String b) {
-        for (int i = 0; i < a.length(); i++) {
-            for (int j = i; j < a.length() - b.length(); j++) {
-
-            }
-        }
-
-    }
-
-    private static int findWindowWithMinLengthv1(String a, String b) {
-        Map<Character, List<Integer>> charToIndex = new HashMap<>();
-        for (int i = 0; i < a.length(); i++) {
-            if (charToIndex.containsKey(a.charAt(i))) {
-                charToIndex.get(a.charAt(i)).add(i);
-            } else {
-                charToIndex.put(a.charAt(i), new ArrayList<>(Arrays.asList(i)));
-            }
-        }
-        for (int i = 0; i < b.length(); i++) {
-        }
-        return 0;
-    }
 
 }

@@ -7,7 +7,8 @@ import java.util.List;
 public class RotatedSortedArraySearch {
 
     public static void main(String[] args) {
-        List<Integer> A = new ArrayList<>(Arrays.asList(5, 1, 3));
+        List<Integer> A = new ArrayList<>(Arrays.asList(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1));
+        //1,1,1,1,1,1,1,1,1,1,1,1,1,2,1,1,1,1,1->2
         // 5, 1, 3->5
         // 4, 5, 6, 7, 0, 1, 2, 3->6
         // 11, 14, 19, 23, 27, -20, -14, -8, -4, 1, 2, 4, 7->5
@@ -22,20 +23,49 @@ public class RotatedSortedArraySearch {
         //9, 10, 11, 12, 14, 15, 17, 19, 24, 25, 30, 39, 40, 44, 46, 48, 51, 53, 54, 56, 59, 60, 69, 70, 73, 75, 80, 87, 88,
         //89, 92, 93, 97, 99, 104, 107, 109, 110, 111, 117, 123, 124, 125, 126, 127, 128, 135, 136, 137, 141, 148, 153, 154,
         //161, 166, 167, 169, 175, 177, 180, 181, 182, 185, 186, 189, 193, 198, 202, 1, 2, 6, 7->198
-        int B = 5;
+        int B = 2;
         System.out.println(searchInRotatedSortedArrayv1(A, B));
         System.out.println(searchInRotatedSortedArrayv2(A, B));
         System.out.println(searchInRotatedSortedArrayv3(A, B));
+        System.out.println(searchInRotatedSortedArrayv4(A, B));
+        System.out.println(searchInRotatedSortedArrayv5(A, B));
     }
 
-    //working code
+    //When input.get(low) == input.get(mid) == input.get(high), increment low and decrement high to skip duplicates.
+    private static int searchInRotatedSortedArrayv5(List<Integer> A, int B) {
+        int low = 0, high = A.size() - 1;
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (A.get(mid) == B) return mid;
+            // If duplicates at the ends, skip them
+            if (A.get(low).equals(A.get(mid)) && A.get(mid).equals(A.get(high))) {
+                low++;
+                high--;
+            } else if (A.get(low) <= A.get(mid)) { // left side sorted
+                if (A.get(low) <= B && B < A.get(mid)) {
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            } else { // right side sorted
+                if (A.get(mid) < B && B <= A.get(high)) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    //working code, considering there are unique elements in the input
     private static int searchInRotatedSortedArrayv3(List<Integer> input, int B) {
         int low = 0, high = input.size() - 1;
         while (low <= high) {
             int mid = high - (high - low) / 2;
             if (input.get(mid) == B) return mid;
             //you can neglect one side based on low, high and mid
-            if (input.get(low) <= input.get(mid)) { // left side is sorted
+            if (input.get(low) < input.get(mid)) { // left side is sorted
                 if (input.get(low) <= B && input.get(mid) > B) {
                     high = mid - 1; // search in left side
                 } else {

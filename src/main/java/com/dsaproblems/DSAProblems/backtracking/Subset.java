@@ -14,6 +14,27 @@ public class Subset {
         System.out.println(findAllSubsetsv2(input));
         System.out.println(findAllSubsetsv3(input));
         System.out.println(findAllSubsetsv4(input));
+        System.out.println(findAllSubsetsv5(input));
+    }
+
+    //Time Complexity: O(2^n*n), where n is the size of the input. This is optimal since there are (2^n) subsets and each subset can be up to (n) elements.
+    //Space Complexity: O(2^n*n) for storing all subsets.
+    private static List<List<Integer>> findAllSubsetsv5(ArrayList<Integer> A) {
+        List<List<Integer>> result = new ArrayList<>();
+        ArrayList<Integer> row = new ArrayList<>();
+        backtracking(0, result, A, row);
+        return result;
+    }
+
+    private static void backtracking(int start, List<List<Integer>> result, ArrayList<Integer> A, ArrayList<Integer> row) {
+        if (start == A.size()) {
+            result.add(new ArrayList<>(row));//have a deep copy
+            return;
+        }
+        backtracking(start + 1, result, A, row); // without current element
+        row.add(A.get(start)); // include current element
+        backtracking(start + 1, result, A, row);
+        row.remove(row.size() - 1); // backtrack
     }
 
     //working code, backtracking one

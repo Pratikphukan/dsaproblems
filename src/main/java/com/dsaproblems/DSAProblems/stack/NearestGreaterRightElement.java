@@ -1,21 +1,20 @@
 package com.dsaproblems.DSAProblems.stack;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 
 public class NearestGreaterRightElement {
 
     public static void main(String[] args) {
-        List<Integer> a = List.of(1, 1, 4, 5);
+        List<Integer> a = List.of(4, 5, 2, 10);
         // (39, 27, 11, 4, 24, 32, 32, 1)
         // (4, 5, 2, 10, 8)
         //(3,4,2)
         //(1,1,4,5)
+        //4, 5, 2, 10
         ArrayList<Integer> A = new ArrayList<>(a);
         System.out.println(nearestGreaterIndicesv1(A));
         System.out.println(nearestGreaterIndicesv2(A));
+        System.out.println(nearestGreaterElementsv1(A));
     }
 
     private static ArrayList<Integer> nearestGreaterIndicesv2(ArrayList<Integer> A) {
@@ -50,6 +49,26 @@ public class NearestGreaterRightElement {
             stack.addFirst(i);
         }
         System.out.println(stack);
+        return ans;
+    }
+
+    // working code
+    private static ArrayList<Integer> nearestGreaterElementsv1(ArrayList<Integer> input) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        Deque<Integer> stack = new ArrayDeque<>();
+        for (int i = input.size() - 1; i >= 0; i--) {
+            int item = input.get(i);
+            while (!stack.isEmpty() && stack.peekFirst() <= item) {// equality is important
+                stack.pollFirst();
+            }
+            if (stack.isEmpty()) {
+                ans.add(-1);
+            } else {
+                ans.add(stack.peekFirst());
+            }
+            stack.offerFirst(item);
+        }
+        Collections.reverse(ans);
         return ans;
     }
 }
