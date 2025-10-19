@@ -9,6 +9,16 @@ public class GrayCode {
         System.out.println(generateGrayCodev1(n));
         System.out.println(generateGrayCodev2(n));
         System.out.println(generateGrayCodev3(n));
+        System.out.println(generateGrayCodev4(n));
+    }
+
+    private static ArrayList<Integer> generateGrayCodev4(int n) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int total = 1 << n;
+        for (int i = 0; i < total; i++) {
+            result.add(i ^ (i >> 1));
+        }
+        return result;
     }
 
     private static ArrayList<Integer> generateGrayCodev3(int n) {
@@ -27,8 +37,10 @@ public class GrayCode {
         return ans;
     }
 
+    //working code, TC: O(2^n)
     private static ArrayList<Integer> generateGrayCodev2(int n) {
-        ArrayList<Integer> result = new ArrayList<>();
+        int total = 1 << n;
+        ArrayList<Integer> result = new ArrayList<>(total);
         result.add(0);
         for (int i = 0; i < n; i++) {
             int size = result.size();

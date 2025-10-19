@@ -8,7 +8,8 @@ public class SubsetII {
         //8, 10, 6, 11, 1, 16, 8
         //1, 2, 2
         //1, 1, 2
-        ArrayList<Integer> input = new ArrayList<>(List.of(1, 1, 2));
+        //4,4,4,1,4
+        ArrayList<Integer> input = new ArrayList<>(List.of(4, 4, 4, 1, 4));
         System.out.println(findAllSubsetsv1(input));
         System.out.println(findAllSubsetsv2(input));
         System.out.println(findAllSubsetsv3(input));

@@ -17,9 +17,28 @@ public class WaysToDecode {
 
         System.out.println(totalWaysToDecodev1("2611055971756562"));
         System.out.println(totalWaysToDecodev4("2611055971756562"));
+        System.out.println(totalWaysToDecodev5("2611055971756562"));
+    }
+
+    private static int totalWaysToDecodev5(String A) {
+        int n = A.length();
+        if (n == 0 || A.charAt(0) == '0') return 0;
+        int mod = 1000000007;
+        int prev2 = 1, prev1 = 1;
+        for (int i = 1; i < n; i++) {
+            int curr = 0;
+            if (A.charAt(i) != '0') curr = prev1;
+            int twoDigit = Integer.parseInt(A.substring(i - 1, i + 1));
+            if (twoDigit >= 10 && twoDigit <= 26) curr = (curr + prev2) % mod;
+            prev2 = prev1;
+            prev1 = curr;
+        }
+        return prev1;
     }
 
     //working code
+    //Time Complexity: (O(N)), where (N) is the length of the string. It iterates once through the string.
+    //Space Complexity: (O(N)) due to the use of an ArrayList for DP.
     private static int totalWaysToDecodev4(String A) {
         List<Integer> dp = new ArrayList<>();
         if (Integer.parseInt(A.substring(0, 1)) == 0) {

@@ -1,6 +1,7 @@
 package com.dsaproblems.DSAProblems.aqr;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 class Student {
     String name;
@@ -180,6 +181,14 @@ public class JavaExamples {
 
         InterviewReady ir = new InterviewReadyExt();
         ir.getInfo();
+
+        TreeSet<String> t = new TreeSet<>();
+        t.add("Scaler");
+        t.add("InterviewBit");
+        t.add("Coders");
+        t.add("Coders");
+        for (String temp : t) System.out.printf(temp + " ");
+        System.out.println("\n");
     }
 
     private static void modify(Integer i, ArrayList<Integer> l) {

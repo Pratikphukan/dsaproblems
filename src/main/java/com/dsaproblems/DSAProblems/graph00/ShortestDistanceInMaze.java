@@ -43,6 +43,87 @@ public class ShortestDistanceInMaze {
 
         System.out.println(findShortestPathv1(input, B, C));
 
+
+        int[][] maze3 = {
+                {0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0},
+                {0, 0, 0, 1, 0},
+                {1, 1, 0, 1, 1},
+                {0, 0, 0, 0, 0}
+        };
+
+        int[] start3 = {0, 4};
+        int[] dest3 = {4, 4};
+
+        System.out.println(shortestDistancePathv1(maze3, start3, dest3));
+    }
+
+    private static int shortestDistancePathv1(int[][] maze, int[] start, int[] destination) {
+        // Get dimensions of the maze.
+        int m = maze.length, n = maze[0].length;
+        // Create a 2D array to track the minimum distance to reach each cell.
+        // Initialize with maximum values to simulate infinity.
+        int[][] dist = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(dist[i], Integer.MAX_VALUE);
+        }
+        // Distance to the starting point is 0.
+        dist[start[0]][start[1]] = 0;
+
+        // Priority queue to implement Dijkstra's algorithm.
+        // Stores an array representing {current distance, row index, column index}.
+        PriorityQueue<int[]> queue = new PriorityQueue<>(
+                (a, b) -> a[0] - b[0]   // Compare based on total traveled distance.
+        );
+        // Add the start state to the queue.
+        queue.offer(new int[]{0, start[0], start[1]});
+
+        // Direction vectors for moving up, right, down, left.
+        int[][] directions = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+        // Process the queue until empty.
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int curDist = current[0];
+            int x = current[1];
+            int y = current[2];
+
+            // If the current position equals the destination, return the distance.
+            if (x == destination[0] && y == destination[1]) {
+                return curDist;
+            }
+
+            // If we reached this cell by a shorter route before, skip processing.
+            if (curDist > dist[x][y]) {
+                continue;
+            }
+
+            // Try rolling in each direction.
+            for (int[] dir : directions) {
+                int newX = x;
+                int newY = y;
+                int count = 0; // Count the distance traveled in this roll.
+
+                // Roll the ball until hitting a wall or boundary.
+                // Check the next position's boundaries and ensure it is not a wall.
+                while (newX + dir[0] >= 0 && newX + dir[0] < m &&
+                        newY + dir[1] >= 0 && newY + dir[1] < n &&
+                        maze[newX + dir[0]][newY + dir[1]] == 0) {
+                    newX += dir[0];  // Move ball in the current direction.
+                    newY += dir[1];  // Move ball in the current direction.
+                    count++;         // Increase the distance count by 1.
+                }
+
+                // Check if the new calculated distance is shorter than previous for newX, newY.
+                if (curDist + count < dist[newX][newY]) {
+                    dist[newX][newY] = curDist + count;
+                    // Add new state to the queue.
+                    queue.offer(new int[]{dist[newX][newY], newX, newY});
+                }
+            }
+        }
+        // If the destination is not reachable, return -1.
+        return -1;
     }
 
     //the solution in FindLengthOfShortestPath.java if used here is not correct
