@@ -42,10 +42,6 @@ public class BinaryTreeApp {
 
         System.out.println("iterativeInorderTraversal: " + bt.iterativeInorderTraversal(head));
 
-        System.out.println("iterativeLevelOrderTraversalv1: " + bt.iterativeLevelOrderTraversalv1(head));
-
-        System.out.println("iterativeLevelOrderTraversalv2: " + bt.iterativeLevelOrderTraversalv2(head));
-
         System.out.println(bt.iterativeReverseLevelOrderTraversal(head));
 
         System.out.println(bt.checkRootToLeafSum(head, 20));

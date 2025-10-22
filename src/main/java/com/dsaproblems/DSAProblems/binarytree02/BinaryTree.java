@@ -226,7 +226,7 @@ public class BinaryTree {
         if (A == null) {
             return ans;
         }
-        Stack<Node> stack = new Stack<Node>();
+        Stack<Node> stack = new Stack<>();
         while (A != null) {
             stack.push(A);
             A = A.left;
@@ -838,16 +838,6 @@ public class BinaryTree {
             return false;
         }
         return checkIdenticalStructure(head1.left, head2.left) && checkIdenticalStructure(head1.right, head2.right);
-    }
-
-    public boolean checkSymmetricTree(Node head1, Node head2) {
-        if (head1 == null && head2 == null) {
-            return true;
-        }
-        if (head1 == null || head2 == null) {
-            return false;
-        }
-        return head1.data == head2.data && checkSymmetricTree(head1.left, head2.right);
     }
 
     public boolean checkMirrorTrees(Node head1, Node head2) {

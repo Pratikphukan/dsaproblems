@@ -43,12 +43,6 @@ public class BinaryTreeClient {
 
         System.out.println(binaryTreeService.getIterativePreorderTraversal(head));
 
-        System.out.println(binaryTreeService.getIterativeLevelorderTraversal(head));
-
-        System.out.println(binaryTreeService.getIterativeLevelorderTraversalAlternative(head));
-
-        System.out.println(binaryTreeService.getIterativeLevelorderTraversalAlternative1(head));
-
         System.out.println(binaryTreeService.getNumberOfNodesv1(head));
 
         System.out.println(binaryTreeService.recursiveSearch(head, 22));

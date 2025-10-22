@@ -32,10 +32,4 @@ public interface BinaryTreeService {
 
     TreeNode buildTreeUsingPosIn(List<Integer> pos, List<Integer> in, Map<Integer, Integer> map, int sin, int ein,
                                  int spo, int epo);
-
-    List<Integer> getIterativeLevelorderTraversal(TreeNode head);
-
-    List<List<Integer>> getIterativeLevelorderTraversalAlternative(TreeNode head);
-
-    List<List<Integer>> getIterativeLevelorderTraversalAlternative1(TreeNode head);
 }

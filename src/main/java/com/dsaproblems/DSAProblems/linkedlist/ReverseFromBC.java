@@ -9,11 +9,12 @@ public class ReverseFromBC {
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
         //head.next.next.next.next.next = new ListNode(6);
-        System.out.println(reverseFromBCv2(head, 1, 4));
+        System.out.println(reverseFromBCv2(head, 3, 5));
 
     }
 
     //working code
+    //Loop Body Execution->Update->Condition Check->...
     private static ListNode reverseFromBCv2(ListNode A, int B, int C) {
         if (A == null || B == C) return A;
         ListNode dummy = new ListNode(0);

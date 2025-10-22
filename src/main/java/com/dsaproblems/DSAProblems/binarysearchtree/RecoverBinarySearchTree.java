@@ -1,12 +1,10 @@
 package com.dsaproblems.DSAProblems.binarysearchtree;
 
 import com.dsaproblems.DSAProblems.binarytree01.TreeNode;
-import com.dsaproblems.DSAProblems.bt.Node;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
-import java.util.Stack;
 
 public class RecoverBinarySearchTree {
 

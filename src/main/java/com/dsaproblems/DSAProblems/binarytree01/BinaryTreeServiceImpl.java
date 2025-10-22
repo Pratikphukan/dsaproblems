@@ -6,8 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.dsaproblems.DSAProblems.bt.Node;
-
 public class BinaryTreeServiceImpl implements BinaryTreeService {
 
     @Override
@@ -121,89 +119,6 @@ public class BinaryTreeServiceImpl implements BinaryTreeService {
             }
         }
         return postorder;
-    }
-
-    // SC is O(breadth of tree)
-    // worst case SC will be a complete where all the levels are completely filled
-    // except the last level
-    // nodes in the last level are left aligned
-    // 2^0+2^1+2^2+2^3=2^4-1/2^(h+1)-1
-    // in the last level we are having 2^h nodes in a complete binary tree
-    // No of nodes in a completes BT where the last level is completely filled =
-    // 2^(h+1)-1
-    // h = log(n+1)-1
-    @Override
-    public List<Integer> getIterativeLevelorderTraversal(TreeNode node) {
-        List<Integer> levelorder = new ArrayList<>();
-        if (node == null) {
-            return levelorder;
-        }
-        Deque<TreeNode> queue = new LinkedList<>();
-        queue.addLast(node);
-        while (!queue.isEmpty()) {
-            TreeNode temp = queue.pollFirst();
-            levelorder.add(temp.getVal());
-            if (temp.getLeft() != null) {
-                queue.addLast(temp.getLeft());
-            }
-            if (temp.getRight() != null) {
-                queue.addLast(temp.getRight());
-            }
-        }
-        return levelorder;
-    }
-
-    @Override
-    public List<List<Integer>> getIterativeLevelorderTraversalAlternative(TreeNode head) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if (head == null) {
-            return ans;
-        }
-        Deque<TreeNode> queue = new LinkedList<>();
-        queue.addLast(head);
-        while (!queue.isEmpty()) {
-            List<Integer> aux = new ArrayList<>();
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode temp = queue.pollFirst();
-                aux.add(temp.getVal());
-                if (temp.getLeft() != null) {
-                    queue.add(temp.getLeft());
-                }
-                if (temp.getRight() != null) {
-                    queue.add(temp.getRight());
-                }
-            }
-            ans.add(aux);
-        }
-        return ans;
-    }
-
-    @Override
-    public List<List<Integer>> getIterativeLevelorderTraversalAlternative1(TreeNode head) {
-        List<List<Integer>> ans = new ArrayList<>();
-        if (head == null) {
-            return ans;
-        }
-        Deque<TreeNode> queue = new LinkedList<>();
-        queue.addLast(head);
-        boolean leftToRight = true;
-        while (!queue.isEmpty()) {
-            List<Integer> aux = new ArrayList<>();
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                TreeNode temp = queue.pollFirst();
-                if (leftToRight)
-                    aux.add(temp.getVal());
-                else
-                    aux.add(0, temp.getVal());
-                if (temp.getLeft() != null) queue.addLast(temp.getLeft());
-                if (temp.getRight() != null) queue.addLast(temp.getRight());
-            }
-            ans.add(aux);
-            leftToRight = !leftToRight; // toggle the direction for next level
-        }
-        return ans;
     }
 
     @Override

@@ -263,59 +263,6 @@ public class BinaryTree {
         return ans;
     }
 
-    // SC is O(breadth of tree or max width of tree)
-    // worst case SC will be a complete tree where all the levels are completely filled
-    // except the last level
-    // nodes in the last level are left aligned
-    // 2^0+2^1+2^2+2^3=2^4-1/2^(h+1)-1
-    // in the last level we are having 2^h nodes in a complete binary tree
-    // No of nodes in a complete BT where the last level is completely filled =
-    // 2^(h+1)-1
-    // h = log(n+1)-1
-    public ArrayList<Integer> iterativeLevelOrderTraversalv1(Node head) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        if (head == null) return ans;
-        Deque<Node> q = new ArrayDeque<>();
-        q.addLast(head);
-        while (!q.isEmpty()) {
-            Node temp = q.removeFirst(); // The element is removed from the beginning or head of the linked list
-            ans.add(temp.data);
-            if (temp.left != null) {
-                q.addLast(temp.left);
-            }
-            if (temp.right != null) {
-                q.addLast(temp.right);
-            }
-        }
-        return ans;
-    }
-
-    /*
-     * recursion happens in a DFS manner
-     */
-    public ArrayList<ArrayList<Integer>> iterativeLevelOrderTraversalv2(Node head) {
-        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
-        if (head == null) return ans;
-        Deque<Node> q = new ArrayDeque<>();
-        q.addLast(head);
-        while (!q.isEmpty()) {
-            ArrayList<Integer> aux = new ArrayList<>();
-            int size = q.size();
-            for (int i = 0; i < size; i++) {
-                Node temp = q.removeFirst();
-                aux.add(temp.data);
-                if (temp.left != null) {
-                    q.addLast(temp.left);
-                }
-                if (temp.right != null) {
-                    q.addLast(temp.right);
-                }
-            }
-            ans.add(aux);
-        }
-        return ans;
-    }
-
     public int getMaximumWidth(Node head) {
         if (head == null) return 0;
         int maxWidth = 1;
@@ -805,16 +752,6 @@ public class BinaryTree {
             return false;
         }
         return checkIdenticalStructure(head1.left, head2.left) && checkIdenticalStructure(head1.right, head2.right);
-    }
-
-    public boolean checkSymmetricTree(Node head1, Node head2) {
-        if (head1 == null && head2 == null) {
-            return true;
-        }
-        if (head1 == null || head2 == null) {
-            return false;
-        }
-        return head1.data == head2.data && checkSymmetricTree(head1.left, head2.right);
     }
 
     public boolean checkMirrorTrees(Node head1, Node head2) {

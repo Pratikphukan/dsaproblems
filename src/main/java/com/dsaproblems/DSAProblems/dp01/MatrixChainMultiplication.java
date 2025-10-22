@@ -3,6 +3,8 @@ package com.dsaproblems.DSAProblems.dp01;
 public class MatrixChainMultiplication {
 
     public static void main(String[] args) {
+        //10, 20, 30
+        //5, 10, 3, 12, 5, 50, 6
         int[] test1 = {40, 20, 30, 10, 30};
         System.out.println(solvev1(test1));
     }
