@@ -19,7 +19,32 @@ public class LevelOrderTraversal {
         System.out.println(iterativeLevelOrderTraversalv1(head));
         System.out.println(iterativeLevelOrderTraversalv2(head));
 
-        System.out.println(getIterativeLevelorderTraversalAlternative(head));
+        System.out.println(getIterativeLevelorderTraversalZigzag(head));
+        System.out.println(getIterativeLevelorderTraversalZigzagv1(head));
+    }
+
+    public static List<List<Integer>> getIterativeLevelorderTraversalZigzagv1(TreeNode head) {
+        List<List<Integer>> ans = new ArrayList<>();
+        if (head == null) return ans;
+        Deque<TreeNode> queue = new LinkedList<>();
+        queue.addLast(head);
+        boolean leftToRight = true;
+        while (!queue.isEmpty()) {
+            LinkedList<Integer> aux = new LinkedList<>();
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode temp = queue.pollFirst();
+                if (leftToRight)
+                    aux.addLast(temp.val);
+                else
+                    aux.addFirst(temp.val);
+                if (temp.left != null) queue.addLast(temp.left);
+                if (temp.right != null) queue.addLast(temp.right);
+            }
+            ans.add(aux);
+            leftToRight = !leftToRight;
+        }
+        return ans;
     }
 
     private static List<List<Integer>> levelOrderTraversalv1(TreeNode head) {
@@ -42,7 +67,7 @@ public class LevelOrderTraversal {
     }
 
 
-    public static List<List<Integer>> getIterativeLevelorderTraversalAlternative(TreeNode head) {
+    public static List<List<Integer>> getIterativeLevelorderTraversalZigzag(TreeNode head) {
         List<List<Integer>> ans = new ArrayList<>();
         if (head == null) return ans;
         Deque<TreeNode> queue = new LinkedList<>();
