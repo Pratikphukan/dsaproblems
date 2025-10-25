@@ -75,15 +75,12 @@ public class BinaryTreeApp {
         Node lca = bt.lowestCommonAncestor2(head, 10, 11);
         if (!(bt.recursiveSearch(head, 10) && bt.recursiveSearch(head, 11))) {
             System.out.println("No LCA possible");
-            ;
         }
         if (lca == null) {
             System.out.println("No LCA possible");
         } else {
             System.out.println(lca.data);
         }
-
-        System.out.println(bt.isHeightBalanced(head) != -1);
 
         System.out.println(bt.getAncestors(head, 4));
 

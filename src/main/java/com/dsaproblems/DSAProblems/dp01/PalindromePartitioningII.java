@@ -3,7 +3,11 @@ package com.dsaproblems.DSAProblems.dp01;
 public class PalindromePartitioningII {
 
     public static void main(String[] args) {
-
+        String A = "abaaba";
+        //aba
+        //aab
+        System.out.println(minCutv2(A));
+        System.out.println(minCutv3(A));
     }
 
     //not working
@@ -52,7 +56,7 @@ public class PalindromePartitioningII {
     }
 
     //working code
-    public int minCutv2(String A) {
+    public static int minCutv2(String A) {
         // Determine the length of the input string
         int n = A.length();
 
@@ -98,5 +102,26 @@ public class PalindromePartitioningII {
         return dp[n - 1];
     }
 
-
+    private static int minCutv3(String A) {
+        int n = A.length();
+        if (n == 0 || n == 1) return 0;
+        if (n == 2) {
+            return A.charAt(0) == A.charAt(1) ? 0 : 1;
+        }
+        int[] dp = new int[n];
+        boolean[][] isPalindrome = new boolean[n][n];
+        for (int i = 0; i < n; i++) {
+            dp[i] = i;
+            isPalindrome[i][i] = true;
+            if ((i + 1) < n && A.charAt(i) == A.charAt(i + 1)) isPalindrome[i][i + 1] = true;
+        }
+        for (int start = 0; start < n; start++) {
+            for (int end = start + 2; end < n; end++) {
+                if (A.charAt(start) == A.charAt(end) && isPalindrome[start + 1][end - 1]) {
+                    isPalindrome[start][end] = true;
+                }
+            }
+        }
+        return dp[n - 1];
+    }
 }

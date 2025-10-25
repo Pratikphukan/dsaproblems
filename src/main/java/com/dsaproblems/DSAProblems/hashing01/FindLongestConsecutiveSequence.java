@@ -13,10 +13,13 @@ public class FindLongestConsecutiveSequence {
     public static void main(String[] args) {
         //-1, 8, 2, 3, 7, 1, 4, 9
         //1, 2, 3, 4, 5, 6, 7
-        List<Integer> A = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7));
+        //7,6,5,4,3,2,1
+        List<Integer> A = new ArrayList<>(Arrays.asList(7, 6, 5, 4, 3, 2, 1));
         System.out.println(findLongestConsecutive(A));
         System.out.println(findLongestConsecutive1(A));
         System.out.println(findLongestConsecutive2(A));
+        System.out.println(findLongestConsecutive3(A));
+        System.out.println(findLongestConsecutive4(A));
         System.out.println(findLongestConsecutivev1(A));
         System.out.println(findLongestConsecutivev2(A));
         System.out.println(findLongestConsecutivev3(A));
@@ -57,6 +60,7 @@ public class FindLongestConsecutiveSequence {
     //TC: O(N) average, O(N) worst case (each sequence is counted only once)
     //every element is visited at most twice (once as a start, once in the inner while loop)
     //SC: O(N) (for the HashSet)
+    //throws TLE in leetcode
     private static int findLongestConsecutivev2(List<Integer> A) {
         Set<Integer> set = new HashSet<>(A);
         int ans = 1;
@@ -79,6 +83,7 @@ public class FindLongestConsecutiveSequence {
     //TC: O(N) average, O(N) worst case (each sequence is counted only once)
     //every element is visited at most twice (once as a start, once in the inner while loop)
     //SC: O(N) (for the HashSet)
+    //throws TLE in leetcode
     private static int findLongestConsecutivev1(List<Integer> A) {
         Set<Integer> set = new HashSet<>(A);
         int ans = 1;
@@ -99,11 +104,11 @@ public class FindLongestConsecutiveSequence {
 
     // optimised solution
     private static int findLongestConsecutive2(List<Integer> A) {
-        int ans = 1, count = 0;
+        int ans = 1;
         Set<Integer> set = new HashSet<>(A);
-        for (Integer item : A) {
+        for (int item : A) {
             if (!set.contains(item + 1)) { // to get the end of the sequence, it should not have a next element
-                count = 1;
+                int count = 1;
                 while (set.contains(--item)) {
                     count++;
                 }
@@ -113,13 +118,29 @@ public class FindLongestConsecutiveSequence {
         return ans;
     }
 
+    //works in leetcode
+    private static int findLongestConsecutive4(List<Integer> A) {
+        if (A.isEmpty()) return 0;
+        int longest = 1;
+        Set<Integer> set = new HashSet<>(A);
+        for (int num : set) {
+            if (!set.contains(num + 1)) {
+                int curr = num;
+                int count = 1;
+                while (set.contains(--curr)) count++;
+                longest = Math.max(count, longest);
+            }
+        }
+        return longest;
+    }
+
     // optimised solution
     private static int findLongestConsecutive1(List<Integer> A) {
-        int ans = 1, count = 0;
+        int ans = 1;
         Set<Integer> set = new HashSet<>(A);
-        for (Integer item : A) {
+        for (int item : A) {
             if (!set.contains(item - 1)) { // to get the start of the sequence, it should not have a previous element
-                count = 1;
+                int count = 1;
                 while (set.contains(++item)) {
                     count++;
                 }
@@ -127,6 +148,22 @@ public class FindLongestConsecutiveSequence {
             }
         }
         return ans;
+    }
+
+    //works in leetcode
+    private static int findLongestConsecutive3(List<Integer> A) {
+        if (A.isEmpty()) return 0;
+        int longest = 1;
+        Set<Integer> set = new HashSet<>(A);
+        for (int num : set) {
+            if (!set.contains(num - 1)) {
+                int curr = num;
+                int count = 1;
+                while (set.contains(++curr)) count++;
+                longest = Math.max(count, longest);
+            }
+        }
+        return longest;
     }
 
     // working but not optimised solution, throws TLE

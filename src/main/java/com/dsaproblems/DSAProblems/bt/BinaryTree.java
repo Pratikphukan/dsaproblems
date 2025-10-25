@@ -161,25 +161,6 @@ public class BinaryTree {
         return Math.max(maximum, x);
     }
 
-    // TC to search anything in a height balanced BT is O(n)
-    public int isHeightBalanced(Node head) {
-        if (head == null) {
-            return 0;
-        }
-        if (head.left == null && head.right == null) {
-            return 1;
-        }
-        int lh = isHeightBalanced(head.left);
-        int rh = isHeightBalanced(head.right);
-        if (lh == -1 || rh == -1) {
-            return -1;
-        }
-        if (Math.abs(lh - rh) > 1) {
-            return -1;
-        }
-        return Math.max(lh, rh) + 1;
-    }
-
     // it is depth first search
     // process the left subtree, right subtree, root
     // moving in bottom to top manner

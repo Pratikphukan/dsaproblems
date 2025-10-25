@@ -21,8 +21,80 @@ public class LevelOrderTraversal {
 
         System.out.println(getIterativeLevelorderTraversalZigzag(head));
         System.out.println(getIterativeLevelorderTraversalZigzagv1(head));
+
+        System.out.println(getBottomUpLOTv1(head));
+        System.out.println(getBottomUpLOTv2(head));
+
+        System.out.println(understandSomething());
     }
 
+    // Java generics are invariant: a List<ArrayList<Integer>> is not a
+    // List<List<Integer>> even though ArrayList<Integer> implements
+    // List<Integer>. The method return type must be a subtype of
+    // List<List<Integer>>. Constructions where the outer generic parameter
+    // matches (List<List<Integer>> or ArrayList<List<Integer>>) are valid;
+    // ones where it doesn't (ArrayList<ArrayList<Integer>> or
+    // List<ArrayList<Integer>>) are not.
+
+    // "Invariant" means: for a generic type G<T>, even if S is a subtype of T,
+    // G<S> is NOT a subtype of G<T>. Java generics do not automatically
+    // follow the subtype relation of their type arguments.
+    private static List<List<Integer>> understandSomething() {
+        List<List<Integer>> ans = new ArrayList<>();//this works
+        return ans;
+
+//        ArrayList<ArrayList<Integer>> ans = new ArrayList<>(); //this does not work
+//        return ans;
+
+//        ArrayList<List<Integer>> ans = new ArrayList<>(); //this works
+//        return ans;
+
+//        List<ArrayList<Integer>> ans = new ArrayList<>(); //this does not work
+//        return ans;
+    }
+
+    private static List<List<Integer>> getBottomUpLOTv2(TreeNode head) {
+        if (head == null) return new ArrayList<>();
+        List<List<Integer>> ans = new ArrayList<>();
+        Deque<TreeNode> q = new ArrayDeque<>();
+        q.addLast(head);
+        while (!q.isEmpty()) {
+            int size = q.size();
+            List<Integer> aux = new ArrayList<>(size);
+            for (int i = 0; i < size; i++) {
+                TreeNode temp = q.removeFirst();
+                aux.add(temp.val);
+                if (temp.left != null) q.addLast(temp.left);
+                if (temp.right != null) q.addLast(temp.right);
+            }
+            ans.add(aux);
+        }
+        Collections.reverse(ans);
+        return ans;
+    }
+
+    //working code
+    //time O(N) (each node visited once) and space O(N) (queue + result store)
+    private static List<List<Integer>> getBottomUpLOTv1(TreeNode head) {
+        LinkedList<List<Integer>> ans = new LinkedList<>();
+        if (head == null) return ans;
+        Deque<TreeNode> q = new ArrayDeque<>();
+        q.addLast(head);
+        while (!q.isEmpty()) {
+            List<Integer> aux = new ArrayList<>();
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode temp = q.removeFirst();
+                aux.add(temp.val);
+                if (temp.left != null) q.addLast(temp.left);
+                if (temp.right != null) q.addLast(temp.right);
+            }
+            ans.addFirst(aux);
+        }
+        return ans;
+    }
+
+    //working code
     public static List<List<Integer>> getIterativeLevelorderTraversalZigzagv1(TreeNode head) {
         List<List<Integer>> ans = new ArrayList<>();
         if (head == null) return ans;
