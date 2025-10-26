@@ -36,10 +36,6 @@ public class BinaryTreeApp {
 
         System.out.println(bt.findMaxValue(head));
 
-        System.out.println("iterativePostorderTraversal: " + bt.iterativePostorderTraversal(head));
-
-        System.out.println("iterativePreorderTraversal: " + bt.iterativePreorderTraversal(head));
-
         System.out.println("iterativeInorderTraversal: " + bt.iterativeInorderTraversal(head));
 
         System.out.println(bt.iterativeReverseLevelOrderTraversal(head));

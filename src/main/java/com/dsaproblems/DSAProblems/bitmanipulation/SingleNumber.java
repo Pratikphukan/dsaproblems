@@ -13,7 +13,7 @@ public class SingleNumber {
 
     private static int findUniqueNumber(List<Integer> input) {
         int num = 0;
-        for (Integer element : input) {
+        for (int element : input) {
             num = num ^ element;
         }
         return num;

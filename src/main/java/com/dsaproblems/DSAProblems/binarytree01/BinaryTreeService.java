@@ -19,10 +19,6 @@ public interface BinaryTreeService {
 
     int getNumberOfNodes(TreeNode head);
 
-    List<Integer> getIterativePreorderTraversal(TreeNode head);
-
-    List<Integer> getIterativePostorderTraversal(TreeNode head);
-
     Integer getNumberOfNodesv1(TreeNode head);
 
     Boolean recursiveSearch(TreeNode head, int data);

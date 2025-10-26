@@ -161,48 +161,6 @@ public class BinaryTree {
         return Math.max(maximum, x);
     }
 
-    // it is depth first search
-    // process the left subtree, right subtree, root
-    // moving in bottom to top manner
-    public ArrayList<Integer> iterativePostorderTraversal(Node A) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        if (A == null) return ans;
-        Deque<Node> stack = new ArrayDeque<>();
-        stack.addFirst(A);
-        while (!stack.isEmpty()) {
-            Node temp = stack.removeFirst();
-            if (temp.left != null) {
-                stack.addFirst(temp.left);
-            }
-            if (temp.right != null) {
-                stack.addFirst(temp.right);
-            }
-            ans.add(0, temp.data); //inserting at the front of the list (ans.add(0, ...)) is (O(n)) per operation
-        }
-        return ans;
-    }
-
-    // it is depth first search
-    // any algorithm that works in a fail fast manner
-    // moving in top to bottom manner
-    public ArrayList<Integer> iterativePreorderTraversal(Node A) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        if (A == null) return ans;
-        Deque<Node> stack = new ArrayDeque<>();
-        stack.addFirst(A);
-        while (!stack.isEmpty()) {
-            Node temp = stack.removeFirst();
-            if (temp.right != null) {
-                stack.addFirst(temp.right);
-            }
-            if (temp.left != null) {
-                stack.addFirst(temp.left);
-            }
-            ans.add(temp.data);
-        }
-        return ans;
-    }
-
     public ArrayList<Integer> iterativeInorderTraversal(Node A) {
         ArrayList<Integer> ans = new ArrayList<>();
         if (A == null) return ans;

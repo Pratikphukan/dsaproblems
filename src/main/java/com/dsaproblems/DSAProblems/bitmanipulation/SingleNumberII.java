@@ -10,6 +10,7 @@ public class SingleNumberII {
         List<Integer> input = new ArrayList<>(Arrays.asList(1, 2, -45, 3, 3, 2, 2, 3, 1, 1));
         System.out.println(findUniqueNumberv1(input));
         System.out.println(findUniqueNumberv2(input));
+        System.out.println(findUniqueNumberv3(input));
     }
 
     private static int findUniqueNumberv2(List<Integer> input) {
@@ -38,11 +39,12 @@ public class SingleNumberII {
     }
 
     //working code
+    //it runs in O(n) time (actually O(32*n) = O(n)) and uses O(1) extra space.
     private static int findUniqueNumberv1(List<Integer> input) {
         int num = 0;
         for (int i = 0; i < 32; i++) {
             int count = 0;
-            for (Integer element : input) {
+            for (int element : input) {
                 if (((element >> i) & 1) == 1) {
                     count++;
                 }
@@ -54,4 +56,12 @@ public class SingleNumberII {
         return num;
     }
 
+    private static int findUniqueNumberv3(List<Integer> input) {
+        int ones = 0, twos = 0;
+        for (int x : input) {
+            ones = (ones ^ x) & ~twos;
+            twos = (twos ^ x) & ~ones;
+        }
+        return ones;
+    }
 }

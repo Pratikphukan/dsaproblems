@@ -80,48 +80,6 @@ public class BinaryTreeServiceImpl implements BinaryTreeService {
     }
 
     @Override
-    public List<Integer> getIterativePreorderTraversal(TreeNode node) {
-        List<Integer> preorder = new ArrayList<>();
-        if (node == null) {
-            return preorder;
-        }
-        Deque<TreeNode> stack = new LinkedList<>();
-        stack.addFirst(node);
-        while (!stack.isEmpty()) {
-            TreeNode temp = stack.pollFirst();
-            preorder.add(temp.getVal());
-            if (temp.getRight() != null) {
-                stack.addFirst(temp.getRight());
-            }
-            if (temp.getLeft() != null) {
-                stack.addFirst(temp.getLeft());
-            }
-        }
-        return preorder;
-    }
-
-    @Override
-    public List<Integer> getIterativePostorderTraversal(TreeNode node) {
-        List<Integer> postorder = new ArrayList<>();
-        if (node == null) {
-            return postorder;
-        }
-        Deque<TreeNode> stack = new LinkedList<>();
-        stack.addFirst(node);
-        while (!stack.isEmpty()) {
-            TreeNode temp = stack.pollFirst();
-            postorder.add(0, temp.getVal());
-            if (temp.getLeft() != null) {
-                stack.addFirst(temp.getLeft());
-            }
-            if (temp.getRight() != null) {
-                stack.addFirst(temp.getRight());
-            }
-        }
-        return postorder;
-    }
-
-    @Override
     public Integer getNumberOfNodesv1(TreeNode node) {
         if (node == null) {
             return 0;

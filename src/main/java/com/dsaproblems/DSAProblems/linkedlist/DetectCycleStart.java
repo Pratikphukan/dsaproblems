@@ -13,33 +13,48 @@ public class DetectCycleStart {
         head.next.next.next.next.next.next = cycleStart;
 
         System.out.println(detectCyclev1(head));
+        System.out.println(detectCyclev2(head));
     }
 
-    private static ListNode detectCyclev1(ListNode A) {
-        if (A == null) {
-            return null;
-        }
+    //working code
+    private static ListNode detectCyclev2(ListNode A) {
+        if (A == null) return null;
         ListNode slow = A, fast = A;
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
-            if (slow == fast) { // don't compare the data as same values may be there
-                break;
-            }
+            if (slow == fast) break;
         }
-        ListNode ans = null;
+        if (fast == null || fast.next == null) return null;
+        slow = A;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return slow;
+    }
+
+    //uses Floyd's Tortoise and Hare: O(n) time and O(1) extra space
+    //working code
+    private static ListNode detectCyclev1(ListNode A) {
+        if (A == null) return null;
+        ListNode slow = A, fast = A;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) break; // don't compare the data as same values may be there
+        }
         if (slow == fast) {
             if (fast == A) {
-                ans = A;
-            } else {
-                slow = A;
-                while (slow.next != fast.next) {
-                    slow = slow.next;
-                    fast = fast.next;
-                }
-                ans = fast.next;
+                return A;
             }
+            slow = A;
+            while (slow.next != fast.next) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            return fast.next;
         }
-        return ans;
+        return null;
     }
 }

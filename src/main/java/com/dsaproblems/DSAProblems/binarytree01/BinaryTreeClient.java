@@ -39,10 +39,6 @@ public class BinaryTreeClient {
         System.out.println(binaryTreeService.getHeightOfTree(head));
         System.out.println(binaryTreeService.getNumberOfNodes(head));
 
-        System.out.println(binaryTreeService.getIterativePostorderTraversal(head));
-
-        System.out.println(binaryTreeService.getIterativePreorderTraversal(head));
-
         System.out.println(binaryTreeService.getNumberOfNodesv1(head));
 
         System.out.println(binaryTreeService.recursiveSearch(head, 22));
@@ -58,12 +54,7 @@ public class BinaryTreeClient {
         }
 
         TreeNode head1 = binaryTreeService.buildTreeUsingPreIn(pre, in, map, 0, in.size() - 1, 0, pre.size() - 1);
-        System.out.println(binaryTreeService.getIterativePostorderTraversal(head1));
-        System.out.println(binaryTreeService.getIterativePreorderTraversal(head1));
 
         TreeNode head2 = binaryTreeService.buildTreeUsingPosIn(pos, in, map, 0, in.size() - 1, 0, pos.size() - 1);
-        System.out.println(binaryTreeService.getIterativePostorderTraversal(head2));
-        System.out.println(binaryTreeService.getIterativePreorderTraversal(head2));
     }
-
 }

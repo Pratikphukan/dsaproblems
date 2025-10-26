@@ -20,6 +20,12 @@ package com.dsaproblems.DSAProblems.binarytree02;
  * depth of a node: distance(no of edges) from the root node to the given node
  * height of a binary tree: distance from the root to the farthest reachable leaf node
  */
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class TreeNode {
     int val;
     TreeNode left;
