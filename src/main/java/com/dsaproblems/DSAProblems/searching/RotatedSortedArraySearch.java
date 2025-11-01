@@ -7,7 +7,8 @@ import java.util.List;
 public class RotatedSortedArraySearch {
 
     public static void main(String[] args) {
-        List<Integer> A = new ArrayList<>(Arrays.asList(5, 1, 3));
+        List<Integer> A = new ArrayList<>(Arrays.asList(3, 4, 5, 1, 2));
+        //3,4,5,1,2->1
         // 5, 1, 3->5
         // 4, 5, 6, 7, 0, 1, 2, 3->6
         // 11, 14, 19, 23, 27, -20, -14, -8, -4, 1, 2, 4, 7->5
@@ -22,7 +23,7 @@ public class RotatedSortedArraySearch {
         //9, 10, 11, 12, 14, 15, 17, 19, 24, 25, 30, 39, 40, 44, 46, 48, 51, 53, 54, 56, 59, 60, 69, 70, 73, 75, 80, 87, 88,
         //89, 92, 93, 97, 99, 104, 107, 109, 110, 111, 117, 123, 124, 125, 126, 127, 128, 135, 136, 137, 141, 148, 153, 154,
         //161, 166, 167, 169, 175, 177, 180, 181, 182, 185, 186, 189, 193, 198, 202, 1, 2, 6, 7->198
-        int B = 5;
+        int B = 1;
         System.out.println(searchInRotatedSortedArrayv1(A, B));
         System.out.println(searchInRotatedSortedArrayv2(A, B));
         System.out.println(searchInRotatedSortedArrayv3(A, B));

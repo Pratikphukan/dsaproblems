@@ -1,7 +1,5 @@
 package com.dsaproblems.DSAProblems.linkedlist;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-
 public class AddTwoNumbersAsLists {
 
     static class ListNode {

@@ -3,8 +3,11 @@ package com.dsaproblems.DSAProblems.dp01;
 public class RegularExpressionMatch {
 
     public static void main(String[] args) {
-        String A = "abxclm";
-        String B = "a*lm";
+//        String A = "abxclm";
+//        String B = "a*lm";
+
+        String A = "aa";
+        String B = "a*";
         System.out.println(checkRegexMatchv1(A, B, A.length(), B.length()));
         System.out.println(checkRegexMatchv2(A, B));
         System.out.println(checkRegexMatchv3(A, B));

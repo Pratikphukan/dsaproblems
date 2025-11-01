@@ -11,6 +11,23 @@ public class ContainerWithMostWater {
 
         System.out.println(findMaxAreav1(input));
         System.out.println(findMaxAreav2(input));
+        System.out.println(findMaxAreav3(input));
+    }
+
+    //working code
+    private static int findMaxAreav3(List<Integer> A) {
+        if (A == null) return 0;
+        int n = A.size();
+        int first = 0, last = n - 1, area = 0;
+        while (first < last) {
+            int minHeight = Math.min(A.get(first), A.get(last));
+            int width = last - first;
+            // finds the area for the current window
+            area = Math.max(area, minHeight * width);
+            while (first < last && A.get(first) <= minHeight) first++;
+            while (first < last && A.get(last) <= minHeight) last--;
+        }
+        return area;
     }
 
     //working code

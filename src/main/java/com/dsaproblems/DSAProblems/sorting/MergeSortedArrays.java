@@ -13,6 +13,8 @@ public class MergeSortedArrays {
         List<Integer> B = new ArrayList<>(Arrays.asList(-2, -2));
         System.out.println(mergeSortv1(A, B));
         System.out.println(mergeSortv2(A, B));
+        int[] x = new int[0];
+        System.out.println(x.length);
     }
 
     private static ArrayList<Integer> mergeSortv2(List<Integer> A, List<Integer> B) {

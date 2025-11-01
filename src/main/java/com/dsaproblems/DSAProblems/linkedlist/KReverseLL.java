@@ -9,11 +9,13 @@ public class KReverseLL {
         head.next.next.next = new ListNode(4);
         head.next.next.next.next = new ListNode(5);
         head.next.next.next.next.next = new ListNode(6);
-        int B = 2;
+        head.next.next.next.next.next.next = new ListNode(7);
+        head.next.next.next.next.next.next.next = new ListNode(8);
+        int B = 3;
 
-//        System.out.println(kReverseLLv1(head, B));
-//        System.out.println(kGroupReverseLLv1(head, B));
-        System.out.println(kGroupReverseLLv2(head, B));
+        //System.out.println(kReverseLLv1(head, B));
+        System.out.println(kGroupReverseLLv1(head, B));
+        //System.out.println(kGroupReverseLLv2(head, B));
     }
 
     //not working, need to fix it
@@ -44,6 +46,7 @@ public class KReverseLL {
         return head;
     }
 
+    //working code, whatever remains at last reverse them as well
     private static ListNode kGroupReverseLLv1(ListNode head, int B) {
         if (B < 2 || head == null || head.next == null) {
             return head;
@@ -64,6 +67,7 @@ public class KReverseLL {
         return h2;
     }
 
+    //reverse only the first B nodes of the list
     private static ListNode kReverseLLv1(ListNode head, int B) {
         if (B < 2 || head == null || head.next == null) {
             return head;

@@ -74,12 +74,12 @@ public class FindLengthOfLongestUniqueSubstring {
         return maxLength;
     }
 
+    //working code
     private static int findLengthOfLongestUniqueSubstring(String A) {
         Map<Character, Integer> map = new HashMap<>();
         int startIdx = 0;
-        int endIdx = 0;
         int maxLength = 0;
-        for (; endIdx < A.length(); endIdx++) {
+        for (int endIdx = 0; endIdx < A.length(); endIdx++) {
             char item = A.charAt(endIdx);
             if (map.containsKey(item))
                 startIdx = Math.max(startIdx, map.get(item) + 1);

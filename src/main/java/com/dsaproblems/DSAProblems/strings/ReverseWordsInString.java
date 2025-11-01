@@ -9,17 +9,49 @@ public class ReverseWordsInString {
         // String input = "Coding Simplified is nice";
         // String input = "e jrkeymu coklj si vohl slje sxtpf xvak p kicqxoqaof
         // uqwftidoi xixfvqbjey n tpkh ylqllzln ljo gvozwv";
-        String input = " bwroafq rfmy eimspekey w wnzjh qisjiabv ya hncn mazvb pfwlcsnkqz muiapt nnvwwx rp bsypbqu ymg bjwapykfil";
+        // bwroafq rfmy eimspekey w wnzjh qisjiabv ya hncn mazvb pfwlcsnkqz muiapt nnvwwx rp bsypbqu ymg bjwapykfil
+        // "a good   example"
+        String input = "a good   example";
         System.out.println(reverseWordsInStringv1(input));
         System.out.println(reverseWordsInStringv2(input));
         System.out.println(reverseWordsInStringv3(input));
         System.out.println(reverseWordsInStringv4(input));
+        System.out.println(reverseWordsInStringv5(input));
+    }
+
+    //working code
+    private static String reverseWordsInStringv5(String s) {
+        if (s == null || s.isEmpty()) return s;
+        int i = s.length() - 1;
+        StringBuilder sb = new StringBuilder();
+        while (i >= 0) {
+            while (i >= 0 && s.charAt(i) == ' ') i--;// skip trailing space
+            if (i < 0) break;
+            int j = i;
+            while (j >= 0 && s.charAt(j) != ' ') j--;// find word start
+            if (!sb.isEmpty()) sb.append(' ');
+            sb.append(s, j + 1, i + 1);
+            i = j - 1;
+        }
+        return sb.toString();
     }
 
     public static String reverseWordsInStringv4(String input) {
         if (input == null || input.isEmpty()) {
             return input;
         }
+        Deque<String> stack = getStack(input);
+        StringBuilder result = new StringBuilder();
+        while (!stack.isEmpty()) {
+            result.append(stack.removeFirst());
+            if (!stack.isEmpty()) {
+                result.append(" ");
+            }
+        }
+        return result.toString();
+    }
+
+    private static Deque<String> getStack(String input) {
         Deque<String> stack = new LinkedList<>();
         StringBuilder currentWord = new StringBuilder();
         String modifiedInput = input.trim();
@@ -33,14 +65,7 @@ public class ReverseWordsInString {
             }
         }
         stack.addFirst(currentWord.toString());
-        StringBuilder result = new StringBuilder();
-        while (!stack.isEmpty()) {
-            result.append(stack.removeFirst());
-            if (!stack.isEmpty()) {
-                result.append(" ");
-            }
-        }
-        return result.toString();
+        return stack;
     }
 
     public static String reverseWordsInStringv3(String input) {
@@ -51,8 +76,7 @@ public class ReverseWordsInString {
         StringBuilder result = new StringBuilder();
         for (int i = words.length - 1; i >= 0; i--) {
             result.append(words[i]);
-            if (i > 0)
-                result.append(" ");
+            if (i > 0) result.append(" ");
         }
         return result.toString();
     }

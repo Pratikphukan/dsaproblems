@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class LongestPalindromeSequence {
 
     public static void main(String[] args) {
-        String A = "agbdba"; // "bebdeeedaddecebbbbbabebedc", "agbdba"
+        String A = "abcaa"; // "bebdeeedaddecebbbbbabebedc", "agbdba"
         StringBuilder sb = new StringBuilder(A);
         String B = sb.reverse().toString();
         // System.out.println(LCS(A, B, A.length(), B.length()));

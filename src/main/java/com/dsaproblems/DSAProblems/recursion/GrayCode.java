@@ -12,6 +12,7 @@ public class GrayCode {
         System.out.println(generateGrayCodev4(n));
     }
 
+    //working code
     private static ArrayList<Integer> generateGrayCodev4(int n) {
         ArrayList<Integer> result = new ArrayList<>();
         int total = 1 << n;

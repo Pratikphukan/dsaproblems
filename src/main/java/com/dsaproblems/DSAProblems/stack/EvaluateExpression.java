@@ -50,6 +50,10 @@ public class EvaluateExpression {
     }
 
 
+    //evaluateExpressionv3 and evaluateExpressionv1 :Both are O(n) time and O(n) worst‑case
+    // space, but v3 avoids repeated string parsing and extra string
+    // allocations (v1 stores numbers as strings and converts back/forth),
+    // so v3 has lower constant overhead and is faster/more memory efficient.
     private static int evaluateExpressionv3(List<String> input) {
         Deque<Integer> stack = new ArrayDeque<>();
         for (String item : input) {
