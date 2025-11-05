@@ -43,4 +43,16 @@ public class RotationGame {
             end--;
         }
     }
+
+    //alternate way to reverse the array
+    private static void reverseSubArray(int[] nums, int start, int end) {
+        while (start < end) {
+            // Swapping two numbers without using third variable (using bitwise)
+            nums[start] = nums[start] ^ nums[end];
+            nums[end] = nums[start] ^ nums[end];
+            nums[start] = nums[start] ^ nums[end];
+            start++;
+            end--;
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package com.dsaproblems.DSAProblems.heap01;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,11 +23,13 @@ public class KthLargestElement {
     }
 
     // using min heap
+    //SC: O(B)
+    //TC: O(N*log(B))-> build/maintain a heap of size B while scanning N elements
     private static Integer findKthLargest1(ArrayList<Integer> A, int B) {
         if (A.size() < B) {
             return null;
         }
-        PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(); //min-heap of size B
         for (int i = 0; i < B; i++) {
             minHeap.add(A.get(i));
         }
@@ -42,14 +43,14 @@ public class KthLargestElement {
     }
 
     // using max heap
+    //SC: O(N)
+    //Time: O(N*log(N))
     private static Integer findKthLargest2(ArrayList<Integer> A, int B) {
         if (A.size() < B) {
             return null;
         }
-        PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(Collections.reverseOrder());
-        for (int i = 0; i < A.size(); i++) {
-            maxHeap.add(A.get(i));
-        }
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());// max-heap of size n
+        maxHeap.addAll(A);
         for (int i = 0; i < B - 1; i++) {
             maxHeap.poll();
         }

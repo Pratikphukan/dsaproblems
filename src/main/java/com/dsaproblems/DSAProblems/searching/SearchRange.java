@@ -8,7 +8,7 @@ public class SearchRange {
 
     public static void main(String[] args) {
         List<Integer> A = new ArrayList<>(Arrays.asList(4, 7, 7, 7, 8, 10, 10));
-        int B = 3;
+        int B = 7;
         // 4, 7, 7, 7, 8, 10, 10|3
         // -5, -5, -3, 0, 0, 1, 1, 5, 5, 5, 5, 5, 5, 5, 8, 10, 10, 15, 15|5
         System.out.println(findStartAndEndOfRange(A, B));
@@ -16,6 +16,8 @@ public class SearchRange {
     }
 
     //working code
+    //Time: O(log n) — it performs two binary searches (first and last occurrence). You cannot do better than logarithmic time for locating an element in a sorted array without extra indexing.
+    //Space: O(1) extra space — uses only constant auxiliary variables.
     private static List<Integer> findStartAndEndOfRangev1(List<Integer> input, int B) {
         int start = findFirstOccurrencev1(input, B);
         if (start == -1) {
@@ -24,7 +26,7 @@ public class SearchRange {
         return new ArrayList<>(Arrays.asList(start, findLastOccurrencev1(input, B, start)));
     }
 
-    private static Integer findLastOccurrencev1(List<Integer> input, int B, int start) {
+    private static int findLastOccurrencev1(List<Integer> input, int B, int start) {
         int low = start;
         int high = input.size() - 1;
         int end = -1;

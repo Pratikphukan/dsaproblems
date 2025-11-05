@@ -1,7 +1,6 @@
 package com.dsaproblems.DSAProblems.aqr;
 
-import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.*;
 
 class Student {
     String name;
@@ -189,6 +188,85 @@ public class JavaExamples {
         t.add("Coders");
         for (String temp : t) System.out.printf(temp + " ");
         System.out.println("\n");
+
+
+        List<String> list1 = new LinkedList<>();
+        list1.add("Scaler");
+        list1.add("For");
+        list1.add("Coders");
+        list1.add("InterviewBit");
+
+        Iterator<String> iter = list1.iterator();
+        while (iter.hasNext())
+            System.out.printf(iter.next() + " ");
+        System.out.println();
+
+
+        list1.add("Coders");
+        List<String> list2 = new LinkedList<>();
+        list2.add("Coders");
+        list1.removeAll(list2);
+        for (String temp : list1)
+            System.out.printf(temp + " ");
+        System.out.println();
+
+        List<Integer> nums = new ArrayList<>(List.of(1, 4, 3, 2));
+        //nums.remove(3);
+        //nums.remove(Integer.valueOf(2));
+        System.out.println(nums);
+
+        //Yes. java.util.HashSet allows one null element. It's backed by a HashMap
+        // (which permits a single null key), so duplicate null inserts are ignored.
+        // Note: ConcurrentHashMap-based sets and TreeSet (with natural ordering) do not allow null.
+
+
+        Map<Integer, String> employeeMap = new HashMap<>();
+        employeeMap.put(123, "Alex");
+        employeeMap.put(342, "Ryan");
+        employeeMap.put(143, "Joe");
+        employeeMap.put(234, "Allen");
+        employeeMap.put(432, "Roy");
+        System.out.println(employeeMap);
+        TreeMap<Integer, String> sortedMap = new TreeMap<>();
+        sortedMap.putAll(employeeMap);
+        System.out.println("Sorted map " + sortedMap);
+
+        //HashMap: no predictable iteration order (buckets + hash).
+        //LinkedHashMap: maintains a doubly-linked list of entries so iteration is in insertion order (or access order if constructed with accessOrder=true)
+        //Both allow one null key and multiple null values.
+
+        //Insertion order means iteration yields entries in the order you inserted them.
+        //But you created the map with new LinkedHashMap<>(..., true) — that true
+        //enables access-order, so calls like get(...) move the accessed entry to the end.
+        // That explains why the printed order changed after get("Google") and get("BMW")
+        HashMap<String, Integer> stocks = new LinkedHashMap<>(16, 0.75f, true);
+        stocks.put("Apple", 123);
+        stocks.put("BMW", 54);
+        stocks.put("Google", 87);
+        stocks.put("Microsoft", 232);
+        stocks.put("Oracle", 76);
+        System.out.println(stocks);
+        stocks.get("Google");
+        stocks.get("BMW");
+        for (Map.Entry<String, Integer> entry : stocks.entrySet()) {
+            System.out.println(entry);
+        }
+        System.out.println(stocks);
+
+        //Arrays.binarySearch returns the index if the key is found.
+        // If not found it returns -(insertionPoint)-1 where insertionPoint
+        // is the index where the key would be inserted to keep the array sorted.
+        //1, 5, 4, 6, 7, 8, 9, 10, 11
+        //1, 3, 5, 6, 7, 8, 9, 10, 11
+        int[] numbers = {1, 5, 4, 6, 7, 8, 9, 10, 11};
+        System.out.println(Arrays.binarySearch(numbers, 4));
+        System.out.println(Arrays.binarySearch(numbers, 5));
+
+        HashSet<String> set = new HashSet<>();
+        set.add(null);
+        set.add("One");
+        for (String s : set)
+            System.out.println(s);
     }
 
     private static void modify(Integer i, ArrayList<Integer> l) {

@@ -1,8 +1,6 @@
 package com.dsaproblems.DSAProblems.binarytree02;
 
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.LinkedList;
+import java.util.*;
 
 public class RightViewOfBT {
 
@@ -45,6 +43,21 @@ public class RightViewOfBT {
         System.out.println(getRightViewOfBTv1(head));
         System.out.println(getRightViewOfBTv2(head));
         System.out.println(getRightViewOfBTv3(head));
+        System.out.println(getRightViewOfBTv4(head));
+    }
+
+    private static List<Integer> getRightViewOfBTv4(TreeNode root) {
+        int level = 0;
+        List<Integer> li = new ArrayList<>();
+        order(root, level, li);
+        return li;
+    }
+
+    private static void order(TreeNode root, int level, List<Integer> li) {
+        if (root == null) return;
+        if (li.size() == level) li.add(root.val);
+        order(root.right, level + 1, li);
+        order(root.left, level + 1, li);
     }
 
     // follows BFS
@@ -53,9 +66,7 @@ public class RightViewOfBT {
     // The queue can hold up to W nodes at a time.
     private static ArrayList<Integer> getRightViewOfBTv1(TreeNode head) {
         ArrayList<Integer> ans = new ArrayList<>();
-        if (head == null) {
-            return ans;
-        }
+        if (head == null) return ans;
         Deque<TreeNode> queue = new LinkedList<>();
         queue.addLast(head);
         while (!queue.isEmpty()) {
@@ -63,12 +74,8 @@ public class RightViewOfBT {
             ans.add(queue.peekFirst().val);
             for (int i = 0; i < size; i++) {
                 TreeNode temp = queue.pollFirst();
-                if (temp.right != null) {
-                    queue.addLast(temp.right);
-                }
-                if (temp.left != null) {
-                    queue.addLast(temp.left);
-                }
+                if (temp.right != null) queue.addLast(temp.right);
+                if (temp.left != null) queue.addLast(temp.left);
             }
         }
         return ans;
@@ -77,22 +84,16 @@ public class RightViewOfBT {
     //working code
     public static ArrayList<Integer> getRightViewOfBTv2(TreeNode head) {
         ArrayList<Integer> ans = new ArrayList<>();
-        if (head == null) {
-            return ans;
-        }
-        Deque<TreeNode> queue = new LinkedList<>();
+        if (head == null) return ans;
+        Deque<TreeNode> queue = new ArrayDeque<>();
         queue.addLast(head);
         while (!queue.isEmpty()) {
             int size = queue.size();
             ans.add(queue.peekLast().val);
             for (int i = 0; i < size; i++) {
                 TreeNode temp = queue.pollFirst();
-                if (temp.left != null) {
-                    queue.add(temp.left);
-                }
-                if (temp.right != null) {
-                    queue.add(temp.right);
-                }
+                if (temp.left != null) queue.add(temp.left);
+                if (temp.right != null) queue.add(temp.right);
             }
         }
         return ans;

@@ -19,10 +19,9 @@ public class SortedInsertPosition {
     private static int findIndexOfElementInSortedArrayv2(List<Integer> input, int B) {
         int low = 0;
         int high = input.size() - 1;
-        int mid = 0;
         int ans = 0;
         while (low <= high) {
-            mid = low + (high - low) / 2;
+            int mid = low + (high - low) / 2;
             if (input.get(mid) > B) {
                 high = mid - 1;
             } else if (input.get(mid) < B) {
@@ -39,10 +38,9 @@ public class SortedInsertPosition {
     private static int findIndexOfElementInSortedArrayv1(List<Integer> input, int B) {
         int low = 0;
         int high = input.size() - 1;
-        int mid = 0;
         int ans = high + 1;
         while (low <= high) {
-            mid = low + (high - low) / 2;
+            int mid = low + (high - low) / 2;
             if (input.get(mid) > B) {
                 ans = Math.min(ans, mid);
                 high = mid - 1;

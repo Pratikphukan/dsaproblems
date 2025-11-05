@@ -4,16 +4,20 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class ValidParenthesesCount {
+
     public static void main(String[] args) {
 
         //()())(()())
-        String A = "(()())()";
+        //(()
+        //(()())()
+        //)()())
+        String A = ")()())";
 
         System.out.println(findLengthOfValidParenthesesv1(A));
         System.out.println(findLengthOfValidParenthesesv2(A));
     }
 
-    //working code
+    //working code, O(n) time and O(n) space
     private static int findLengthOfValidParenthesesv2(String s) {
         Deque<Integer> stack = new ArrayDeque<>();
         stack.addFirst(-1);
@@ -23,10 +27,11 @@ public class ValidParenthesesCount {
             if (c == '(') {
                 stack.addFirst(i);
             } else {
-                stack.pollFirst();
+                stack.pollFirst(); //pop one index to try to match a previous '('
                 if (stack.isEmpty()) {
-                    stack.addFirst(i);
+                    stack.addFirst(i); //push the current index i as a new base boundary (no unmatched '(' to pair with)
                 } else {
+                    //a valid substring ends at i; its length is i - stack.peek() where stack.peek() is the index just before the current valid block
                     maxLen = Math.max(maxLen, i - stack.peekFirst());
                 }
             }

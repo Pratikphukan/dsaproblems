@@ -96,7 +96,7 @@ public class MaxMoneyRobbed {
 
     private static int maxMoneyv3(List<Integer> A) {
         int n = A.size();
-        int[] dp = new int[n + 1];
+        int[] dp = new int[n + 1]; //max money robbed if there are 0,1,2,.... houses
         dp[0] = 0;
         dp[1] = A.get(0);
         for (int i = 2; i <= n; i++) {
