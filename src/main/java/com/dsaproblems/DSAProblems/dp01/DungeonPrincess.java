@@ -24,6 +24,7 @@ public class DungeonPrincess {
         System.out.println(minInitialHealthRequiredv4(A));
     }
 
+    //working code
     private static int minInitialHealthRequiredv4(ArrayList<ArrayList<Integer>> A) {
         int n = A.size(), m = A.get(0).size();
         int[][] dp = new int[n][m];

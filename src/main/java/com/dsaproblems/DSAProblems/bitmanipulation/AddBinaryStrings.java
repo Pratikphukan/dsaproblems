@@ -10,34 +10,24 @@ public class AddBinaryStrings {
         System.out.println(addBinaryStringsv3(a, b));
     }
 
+    //working code
     private static String addBinaryStringsv2(String A, String B) {
-        int nA, nB;
-        char res[];
-        int i, j, k;
-        nA = A.length();
-        nB = B.length();
-        res = new char[Math.max(nA, nB) + 1];
-        k = Math.max(nA, nB);
-        i = nA - 1;
-        j = nB - 1;
-        int sum = 0, carry = 0;
+        int a = A.length(), b = B.length();
+        char[] res = new char[Math.max(a, b) + 1];
+        int k = res.length - 1;
+        int i = a - 1, j = b - 1;
+        int carry = 0;
         // we add bits from the rightmost bit to the leftmost bit
         while (i >= 0 || j >= 0 || carry != 0) {
-            sum = carry;
-            if (i >= 0)
-                sum += (A.charAt(i) - '0');
-            if (j >= 0)
-                sum += (B.charAt(j) - '0');
-            res[k] = (char) ((sum % 2) + '0');
-            carry = sum / 2;
-            i--;
-            j--;
-            k--;
+            int sum = carry;
+            if (i >= 0) sum += (A.charAt(i--) - '0');
+            if (j >= 0) sum += (B.charAt(j--) - '0');
+            res[k--] = (char) ((sum & 1) + '0');
+            carry = sum >> 1;
         }
         if (res[0] == '1')
             return new String(res);
-        int len = Math.max(nA, nB);
-        return new String(res, 1, len);
+        return new String(res, 1, res.length - 1);
     }
 
     private static String addBinaryStringsv1(String num1, String num2) {
@@ -78,5 +68,4 @@ public class AddBinaryStrings {
         }
         return sb.reverse().toString();
     }
-
 }

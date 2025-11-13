@@ -161,47 +161,6 @@ public class BinaryTree {
         return Math.max(maximum, x);
     }
 
-    public ArrayList<Integer> iterativeInorderTraversal(Node A) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        if (A == null) return ans;
-        Deque<Node> stack = new ArrayDeque<>();
-        while (A != null) {
-            stack.push(A);
-            A = A.left;
-        }
-        while (!stack.isEmpty()) {
-            Node temp = stack.pop();
-            ans.add(temp.data);
-            if (temp.right != null) {
-                Node node = temp.right;
-                while (node != null) {
-                    stack.push(node);
-                    node = node.left;
-                }
-            }
-        }
-        return ans;
-    }
-
-    public ArrayList<Integer> iterativeInorderTraversal1(Node head) {
-        ArrayList<Integer> ans = new ArrayList<>();
-        if (head == null) {
-            return ans;
-        }
-        Node temp = head;// not necessary if we are returning an arraylist
-        Stack<Node> stack = new Stack<Node>();
-        while (temp != null || !stack.isEmpty()) {
-            while (temp != null) {
-                stack.push(temp);
-                temp = temp.left;
-            }
-            temp = stack.pop();
-            ans.add(temp.data);
-            temp = temp.right;
-        }
-        return ans;
-    }
-
     public int getMaximumWidth(Node head) {
         if (head == null) return 0;
         int maxWidth = 1;
@@ -761,68 +720,6 @@ public class BinaryTree {
             return true;
         }
         return false;
-    }
-
-    public Node lowestCommonAncestor1(Node head, int n1, int n2) {
-        if (head == null || head.data == n1 || head.data == n2) { // if one of them is found, then it will return the
-            // node
-            return head;
-        }
-        Node leftlca = lowestCommonAncestor1(head.left, n1, n2);
-        Node rightlca = lowestCommonAncestor1(head.right, n1, n2);
-        if (leftlca != null && rightlca != null) {
-            return head;
-        } else if (leftlca != null) {
-            return leftlca;
-        } else {
-            return rightlca;
-        }
-    }
-
-    public Node lowestCommonAncestor2(Node head, int n1, int n2) {
-        if (head == null || head.data == n1 || head.data == n2) {
-            return head;
-        }
-        boolean checkn1 = recursiveSearch(head.left, n1);
-        boolean checkn2 = recursiveSearch(head.left, n2);
-        if (checkn1 && checkn2) {
-            return lowestCommonAncestor2(head.left, n1, n2);
-        } else if (checkn1 || checkn2) {
-            return head;
-        } else {
-            return lowestCommonAncestor2(head.right, n1, n2);
-        }
-    }
-
-    boolean checkn1 = false;
-    boolean checkn2 = false;
-
-    public Node lowestCommonAncestor(Node head, int n1, int n2) {
-        Node lca = this.lowestCommonAncestorUtil(head, n1, n2);
-        if (checkn1 && checkn2) {
-            return lca;
-        }
-        return null;
-    }
-
-    public Node lowestCommonAncestorUtil(Node head, int n1, int n2) {
-        if (head == null) {
-            return null;
-        }
-        if (head.data == n1) {
-            checkn1 = true;
-            return head;
-        }
-        if (head.data == n2) {
-            checkn2 = true;
-            return head;
-        }
-        Node leftlca = lowestCommonAncestorUtil(head.left, n1, n2);
-        Node rightlca = lowestCommonAncestorUtil(head.right, n1, n2);
-        if (leftlca != null && rightlca != null) {
-            return head;
-        }
-        return leftlca != null ? leftlca : rightlca;
     }
 
     public void printBoundaryLeft(ArrayList<Integer> ans, Node head) {

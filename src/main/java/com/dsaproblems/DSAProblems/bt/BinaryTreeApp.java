@@ -36,8 +36,6 @@ public class BinaryTreeApp {
 
         System.out.println(bt.findMaxValue(head));
 
-        System.out.println("iterativeInorderTraversal: " + bt.iterativeInorderTraversal(head));
-
         System.out.println(bt.iterativeReverseLevelOrderTraversal(head));
 
         System.out.println(bt.checkRootToLeafSum(head, 20));
@@ -66,16 +64,6 @@ public class BinaryTreeApp {
             System.out.println("No sibling");
         } else {
             System.out.println(sibling.data);
-        }
-
-        Node lca = bt.lowestCommonAncestor2(head, 10, 11);
-        if (!(bt.recursiveSearch(head, 10) && bt.recursiveSearch(head, 11))) {
-            System.out.println("No LCA possible");
-        }
-        if (lca == null) {
-            System.out.println("No LCA possible");
-        } else {
-            System.out.println(lca.data);
         }
 
         System.out.println(bt.getAncestors(head, 4));

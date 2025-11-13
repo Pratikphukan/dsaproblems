@@ -46,7 +46,9 @@ public class ShortestUniquePrefix {
 
     //working code
     public static void main(String[] args) {
-        ArrayList<String> A = new ArrayList<>(Arrays.asList("zebra", "dog", "duck", "dove"));
+        //"zebra", "dog", "duck", "dove"
+        //"flower","flow","flight"
+        ArrayList<String> A = new ArrayList<>(Arrays.asList("flower", "flow", "flight"));
         System.out.println(shortestUniquePrefixesv1(A));
     }
 

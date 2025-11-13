@@ -32,7 +32,7 @@ public class MaxSumPathInBT {
         System.out.println(maxPathSumv3(root4));
     }
 
-    //working code
+    //working code, very optimal
     private static int maxPathSumv3(TreeNode A) {
         maxSum = Integer.MIN_VALUE;
         dfs(A);

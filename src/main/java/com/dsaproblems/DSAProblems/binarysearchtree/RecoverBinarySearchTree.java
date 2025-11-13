@@ -23,6 +23,37 @@ public class RecoverBinarySearchTree {
         root.right.right.right = new TreeNode(50);
         System.out.println(recoverBSTv1(root));
         System.out.println(recoverBSTv2(root));
+        System.out.println(recoverBSTv3(root));
+    }
+
+    //working code
+    private static TreeNode recoverBSTv3(TreeNode root) {
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        TreeNode curr = root;
+        TreeNode prev = null;
+        TreeNode first = null;
+        TreeNode second = null;
+        while (curr != null || !stack.isEmpty()) {
+            while (curr != null) {
+                stack.addFirst(curr);
+                curr = curr.left;
+            }
+            curr = stack.pollFirst();
+            if (prev != null && prev.val > curr.val) {
+                if (first == null) {
+                    first = prev;
+                }
+                second = curr;
+            }
+            prev = curr;
+            curr = curr.right;
+        }
+        if (first != null && second != null) {
+            int tmp = first.val;
+            first.val = second.val;
+            second.val = tmp;
+        }
+        return root;
     }
 
     //working code

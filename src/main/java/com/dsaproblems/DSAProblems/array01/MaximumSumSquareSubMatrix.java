@@ -143,7 +143,7 @@ public class MaximumSumSquareSubMatrix {
         return max;
     }
 
-    public static int slidingwindow(int A[], int B) {
+    public static int slidingwindow(int[] A, int B) {
         int max = Integer.MIN_VALUE;
         int sum = 0;
         for (int i = 0; i < B; i++) {

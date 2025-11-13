@@ -10,21 +10,37 @@ public class PeakElement {
         //1, 2, 3, 4, 5
         //5, 17, 100, 11
         //5,4,3,2,1
-        List<Integer> A = new ArrayList<>(Arrays.asList(5, 4, 3, 2, 1));
+        //1,2,1,3,5,6,4
+        List<Integer> A = new ArrayList<>(Arrays.asList(4, 6, 5, 3, 1, 2, 1));
         System.out.println(findPeakInArrayv1(A));
         System.out.println(findPeakInArrayv2(A));
         System.out.println(findPeakInArrayv3(A));
+        System.out.println(findPeakInArrayv4(A));
 
         //38,102,135,142,171,178,180,201,229,243,249,270,307,333,455,476,488,491,467,441,427,398,371,360,354,351,343,325,265,226,197,167,164,113,105,93,84,72,61,14,9,2
     }
 
     //working code
+    private static Integer findPeakInArrayv4(List<Integer> input) {
+        int len = input.size();
+        int low = 0, high = len - 1;
+        while (low < high) {
+            int mid = high - (high - low) / 2;
+            if (input.get(mid) < input.get(mid - 1)) { //mid+1 will not go out of bounds as low < high
+                high = mid - 1; // Search in the right half
+            } else {
+                low = mid; // Search in the left half
+            }
+        }
+        return input.get(high);
+    }
+
+    //working code
     private static Integer findPeakInArrayv3(List<Integer> input) {
         int len = input.size();
-        int low = 0;
-        int high = len - 1;
+        int low = 0, high = len - 1;
         while (low < high) {
-            int mid = (low + high) / 2;
+            int mid = low + (high - low) / 2;
             if (input.get(mid) < input.get(mid + 1)) { //mid+1 will not go out of bounds as low < high
                 low = mid + 1; // Search in the right half
             } else {

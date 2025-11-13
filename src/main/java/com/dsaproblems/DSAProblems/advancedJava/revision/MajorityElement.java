@@ -5,10 +5,13 @@ import java.util.*;
 public class MajorityElement {
 
     public static void main(String[] args) {
-        List<Integer> input = new ArrayList<>(Arrays.asList(2, 1, 2));
+        //2,2,1,1,1,2,2
+        //2, 1, 2
+        List<Integer> input = new ArrayList<>(Arrays.asList(2, 2, 1, 1, 1, 2, 2));
         System.out.println(findMajorityElementv1(input));
         System.out.println(findMajorityElementv2(input));
         System.out.println(findMajorityElementv3(input));
+        System.out.println(findMajorityElementv4(input));
     }
 
     //working
@@ -24,6 +27,34 @@ public class MajorityElement {
             elementToFrequency.put(item, currFrequency);
         }
         return ans;
+    }
+
+    //The method implements the Boyer-Moore Voting Algorithm in two phases:
+    // (1) scan to pick a candidate that might be the majority by tracking a running count;
+    // (2) verify that the candidate actually appears more than n/2 times.
+    // Time O(n), extra space O(1)
+    private static int findMajorityElementv4(List<Integer> input) {
+        int n = input.size();
+        // Phase 1: find candidate
+        Integer candidate = null;
+        int count = 0;
+        for (int num : input) {
+            if (count == 0) {
+                candidate = num;
+                count = 1;
+            } else if (num == candidate) {
+                count++;
+            } else {
+                count--;
+            }
+        }
+        // Phase 2: verify candidate
+        if (candidate == null) return -1;
+        count = 0;
+        for (int num : input) {
+            if (num == candidate) count++;
+        }
+        return (count > n / 2) ? candidate : -1;
     }
 
     //working
