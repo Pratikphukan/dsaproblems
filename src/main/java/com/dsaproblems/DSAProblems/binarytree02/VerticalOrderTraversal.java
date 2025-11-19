@@ -1,11 +1,6 @@
 package com.dsaproblems.DSAProblems.binarytree02;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class VerticalOrderTraversal {
 
@@ -31,26 +26,58 @@ public class VerticalOrderTraversal {
         }
 
         Node(TreeNode node, int breadth) {
+            this(node);
             this.breadth = breadth;
-            this.node = node;
         }
     }
 
     public static void main(String[] args) {
-        TreeNode head = new TreeNode(2);
-        head.left = new TreeNode(7);
-        head.left.left = new TreeNode(2);
-        head.left.right = new TreeNode(6);
-        head.left.right.right = new TreeNode(11);
-        head.left.right.left = new TreeNode(5);
-        head.right = new TreeNode(5);
-        head.right.right = new TreeNode(9);
-        head.right.right.left = new TreeNode(4);
+//        TreeNode head = new TreeNode(2);
+//        head.left = new TreeNode(7);
+//        head.left.left = new TreeNode(2);
+//        head.left.right = new TreeNode(6);
+//        head.left.right.right = new TreeNode(11);
+//        head.left.right.left = new TreeNode(5);
+//        head.right = new TreeNode(5);
+//        head.right.right = new TreeNode(9);
+//        head.right.right.left = new TreeNode(4);
+
+        TreeNode head = new TreeNode(3);
+        head.left = new TreeNode(1);
+        head.left.left = new TreeNode(0);
+        head.left.right = new TreeNode(2);
+        head.right = new TreeNode(4);
+        head.right.left = new TreeNode(2);
 
         System.out.println(getVerticalOrderOfBTv1(head));
         System.out.println(getVerticalOrderOfBTv2(head));
+        System.out.println(getVerticalOrderOfBTv3(head));
     }
 
+    //different version, leetcode question
+    private static List<List<Integer>> getVerticalOrderOfBTv3(TreeNode head) {
+        Map<Integer, Queue<Integer>> map = new TreeMap<>();
+        if (head == null) return new ArrayList<>();
+        Deque<Node> queue = new LinkedList<>();
+        queue.addLast(new Node(head));
+        while (!queue.isEmpty()) {
+            Node temp = queue.pollFirst();
+            int currbreadth = temp.breadth;
+            map.putIfAbsent(currbreadth, new PriorityQueue<>());
+            map.get(currbreadth).add(temp.node.val);
+            if (temp.node.left != null) queue.addLast(new Node(temp.node.left, currbreadth - 1));
+            if (temp.node.right != null) queue.addLast(new Node(temp.node.right, currbreadth + 1));
+        }
+        List<List<Integer>> result = new ArrayList<>();
+        for (Queue<Integer> pq : map.values()) {
+            List<Integer> col = new ArrayList<>();
+            while (!pq.isEmpty()) col.add(pq.poll());
+            result.add(col);
+        }
+        return result;
+    }
+
+    //working code
     private static ArrayList<ArrayList<Integer>> getVerticalOrderOfBTv2(TreeNode head) {
         Map<Integer, ArrayList<Integer>> map = new TreeMap<>();
         if (head == null) {
@@ -61,11 +88,8 @@ public class VerticalOrderTraversal {
         while (!queue.isEmpty()) {
             Node temp = queue.pollFirst();
             int currbreadth = temp.breadth;
-            if (!map.containsKey(currbreadth)) {
-                map.put(currbreadth, new ArrayList<>(Arrays.asList(temp.node.val)));
-            } else {
-                map.get(currbreadth).add(temp.node.val);
-            }
+            map.putIfAbsent(currbreadth, new ArrayList<>());
+            map.get(currbreadth).add(temp.node.val);
             if (temp.node.left != null) {
                 queue.addLast(new Node(temp.node.left, currbreadth - 1));
             }

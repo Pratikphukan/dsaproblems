@@ -6,10 +6,11 @@ public class IndexOfFirstOccurrenceInString {
         //leetcode|leeto
         //sadbutsad|sad
         //hello|lo
-        String haystack = "hello";
-        String needle = "lo";
+        String haystack = "sadbutsad";
+        String needle = "uts";
         System.out.println(findPatternInStringv1(haystack, needle));
         System.out.println(findPatternInStringv2(haystack, needle));
+        System.out.println(findPatternInStringv3(haystack, needle));
     }
 
     private static int findPatternInStringv2(String s, String p) {
@@ -51,6 +52,7 @@ public class IndexOfFirstOccurrenceInString {
         return lps;
     }
 
+    //working code
     private static int findPatternInStringv1(String s, String p) {
         int n = s.length(), m = p.length();
         for (int i = 0; i <= n - m; i++) {
@@ -59,6 +61,24 @@ public class IndexOfFirstOccurrenceInString {
                 if (s.charAt(i + j) != p.charAt(j)) break;
             }
             if (j == m) return i;
+        }
+        return -1;
+    }
+
+    //working code
+    private static int findPatternInStringv3(String s, String p) {
+        int n = s.length(), m = p.length();
+        if (m > n) return -1;
+        for (int i = 0; i < m; i++) {
+            if (s.charAt(i) != p.charAt(i)) break;
+            if (i == m - 1) return 0;
+        }
+        for (int i = m; i < n; i++) {
+            int k = 0;
+            for (int j = i - m + 1; j <= i; j++) {
+                if (s.charAt(j) != p.charAt(k++)) break;
+                if (k == m) return i - m + 1;
+            }
         }
         return -1;
     }

@@ -1,5 +1,7 @@
 package com.dsaproblems.DSAProblems.linkedlist;
 
+import java.util.PriorityQueue;
+
 public class MergeKSortedLists {
 
     public static void main(String[] args) {
@@ -16,7 +18,26 @@ public class MergeKSortedLists {
 
         ListNode[] A = new ListNode[]{h1, h2, h3};
         //System.out.println(mergeKSortedListsv1(A));
-        System.out.println(mergeKSortedListsv2(A));
+        //System.out.println(mergeKSortedListsv2(A));
+        System.out.println(mergeKSortedListsv3(A));
+    }
+
+    //working code
+    //use a min-heap (`PriorityQueue`) to merge k lists in O(N log k) time and O(k) extra space
+    private static ListNode mergeKSortedListsv3(ListNode[] lists) {
+        PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.val, b.val));
+        for (ListNode node : lists) {
+            if (node != null) pq.offer(node);
+        }
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        while (!pq.isEmpty()) {
+            ListNode curr = pq.poll();
+            tail.next = curr;
+            tail = tail.next;
+            if (curr.next != null) pq.offer(curr.next);
+        }
+        return dummy.next;
     }
 
     //working code

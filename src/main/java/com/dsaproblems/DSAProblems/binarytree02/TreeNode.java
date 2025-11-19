@@ -27,9 +27,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TreeNode {
-    int val;
-    TreeNode left;
-    TreeNode right;
+    public int val;
+    public TreeNode left;
+    public TreeNode right;
     int height;
 
     public TreeNode(int val) {

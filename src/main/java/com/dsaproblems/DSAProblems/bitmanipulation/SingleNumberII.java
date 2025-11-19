@@ -7,10 +7,22 @@ import java.util.List;
 public class SingleNumberII {
 
     public static void main(String[] args) {
-        List<Integer> input = new ArrayList<>(Arrays.asList(1, 2, -45, 3, 3, 2, 2, 3, 1, 1));
+        //1, 2, -45, 3, 3, 2, 2, 3, 1, 1
+        //2, 2, 3, 2
+        List<Integer> input = new ArrayList<>(Arrays.asList(2, 2, 3, 2));
         System.out.println(findUniqueNumberv1(input));
         System.out.println(findUniqueNumberv2(input));
         System.out.println(findUniqueNumberv3(input));
+
+
+        int x1 = 5;      //  00000000 00000000 00000000 00000101
+        int c1 = ~x1;    //  11111111 11111111 11111111 11111010 = -6
+        System.out.println("x1 = " + x1 + ", ~x1 = " + c1);
+        System.out.println(bits(x1) + " -> " + bits(c1));
+    }
+
+    private static String bits(int v) {
+        return String.format("%32s", Integer.toBinaryString(v)).replace(' ', '0');
     }
 
     private static int findUniqueNumberv2(List<Integer> input) {
@@ -57,6 +69,8 @@ public class SingleNumberII {
     }
 
     private static int findUniqueNumberv3(List<Integer> input) {
+        // ones: bits that have appeared exactly once (mod 3) so far
+        // twos: bits that have appeared exactly twice (mod 3) so far
         int ones = 0, twos = 0;
         for (int x : input) {
             ones = (ones ^ x) & ~twos;
