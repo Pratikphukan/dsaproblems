@@ -37,5 +37,25 @@ public class TypeHeadClient {
         // After final lexicographical sorting (ascending) they become: ["apple", "apricot"]
         String[] output4 = typeHead3.findTopXSuggestion("ap", 2);
         System.out.println(Arrays.toString(output4));
+
+
+        TypeHeadV2 typeHeadV2 = new TypeHeadV2();
+        typeHeadV2.incrementSearchTermFrequency("michelleobama", 100);  // frequency becomes 100
+        typeHeadV2.incrementSearchTermFrequency("michaeljackson", 90);   // frequency becomes 90
+        typeHeadV2.incrementSearchTermFrequency("michaeljordan", 120);    // frequency becomes 120
+        // After dayPasses(2), effective frequencies will be halved.
+        typeHeadV2.dayPasses(2);
+        typeHeadV2.incrementSearchTermFrequency("mickeymouse", 51);       // new addition gets added with current globalDecayFactor=2
+
+        // Now, find top 2 suggestions for prefix "mic"
+        String[] result1 = typeHeadV2.findTopXSuggestion("mic", 2);
+        // Expected effective frequencies:
+        // michelleobama: 100 / 2 = 50
+        // michaeljackson: 90 / 2 = 45
+        // michaeljordan: 120 / 2 = 60
+        // mickeymouse: (51*2) / 2 = 51
+        // The top two by effective frequency: "michaeljordan" (60) and "mickeymouse" (51).
+        // When sorted lexicographically, the result should be: ["michaeljordan", "mickeymouse"] sorted as (["michaeljordan", "mickeymouse"]).
+        System.out.println(Arrays.toString(result1));
     }
 }

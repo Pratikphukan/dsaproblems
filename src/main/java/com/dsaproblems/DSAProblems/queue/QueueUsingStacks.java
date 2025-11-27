@@ -54,6 +54,17 @@ public class QueueUsingStacks {
 
         qs.enqueue(11);
         qs.enqueue(76);
+
+
+        StackUsingQueue s = new StackUsingQueue();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        s.push(4);
+        System.out.println("Test Case 2: Top element: " + s.top());
+        System.out.println("Test Case 2: Popped element: " + s.pop()); // Expected: 2
+        // The next top should be 1
+        System.out.println("Test Case 2: Top element after pop: " + s.top());
     }
 
 }

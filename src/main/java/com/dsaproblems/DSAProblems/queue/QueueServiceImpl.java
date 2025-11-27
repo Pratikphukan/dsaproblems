@@ -35,7 +35,11 @@ public class QueueServiceImpl implements QueueService {
 
     @Override
     public Integer peek() {
+        if (stack2.isEmpty()) {
+            while (!stack1.isEmpty()) {
+                stack2.addFirst(stack1.pollFirst());
+            }
+        }
         return stack2.peekFirst();
     }
-
 }

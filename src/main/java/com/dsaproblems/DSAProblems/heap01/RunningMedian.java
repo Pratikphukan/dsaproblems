@@ -25,6 +25,7 @@ public class RunningMedian {
         System.out.println(findMediansv7(A));//cannot add a null element to heap
     }
 
+    //working code
     private static ArrayList<Integer> findMediansv2(ArrayList<Integer> input) {
         // maxHeap for lower half, minHeap for upper half
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
