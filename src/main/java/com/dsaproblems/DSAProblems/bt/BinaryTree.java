@@ -605,17 +605,6 @@ public class BinaryTree {
         return false;
     }
 
-    public boolean checkRootToLeafSum(Node head, int val) {
-        if (head == null) {
-            return false;
-        }
-        if (head.left == null && head.right == null && val == head.data) {
-            return true;
-        }
-        return checkRootToLeafSum(head.left, val - head.data) || checkRootToLeafSum(head.right, val - head.data);
-        // once true is encountered the later part of the code is not run
-    }
-
     int maxSum = Integer.MIN_VALUE;
 
     public void maxSumfromRootToLeaf(Node head, int sum) {

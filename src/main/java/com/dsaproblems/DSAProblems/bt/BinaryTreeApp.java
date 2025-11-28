@@ -38,8 +38,6 @@ public class BinaryTreeApp {
 
         System.out.println(bt.iterativeReverseLevelOrderTraversal(head));
 
-        System.out.println(bt.checkRootToLeafSum(head, 20));
-
         bt.maxSumfromRootToLeaf(head, 0);
         System.out.println(bt.maxSum);
 
