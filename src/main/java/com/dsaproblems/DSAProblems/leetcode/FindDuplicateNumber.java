@@ -6,7 +6,7 @@ public class FindDuplicateNumber {
         //1, 3, 4, 2, 2
         //3, 1, 3, 4, 2
         //3, 3, 3, 3, 3
-        int[] nums = {3, 3, 3, 3, 3};
+        int[] nums = {8, 1, 5, 6, 3, 7, 4, 5, 9, 2};
         System.out.println(findDuplicateNumberv1(nums));
         System.out.println(findDuplicateNumberv2(nums));
     }

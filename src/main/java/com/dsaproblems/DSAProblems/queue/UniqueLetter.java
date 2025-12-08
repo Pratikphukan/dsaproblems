@@ -1,7 +1,5 @@
 package com.dsaproblems.DSAProblems.queue;
 
-import com.dsaproblems.DSAProblems.trie01.A;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;

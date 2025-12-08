@@ -1,6 +1,7 @@
 package com.dsaproblems.DSAProblems.backtracking;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Sudoku {
 
@@ -122,6 +123,55 @@ public class Sudoku {
             }
             System.out.println();
         }
+
+        char[][] board1 = {{'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+                {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+                {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+                {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+                {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+                {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+                {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+                {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+                {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+        solveSudokuv1(board1);
+        System.out.println(Arrays.deepToString(board1));
+    }
+
+    private static void solveSudokuv1(char[][] board) {
+        solveSudokuv2(board);
+    }
+
+    private static boolean solveSudokuv2(char[][] board) {
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                if (board[row][col] == '.') {
+                    for (char c = '1'; c <= '9'; c++) {
+                        if (isValidv1(board, row, col, c)) {
+                            board[row][col] = c;
+                            if (solveSudokuv2(board)) return true;
+                            board[row][col] = '.';
+                        }
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private static boolean isValidv1(char[][] board, int row, int col, char c) {
+        for (int i = 0; i < 9; i++) {
+            if (board[row][i] == c) return false;
+            if (board[i][col] == c) return false;
+        }
+        int startRow = (row / 3) * 3;
+        int startCol = (col / 3) * 3;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[startRow + i][startCol + j] == c) return false;
+            }
+        }
+        return true;
     }
 
     // Function to solve the sudoku puzzle by modifying the board in place.

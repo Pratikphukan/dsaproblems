@@ -52,18 +52,18 @@ public class NumberOfLandAreasConverted {
 
         for (int i = 0; i < n; i++) {
             if (input.get(i).get(0) == 0 && !visited[i][0]) {
-                mark(i, 0, input, visited);
+                markBfs(i, 0, input, visited);
             }
             if (input.get(i).get(m - 1) == 0 && !visited[i][m - 1]) {
-                mark(i, m - 1, input, visited);
+                markBfs(i, m - 1, input, visited);
             }
         }
         for (int i = 0; i < m; i++) {
             if (input.get(0).get(i) == 0 && !visited[0][i]) {
-                mark(0, i, input, visited);
+                markBfs(0, i, input, visited);
             }
             if (input.get(n - 1).get(i) == 0 && !visited[n - 1][i]) {
-                mark(n - 1, i, input, visited);
+                markBfs(n - 1, i, input, visited);
             }
         }
 
@@ -72,14 +72,41 @@ public class NumberOfLandAreasConverted {
             for (int j = 0; j < m; j++) {
                 if (input.get(i).get(j) == 0 && !visited[i][j]) {
                     converted++;
-                    mark(i, j, input, visited);
+                    markBfs(i, j, input, visited);
                 }
             }
         }
         return converted;
     }
 
-    private static void mark(int x, int y, List<List<Integer>> input, boolean[][] visited) {
+    private static void markDfs(int x, int y, List<List<Integer>> input, boolean[][] visited) {
+        int[] dx = {-1, 0, 1, 0}, dy = {0, 1, 0, -1};
+        int rows = input.size(), cols = input.get(0).size();
+        Deque<int[]> stack = new ArrayDeque<>();
+        stack.addFirst(new int[]{
+                x, y
+        });
+        visited[x][y] = true;
+        while (!stack.isEmpty()) {
+            int[] curr = stack.pollFirst();
+            for (int d = 0; d < 4; d++) {
+                int nx = curr[0] + dx[d], ny = curr[1] + dy[d];
+                if (nx >= 0 &&
+                        nx < rows &&
+                        ny >= 0 &&
+                        ny < cols &&
+                        input.get(nx).get(ny) == 1 &&
+                        !visited[nx][ny]) {
+                    visited[nx][ny] = true;
+                    stack.addFirst(new int[]{
+                            nx, ny
+                    });
+                }
+            }
+        }
+    }
+
+    private static void markBfs(int x, int y, List<List<Integer>> input, boolean[][] visited) {
         int[] dx = {-1, 0, 1, 0}, dy = {0, 1, 0, -1};
         Deque<int[]> queue = new ArrayDeque<>();
         queue.addFirst(new int[]{x, y});
