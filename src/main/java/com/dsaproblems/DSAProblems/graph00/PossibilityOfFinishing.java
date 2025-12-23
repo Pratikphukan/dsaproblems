@@ -31,11 +31,75 @@ public class PossibilityOfFinishing {
     public static void main(String[] args) {
         //8 | 1, 2, 2, 3, 5, 5, 6, 4 | 3, 3, 4, 5, 8, 6, 7, 6
         //2 | 1, 2 | 2, 1
-        int A = 5;
-        List<Integer> B = new ArrayList<>(Arrays.asList(1, 3, 4, 5));
-        List<Integer> C = new ArrayList<>(Arrays.asList(2, 1, 5, 3));
+        //5 | 1, 3, 4, 5 | 2, 1, 5, 3
+        //4 | 1, 1, 2, 3 | 2, 3, 4, 4
+        int A = 4;
+        List<Integer> B = new ArrayList<>(Arrays.asList(1, 1, 2, 3));
+        List<Integer> C = new ArrayList<>(Arrays.asList(2, 3, 4, 4));
         System.out.println(possibilityToTakeAllCoursesv1(A, B, C));
         System.out.println(possibilityToTakeAllCoursesv2(A, B, C));
+        System.out.println(possibilityToTakeAllCoursesv3(A, B, C));
+        System.out.println(Arrays.toString(possibilityToTakeAllCoursesv4(A, B, C)));
+    }
+
+    //working code, returning an array of the sequence of courses
+    //Building the adjacency lists and incoming-degree array costs O(N + E)
+    private static int[] possibilityToTakeAllCoursesv4(int nodes, List<Integer> B, List<Integer> C) {
+        List<Integer>[] graph = new ArrayList[nodes + 1];
+        int[] result = new int[nodes];
+        for (int i = 1; i <= nodes; i++) graph[i] = new ArrayList<>();//create an empty list for each node: O(N)
+        int[] incomingDegree = new int[nodes + 1];
+        //Iterate the edge lists (size E = B.size()):
+        // for each edge do two O(1) operations — append to the node's adjacency
+        // list (amortized O(1) for ArrayList) and increment incomingDegree[end]
+        // (array access O(1)) — total O(E)
+        for (int i = 0; i < B.size(); i++) {
+            int start = B.get(i), end = C.get(i);
+            graph[start].add(end);
+            incomingDegree[end]++;
+        }
+        Deque<Integer> queue = new ArrayDeque<>();
+        for (int i = 1; i <= nodes; i++) {
+            if (incomingDegree[i] == 0) queue.addLast(i);
+        }
+        int processed = 0, i = 0;
+        //Kahn's loop visits each node once and processes each edge once, adding another O(N + E)
+        while (!queue.isEmpty()) {
+            int start = queue.pollFirst();
+            processed++;
+            result[i++] = start;
+            for (int end : graph[start]) {
+                incomingDegree[end]--;
+                if (incomingDegree[end] == 0) queue.addLast(end);
+            }
+        }
+        return processed == nodes ? result : new int[0];
+    }
+
+    //working code
+    private static int possibilityToTakeAllCoursesv3(int nodes, List<Integer> B, List<Integer> C) {
+        List<Integer>[] graph = new ArrayList[nodes + 1];
+        for (int i = 1; i <= nodes; i++) graph[i] = new ArrayList<>();
+        int[] incomingDegree = new int[nodes + 1];
+        for (int i = 0; i < B.size(); i++) {
+            int start = B.get(i), end = C.get(i);
+            graph[start].add(end);
+            incomingDegree[end]++;
+        }
+        Deque<Integer> queue = new ArrayDeque<>();
+        for (int i = 1; i <= nodes; i++) {
+            if (incomingDegree[i] == 0) queue.addLast(i);
+        }
+        int processed = 0;
+        while (!queue.isEmpty()) {
+            int start = queue.pollFirst();
+            processed++;
+            for (int end : graph[start]) {
+                incomingDegree[end]--;
+                if (incomingDegree[end] == 0) queue.addLast(end);
+            }
+        }
+        return processed == nodes ? 1 : 0;
     }
 
     //working code

@@ -7,11 +7,66 @@ public class MajorityElement {
     public static void main(String[] args) {
         //2,2,1,1,1,2,2
         //2, 1, 2
-        List<Integer> input = new ArrayList<>(Arrays.asList(2, 2, 1, 1, 1, 2, 2));
+        List<Integer> input = new ArrayList<>(Arrays.asList(2, 1, 2, 1, 2, 1, 2));
         System.out.println(findMajorityElementv1(input));
         System.out.println(findMajorityElementv2(input));
         System.out.println(findMajorityElementv3(input));
         System.out.println(findMajorityElementv4(input));
+
+        //2,1,1,3,1,4,5,6
+        //3, 3, 4, 3, 5
+        int[] nums = {2, 1, 1, 3, 1, 4, 5, 6};
+        System.out.println(findMajorityElementIIv1(nums));
+        System.out.println(findMajorityElementIIv2(nums));
+
+    }
+
+    //working code
+    // if you check cnt1 == 0 / cnt2 == 0 before testing if num equals an
+    // existing candidate, so equal values can be (incorrectly) treated as new candidates.
+    private static List<Integer> findMajorityElementIIv2(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        // Phase 1: find candidates
+        Integer cand1 = null, cand2 = null;
+        int cnt1 = 0, cnt2 = 0;
+        for (int num : nums) {
+            if (cand1 != null && num == cand1) {
+                cnt1++;
+            } else if (cand2 != null && num == cand2) {
+                cnt2++;
+            } else if (cnt1 == 0) {
+                cand1 = num;
+                cnt1 = 1;
+            } else if (cnt2 == 0) {
+                cand2 = num;
+                cnt2 = 1;
+            } else {
+                cnt1--;
+                cnt2--;
+            }
+        }
+        cnt1 = 0;
+        cnt2 = 0;
+        for (int num : nums) {
+            if (cand1 != null && num == cand1) cnt1++;
+            else if (cand2 != null && num == cand2) cnt2++;
+        }
+        int threshold = nums.length / 3;
+        if (cand1 != null && cnt1 > threshold) result.add(cand1);
+        if (cand2 != null && !Objects.equals(cand2, cand1) && cnt2 > threshold) result.add(cand2);
+
+        return result;
+    }
+
+    private static List<Integer> findMajorityElementIIv1(int[] nums) {
+        int minOccurrences = nums.length / 3;
+        List<Integer> result = new ArrayList<>();
+        Map<Integer, Integer> freq = new HashMap<>();
+        for (int num : nums) freq.put(num, freq.getOrDefault(num, 0) + 1);
+        for (Map.Entry<Integer, Integer> entry : freq.entrySet()) {
+            if (entry.getValue() > minOccurrences) result.add(entry.getKey());
+        }
+        return result;
     }
 
     //working

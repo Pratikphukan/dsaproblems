@@ -1,4 +1,4 @@
-package com.dsaproblems.DSAProblems.advancedJava;
+package com.dsaproblems.DSAProblems;
 
 import org.junit.jupiter.api.Test;
 

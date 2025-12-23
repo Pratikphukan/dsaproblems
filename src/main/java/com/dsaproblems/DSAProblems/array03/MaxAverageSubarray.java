@@ -12,14 +12,29 @@ public class MaxAverageSubarray {
         int k = 3;
         System.out.println(maxAverageSubarrayv1(A, k));
         System.out.println(maxAverageSubarrayv2(A, k));
+        int[] nums = {1, 12, -5, -6, 50, 3};
+        System.out.println(getMaxSubarrayAvgv1(nums, 4));
     }
 
+    //uses a sliding-window sum to find the maximum k-length subarray sum
+    private static double getMaxSubarrayAvgv1(int[] nums, int k) {
+        long sum = 0L;
+        for (int i = 0; i < k; i++) sum += nums[i];
+        long maxSum = sum;
+        for (int i = k; i < nums.length; i++) {
+            sum += nums[i] - nums[i - k];
+            maxSum = Math.max(maxSum, sum);
+        }
+        return (double) maxSum / k;
+    }
+
+    //Use long for sum/maxSum if element values or k can make the sum overflow int
     private static int maxAverageSubarrayv2(ArrayList<Integer> A, int k) {
-        int sum = 0;
+        long sum = 0L;
         for (int i = 0; i < k; i++) {
             sum += A.get(i);
         }
-        int maxSum = sum;
+        long maxSum = sum;
         int index = 0;
         for (int i = k; i < A.size(); i++) {
             sum += (A.get(i) - A.get(i - k));
@@ -32,11 +47,11 @@ public class MaxAverageSubarray {
     }
 
     private static int maxAverageSubarrayv1(ArrayList<Integer> A, int k) {
-        int sum = 0;
+        long sum = 0L;
         for (int i = 0; i < k; i++) {
             sum += A.get(i);
         }
-        int maxSum = sum;
+        long maxSum = sum;
         int index = 0;
         for (int i = 1; i <= A.size() - k; i++) {
             sum += (A.get(i + k - 1) - A.get(i - 1));

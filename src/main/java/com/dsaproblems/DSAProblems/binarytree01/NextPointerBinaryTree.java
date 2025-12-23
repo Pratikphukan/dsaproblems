@@ -28,6 +28,7 @@ public class NextPointerBinaryTree {
     }
 
     //working code
+    //works for a perfect binary tree where all leaves are on the same level, and every parent has two children
     private static TreeLinkNode connectv2(TreeLinkNode head) {
         if (head == null) return null;
         TreeLinkNode level = head;
