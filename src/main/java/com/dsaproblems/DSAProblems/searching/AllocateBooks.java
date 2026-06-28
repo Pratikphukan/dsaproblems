@@ -7,10 +7,11 @@ import java.util.List;
 public class AllocateBooks {
 
     public static void main(String[] args) {
-        List<Integer> books = new ArrayList<>(Arrays.asList(31, 14, 19, 55));
+        List<Integer> books = new ArrayList<>(Arrays.asList(3, 5, 1, 7, 8, 2, 5, 3, 10, 1, 4, 7, 5, 4, 6));
         // 31,14,19,75->12
         // 12, 34, 67, 90->2
-        int students = 2;
+        //3, 5, 1, 7, 8, 2, 5, 3, 10, 1, 4, 7, 5, 4, 6->5
+        int students = 4;
         System.out.println(findMinimumTimeAllocatedToStudents(books, students));
     }
 

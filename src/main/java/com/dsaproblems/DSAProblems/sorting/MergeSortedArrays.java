@@ -69,5 +69,4 @@ public class MergeSortedArrays {
         }
         return ans;
     }
-
 }

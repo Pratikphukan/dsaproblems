@@ -148,6 +148,29 @@ public class LinkedListFactory {
         return h2;
     }
 
+    public static ListNode mergeSortedLinkedListsv2(ListNode h1, ListNode h2) { // h1 and h2 are sorted in ascending order
+        // and head is sorted in ascending order
+        ListNode dummy = new ListNode(-1);
+        ListNode current = dummy;
+        while (h1 != null && h2 != null) {
+            if (h1.val > h2.val) {
+                current.next = h2;
+                h2 = h2.next;
+            } else {
+                current.next = h1;
+                h1 = h1.next;
+            }
+            current = current.next;
+        }
+        if (h1 == null) {
+            current.next = h2;
+        }
+        if (h2 == null) {
+            current.next = h1;
+        }
+        return dummy.next;
+    }
+
     public static ListNode mergeSortedLinkedLists(ListNode h1, ListNode h2) { // h1 and h2 are sorted in ascending order
         // and head is sorted in ascending order
         if (h1 == null && h2 == null) {

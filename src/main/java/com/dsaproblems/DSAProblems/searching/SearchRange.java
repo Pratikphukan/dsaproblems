@@ -62,15 +62,12 @@ public class SearchRange {
         return start;
     }
 
+    //working code
     private static List<Integer> findStartAndEndOfRange(List<Integer> input, int B) {
-        List<Integer> ans = new ArrayList<>();
-        int low = 0;
-        int high = input.size() - 1;
-        int mid = 0;
-        int start = -1;
-        int end = -1;
+        int low = 0, high = input.size() - 1;
+        int start = -1, end = -1;
         while (low <= high) {
-            mid = (low + high) / 2;
+            int mid = high - (high - low) / 2;
             if (input.get(mid) > B) {
                 high = mid - 1;
             } else if (input.get(mid) < B) {
@@ -80,10 +77,11 @@ public class SearchRange {
                 high = mid - 1;
             }
         }
+        if (start == -1) return new ArrayList<>(Arrays.asList(-1, -1));
         low = 0;
         high = input.size() - 1;
         while (low <= high) {
-            mid = (low + high) / 2;
+            int mid = high - (high - low) / 2;
             if (input.get(mid) > B) {
                 high = mid - 1;
             } else if (input.get(mid) < B) {
@@ -93,9 +91,7 @@ public class SearchRange {
                 low = mid + 1;
             }
         }
-        ans.add(start);
-        ans.add(end);
-        return ans;
+        return new ArrayList<>(Arrays.asList(start, end));
     }
 
 }
