@@ -61,7 +61,7 @@ public class SingleElementInSortedArray {
         }
         int low = 0, high = len - 1, mid = 0;
         while (low <= high) {
-            mid = (low + high) / 2;
+            mid = low + (high - low) / 2;
             int prev = input.get(mid - 1);
             int curr = input.get(mid);
             int next = input.get(mid + 1);
@@ -94,7 +94,7 @@ public class SingleElementInSortedArray {
         }
         int low = 0, high = len - 1, mid = 0;
         while (low <= high) {
-            mid = (low + high) / 2;
+            mid = low + (high - low) / 2;
             int prev = input.get(mid - 1);
             int curr = input.get(mid);
             int next = input.get(mid + 1);
