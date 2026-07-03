@@ -7,7 +7,8 @@ import java.util.List;
 public class RotatedSortedArraySearch {
 
     public static void main(String[] args) {
-        List<Integer> A = new ArrayList<>(Arrays.asList(3, 4, 5, 1, 2));
+        List<Integer> A = new ArrayList<>(Arrays.asList(6, 8, 9, -2, 1, 3, 4));
+        //6, 8, 9, -2, 1, 3, 4->3
         //3,4,5,1,2->1
         // 5, 1, 3->5
         // 4, 5, 6, 7, 0, 1, 2, 3->6
@@ -23,10 +24,11 @@ public class RotatedSortedArraySearch {
         //9, 10, 11, 12, 14, 15, 17, 19, 24, 25, 30, 39, 40, 44, 46, 48, 51, 53, 54, 56, 59, 60, 69, 70, 73, 75, 80, 87, 88,
         //89, 92, 93, 97, 99, 104, 107, 109, 110, 111, 117, 123, 124, 125, 126, 127, 128, 135, 136, 137, 141, 148, 153, 154,
         //161, 166, 167, 169, 175, 177, 180, 181, 182, 185, 186, 189, 193, 198, 202, 1, 2, 6, 7->198
-        int B = 1;
+        int B = 3;
         System.out.println(searchInRotatedSortedArrayv1(A, B));
         System.out.println(searchInRotatedSortedArrayv2(A, B));
         System.out.println(searchInRotatedSortedArrayv3(A, B));
+        System.out.println(searchInRotatedSortedArrayv4(A, B));
     }
 
     //working code
@@ -48,40 +50,6 @@ public class RotatedSortedArraySearch {
                 } else {
                     high = mid - 1;
                 }
-            }
-        }
-        return -1;
-    }
-
-    //working code
-    private static int searchInRotatedSortedArrayv1(List<Integer> input, int B) {
-        int low = 0, high = input.size() - 1;
-        int k = 0;
-        while (low <= high) {
-            int mid = high - (high - low) / 2;
-            if (input.get(mid) > input.get(input.size() - 1)) {
-                low = mid + 1; //try to move to the right sorted segment
-            } else {
-                k = mid; //in the right sorted segment, k is the possible start
-                high = mid - 1;
-            }
-        }
-        //k is the start index of right sorted segment
-        if (B < input.get(0) || k == 0) { //check where B lies
-            low = k;
-            high = input.size() - 1;
-        } else {
-            low = 0;
-            high = k - 1;
-        }
-        while (low <= high) {
-            int mid = high - (high - low) / 2;
-            if (input.get(mid) > B) {
-                high = mid - 1; //move to the left of mid
-            } else if (input.get(mid) < B) {
-                low = mid + 1; //move to the right of mid
-            } else {
-                return mid;
             }
         }
         return -1;
@@ -121,16 +89,17 @@ public class RotatedSortedArraySearch {
         return -1;
     }
 
+    //working code
     private static int searchInRotatedSortedArrayv4(List<Integer> input, int B) {
         int low = 0, high = input.size() - 1;
         int k = 0;
         while (low <= high) {
             int mid = high - (high - low) / 2;
-            if (input.get(mid) < input.get(0)) {
+            if (input.get(mid) < input.get(0)) { //lies in the right sorted segment
                 k = mid;
-                high = mid - 1;
+                high = mid - 1;//try to move to the left sorted segment
             } else {
-                low = mid + 1;
+                low = mid + 1;//try to move to the right sorted segment
             }
         }
         if (B < input.get(0) || k == 0) {
@@ -141,11 +110,45 @@ public class RotatedSortedArraySearch {
             high = k - 1;
         }
         while (low <= high) {
-            int mid = (low + high) / 2;
+            int mid = high - (high - low) / 2;
             if (input.get(mid) > B) {
                 high = mid - 1;
             } else if (input.get(mid) < B) {
                 low = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+
+    //working code
+    private static int searchInRotatedSortedArrayv1(List<Integer> input, int B) {
+        int low = 0, high = input.size() - 1;
+        int k = 0;
+        while (low <= high) {
+            int mid = high - (high - low) / 2;
+            if (input.get(mid) > input.get(input.size() - 1)) {
+                low = mid + 1; //try to move to the right sorted segment
+            } else {
+                k = mid; //in the right sorted segment, k is the possible start
+                high = mid - 1;
+            }
+        }
+        //k is the start index of right sorted segment
+        if (B < input.get(0) || k == 0) { //check where B lies
+            low = k;
+            high = input.size() - 1;
+        } else {
+            low = 0;
+            high = k - 1;
+        }
+        while (low <= high) {
+            int mid = high - (high - low) / 2;
+            if (input.get(mid) > B) {
+                high = mid - 1; //move to the left of mid
+            } else if (input.get(mid) < B) {
+                low = mid + 1; //move to the right of mid
             } else {
                 return mid;
             }

@@ -34,7 +34,7 @@ public class FindAnyPeakElement {
             if (A.get(mid - 1) < A.get(mid) && A.get(mid) > A.get(mid + 1)) {
                 return A.get(mid);
             }
-            if (A.get(mid) < A.get(mid + 1)) {
+            if (A.get(mid) < A.get(mid + 1)) { //there is a chance you will get a local maxima on the right
                 l = mid + 1;
             } else {
                 h = mid - 1;
@@ -63,7 +63,7 @@ public class FindAnyPeakElement {
             if (A.get(mid - 1) < A.get(mid) && A.get(mid) > A.get(mid + 1)) {
                 return A.get(mid);
             }
-            if (A.get(mid - 1) > A.get(mid)) {
+            if (A.get(mid - 1) > A.get(mid)) { //there is a chance you will get a local maxima on the left
                 h = mid - 1;
             } else {
                 l = mid + 1;

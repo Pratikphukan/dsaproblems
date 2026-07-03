@@ -40,23 +40,18 @@ public class MatrixSearch {
     private static int searchInMatrixV1(List<List<Integer>> input, int B) {
         int rows = input.size();
         int cols = input.get(0).size();
-        int low = 0;
-        int high = rows * cols - 1;
-        int mid = 0;
-        int row = 0;
-        int col = 0;
+        int low = 0, high = rows * cols - 1;
         int ans = 0;
         while (low <= high) {
-            mid = (low + high) / 2;
-            row = mid / cols;
-            col = mid % cols;
+            int mid = high - (high - low) / 2;
+            int row = mid / cols;
+            int col = mid % cols;
             if (input.get(row).get(col) > B) {
                 high = mid - 1;
             } else if (input.get(row).get(col) < B) {
                 low = mid + 1;
             } else {
-                ans = 1;
-                break;
+                return 1;
             }
         }
         return ans;

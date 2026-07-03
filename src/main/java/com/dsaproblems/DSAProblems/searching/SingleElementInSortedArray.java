@@ -15,33 +15,18 @@ public class SingleElementInSortedArray {
         System.out.println(findTheSingleElementInSortedArrayv1(A));
         System.out.println(findTheSingleElementInSortedArrayv2(A));
         System.out.println(findTheSingleElementInSortedArrayv3(A));
-        System.out.println(findTheSingleElementInSortedArrayv4(A));
-    }
-
-    private static Integer findTheSingleElementInSortedArrayv4(List<Integer> input) {
-        int low = 0, high = input.size() - 1, mid = 0;
-        while (low < high) {
-            mid = low + (high - low) / 2;
-            if (mid % 2 == 1) mid--; // Ensure mid is even
-            if (input.get(mid).equals(input.get(mid + 1))) {
-                low = mid + 2;
-            } else {
-                high = mid - 1;
-            }
-        }
-        return input.get(low);
     }
 
     //working code
     private static Integer findTheSingleElementInSortedArrayv3(List<Integer> input) {
-        int low = 0, high = input.size() - 1, mid = 0;
+        int low = 0, high = input.size() - 1;
         while (low < high) {
-            mid = low + (high - low) / 2;
+            int mid = low + (high - low) / 2;
             if (mid % 2 == 1) mid--; // Ensure mid is even
             if (input.get(mid).equals(input.get(mid + 1))) {
-                low = mid + 2;
+                low = mid + 2; // single is on right side
             } else {
-                high = mid - 1;
+                high = mid - 1;  // single is at mid or on left side
             }
         }
         return input.get(low);
