@@ -100,7 +100,7 @@ public class AthMagicalNumber {
     private static int findAthMagicalNumber(int a, int b, int c) {
         int lcm = (b * c) / GCD(b, c);
         long left = 0;
-        long right = a * lcm;
+        long right = (long) a * lcm;
         while (left < right) {
             long mid = left + (right - left) / 2;
             if ((mid / b + mid / c - mid / lcm) < a) {
@@ -109,7 +109,7 @@ public class AthMagicalNumber {
                 right = mid;
             }
         }
-        return (int) left % 1000000007;
+        return (int) (left % 1000000007);
     }
 
     private static int GCD(int b, int c) {

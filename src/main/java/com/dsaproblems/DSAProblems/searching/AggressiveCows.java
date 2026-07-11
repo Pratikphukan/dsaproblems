@@ -10,6 +10,7 @@ public class AggressiveCows {
     public static void main(String[] args) {
         List<Integer> coordinates = new ArrayList<>(
                 Arrays.asList(82, 61, 38, 88, 12, 7, 6, 12, 48, 8, 31, 90, 35, 5, 88, 2, 66, 19, 5, 96, 84, 95));
+        //2,6,11,14,19,25,30,39,43->4
         // 82,61,38,88,12,7,6,12,48,8,31,90,35,5,88,2,66,19,5,96,84,95->8
         // 1, 2, 3, 4, 5->3
         int cows = 8;
@@ -53,31 +54,31 @@ public class AggressiveCows {
         return false;
     }
 
-    // not working, please check
-    private static int findLargestMinimumDistanceBetweenCows(List<Integer> coordinates, int cows) {
-        Collections.sort(coordinates);
-        int noOfCoordinates = coordinates.size();
-        int maxSeparation = coordinates.get(noOfCoordinates - 1) - coordinates.get(0); // considering two cows only
-        int minSeparation = coordinates.get(1) - coordinates.get(0); // considering the number of cows as the size of
-        // the array
-        for (int i = 1; i < noOfCoordinates - 1; i++) {
-            minSeparation = Math.max(minSeparation, coordinates.get(i + 1) - coordinates.get(i));
+    //working code
+    private static int findLargestMinimumDistanceBetweenCows(List<Integer> points, int cows) {
+        Collections.sort(points);
+        int noOfPoints = points.size();
+        int maxPossibleMinSep = points.get(noOfPoints - 1) - points.get(0); // considering two cows only
+        int minPossibleMinSep = points.get(1) - points.get(0); // considering the number of cows as the size of the array
+        //find the min adjacent difference between two stalls
+        for (int i = 1; i < noOfPoints - 1; i++) {
+            minPossibleMinSep = Math.min(minPossibleMinSep, points.get(i + 1) - points.get(i));
         }
-        int ans = maxSeparation;
+        int ans = maxPossibleMinSep;
         int possibleLargestMinimunSeparation = 0;
-        while (minSeparation <= maxSeparation) {
-            possibleLargestMinimunSeparation = minSeparation + (maxSeparation - minSeparation) / 2;
-            if (findCows(coordinates, possibleLargestMinimunSeparation) >= cows) {
+        while (minPossibleMinSep <= maxPossibleMinSep) {
+            possibleLargestMinimunSeparation = minPossibleMinSep + (maxPossibleMinSep - minPossibleMinSep) / 2;
+            if (findPossibleCows(points, possibleLargestMinimunSeparation, cows)) {
                 ans = possibleLargestMinimunSeparation;
-                minSeparation = possibleLargestMinimunSeparation + 1;
+                minPossibleMinSep = possibleLargestMinimunSeparation + 1;
             } else {
-                maxSeparation = possibleLargestMinimunSeparation - 1;
+                maxPossibleMinSep = possibleLargestMinimunSeparation - 1;
             }
         }
         return ans;
     }
 
-    private static int findCows(List<Integer> coordinates, int possibleLargestMinimunSeparation) {
+    private static boolean findPossibleCows(List<Integer> coordinates, int possibleLargestMinimunSeparation, int cows) {
         int lastCow = coordinates.get(0);
         int count = 1;
         for (int i = 1; i < coordinates.size(); i++) {
@@ -85,8 +86,8 @@ public class AggressiveCows {
                 lastCow = coordinates.get(i);
                 count++;
             }
+            if (count > cows) return true;
         }
-        return count;
+        return count == cows;
     }
-
 }
