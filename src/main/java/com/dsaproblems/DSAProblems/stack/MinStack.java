@@ -6,41 +6,6 @@ import java.util.Deque;
 
 public class MinStack {
 
-//    static class MinStackV3 {
-//        private Deque<Integer> stack = new LinkedList<>();
-//        private PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-//        private Integer min = Integer.MIN_VALUE;
-//
-//        public void push(int x) {
-//            minHeap.add(x);
-//            stack.addFirst(x);
-//            min = minHeap.peek();
-//        }
-//
-//        public void pop() {
-//            Integer toBeRemoved = stack.peekFirst();
-//            if (toBeRemoved != null) {
-//                minHeap.remove(stack.peekFirst());
-//                stack.removeFirst();
-//                min = minHeap.peek();
-//            }
-//        }
-//
-//        public int top() {
-//            if (stack.isEmpty()) {
-//                return -1;
-//            }
-//            return stack.peekFirst();
-//        }
-//
-//        public int getMin() {
-//            if (stack.isEmpty()) {
-//                return -1;
-//            }
-//            return min;
-//        }
-//    }
-
     //not working version
     static class MinStackV1 {
         private ArrayList<Integer> stack;
@@ -93,48 +58,6 @@ public class MinStack {
                 return -1;
             }
             return min;
-        }
-    }
-
-    //working version
-    static class MinStackV2 {
-        private final Deque<Integer> stack;
-
-        private final Deque<Integer> helper;
-
-        public MinStackV2() {
-            stack = new ArrayDeque<>();
-            helper = new ArrayDeque<>();
-        }
-
-        public void push(int val) {
-            stack.addFirst(val);
-            if (helper.isEmpty() || val <= helper.peekFirst()) {
-                helper.addFirst(val);
-            }
-        }
-
-        public int top() {
-            if (stack.isEmpty()) {
-                return -1;
-            }
-            return stack.peekFirst();
-        }
-
-        public void pop() {
-            if (!stack.isEmpty()) {
-                int poppedElement = stack.pollFirst();
-                if (!helper.isEmpty() && helper.peekFirst().equals(poppedElement)) {
-                    helper.pollFirst();
-                }
-            }
-        }
-
-        public int getMin() {
-            if (!helper.isEmpty()) {
-                return helper.peekFirst();
-            }
-            return -1;
         }
     }
 

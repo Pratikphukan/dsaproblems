@@ -1,18 +1,18 @@
 package com.dsaproblems.DSAProblems.stack;
 
-class Node {
-    int val;
-    int min;
-    Node next;
-
-    Node(int val, int min, Node next) {
-        this.val = val;
-        this.min = min;
-        this.next = next;
-    }
-}
-
 public class MinStackV3 {
+
+    private static class Node {
+        int val;
+        int min;
+        Node next;
+
+        Node(int val, int min, Node next) {
+            this.val = val;
+            this.min = min;
+            this.next = next;
+        }
+    }
 
     Node head;
 

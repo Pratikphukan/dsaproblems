@@ -29,15 +29,13 @@ public class BalancedParanthesis {
                 return 0;
             }
         }
-        if (stack.isEmpty())
-            return 1;
-        return 0;
+        return stack.isEmpty() ? 1 : 0;
     }
 
     // working code
     private static int isBalancedParanthesis1(String A) {
-        HashMap<Character, Character> mp = new HashMap<Character, Character>();
-        Stack<Character> st = new Stack<Character>();
+        HashMap<Character, Character> mp = new HashMap<>();
+        Stack<Character> st = new Stack<>();
         mp.put(')', '(');
         mp.put('}', '{');
         mp.put(']', '[');
@@ -79,10 +77,7 @@ public class BalancedParanthesis {
                 }
             }
         }
-        if (stack.isEmpty()) {
-            return true;
-        }
-        return false;
+        return stack.isEmpty();
     }
 
 }

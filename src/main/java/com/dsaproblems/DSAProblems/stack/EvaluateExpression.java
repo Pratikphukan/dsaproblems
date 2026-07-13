@@ -54,6 +54,7 @@ public class EvaluateExpression {
     // space, but v3 avoids repeated string parsing and extra string
     // allocations (v1 stores numbers as strings and converts back/forth),
     // so v3 has lower constant overhead and is faster/more memory efficient.
+    //use ArrayDeque<Integer> instead of LinkedList<Integer> (faster stack ops)
     private static int evaluateExpressionv3(List<String> input) {
         Deque<Integer> stack = new ArrayDeque<>();
         for (String item : input) {
@@ -94,5 +95,4 @@ public class EvaluateExpression {
     private static boolean isOperator(String c) {
         return c.equals("/") || c.equals("*") || c.equals("+") || c.equals("-"); // don't use ==
     }
-
 }
