@@ -17,36 +17,41 @@ public class ConnectRopes {
         System.out.println(costOfConnectingv4(A));
     }
 
-    //working code, no change in performance
-    //Building a heap from an unsorted list using addAll operation is (O(n))
-    // because the heapify process (used internally) organizes all elements in linear time
+    /*
+    minHeap.addAll(input) is not O(n) for a PriorityQueue;
+    it effectively inserts one-by-one, so it is about O(n log n)
+    when starting from empty (more generally, O(m log(n+m)) for adding m items to heap size n).
+    If you want true linear-time heap build, use the constructor:
+    PriorityQueue<Integer> minHeap = new PriorityQueue<>(input);
+    That path heapifies in O(n).
+     */
     private static int costOfConnectingv1(List<Integer> input) {
-        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
-        minHeap.addAll(input);
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>(input);
+        //minHeap.addAll(input);
         if (minHeap.size() == 1) {
             return 0;
         }
         int minimumCostOfConnecting = 0;
         while (minHeap.size() > 1) {
-            int firstMin = minHeap.poll();
-            int secondMin = minHeap.poll();
+            int firstMin = minHeap.poll(); //poll() is O(log n) in general (heap reordering after removing root)
+            int secondMin = minHeap.poll(); //poll() is O(log n) in general (heap reordering after removing root)
             int sumOfMins = firstMin + secondMin;
-            minHeap.add(sumOfMins);
+            minHeap.add(sumOfMins); //add() is O(log n) in general (heap reordering after adding element)
             minimumCostOfConnecting += sumOfMins;
         }
         return minimumCostOfConnecting;
     }
 
-    // working code, no change in performance
+    //working code, no change in performance
     //Each iteration: remove two elements (O(log(n)) each), insert one (O(log(n))), repeated (n-1) times.
     private static int costOfConnectingv3(List<Integer> input) {
         Queue<Integer> min_heap = new PriorityQueue<>();
         for (int num : input) {
-            min_heap.offer(num);
+            min_heap.offer(num); //Each offer is O(log k) at step k, so total is log 1 + log 2 + ... + log n = O(n log n)
         }
         int minCost = 0;
         if (min_heap.size() == 1) { //the single-element check can be removed; the loop handles it
-            return min_heap.poll();
+            return minCost;
         }
         while (min_heap.size() > 1) { //iterate until only one element remains in the min heap
             int firstMin = min_heap.poll();
