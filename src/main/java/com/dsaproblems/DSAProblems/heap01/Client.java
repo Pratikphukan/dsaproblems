@@ -7,7 +7,9 @@ import java.util.List;
 public class Client {
 
     public static void main(String[] args) {
-        List<Integer> input = new ArrayList<>(Arrays.asList(10, 7, 11, 30, 20, 38, 2, 45));
+        //3,2,9,6,8,7,2,14,16
+        //10, 7, 11, 30, 20, 38, 2, 45
+        List<Integer> input = new ArrayList<>(Arrays.asList(3, 2, 9, 6, 8, 7, 2, 14, 16));
 
         System.out.println(input);
 

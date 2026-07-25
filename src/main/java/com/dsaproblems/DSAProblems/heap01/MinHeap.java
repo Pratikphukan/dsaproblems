@@ -18,29 +18,35 @@ public class MinHeap {
     // TC->O(log(n)), percolate up algorithm
     public void add(Integer item) {
         heap.add(item);
-        int childIdx = heap.size() - 1; // current index
-        int value = item;
+        percolateUp(heap.size() - 1, item);
+    }
+
+    //The add() method is already optimal at O(log n)
+    private void percolateUp(int childIdx, int value) {
         while (childIdx > 0) {
             int parentIdx = (childIdx - 1) / 2;
             if (heap.get(parentIdx) > value) {
                 heap.set(childIdx, heap.get(parentIdx));
                 childIdx = parentIdx;
             } else {
-                break; // cover at most the height of the complete BT, TC->O(log(n))
+                break;
             }
         }
-        heap.set(childIdx, value); // set the value at the correct position
+        heap.set(childIdx, value);
     }
 
+    //The poll() method is time-optimal at O(log n)
     public Integer poll() {
         if (heap.isEmpty()) return null;
         if (heap.size() == 1) return heap.remove(0);
 
         int min = heap.get(0);
-        int value = heap.remove(heap.size() - 1);
-        int idx = 0;
-        int size = heap.size();
+        int parent = heap.remove(heap.size() - 1); //basically it replaces the element at 0th index
+        percolateDown(0, heap.size(), parent);
+        return min;
+    }
 
+    private void percolateDown(int idx, int size, int parent) {
         while (idx < size / 2) {
             int left = 2 * idx + 1;
             int right = 2 * idx + 2;
@@ -50,15 +56,14 @@ public class MinHeap {
                 smallest = right;
             }
 
-            if (heap.get(smallest) < value) {
+            if (heap.get(smallest) < parent) {
                 heap.set(idx, heap.get(smallest));
                 idx = smallest;
             } else {
                 break;
             }
         }
-        heap.set(idx, value);
-        return min;
+        heap.set(idx, parent);
     }
 
     // last node will come to the start and percolate down
@@ -94,31 +99,40 @@ public class MinHeap {
 //        return min;
 //    }
 
+    //The minHeapify method is already O(n) (optimal for building a heap from scratch)
+    //Benefits:
+    //Extract percolate-down logic (reusable in poll() too, reducing duplication)
+    //Cleaner loop logic
+    //Same O(n) complexity, just cleaner code
     public void minHeapify(List<Integer> input) {
         heap = new ArrayList<>(input);
         int len = heap.size();
-        for (int i = (len / 2 - 1); i >= 0; i--) {
-            int startIdx = i;
-            while (startIdx < len / 2) {
-                int parentIdx = startIdx;
-                int left = 2 * parentIdx + 1;
-                int right = 2 * parentIdx + 2;
-                if (left < len && heap.get(left) < heap.get(parentIdx)) {
-                    parentIdx = left;
-                }
-                if (right < len && heap.get(right) < heap.get(parentIdx)) {
-                    parentIdx = right;
-                }
-                if (parentIdx != startIdx) {
-                    int t = heap.get(startIdx);
-                    heap.set(startIdx, heap.get(parentIdx));
-                    heap.set(parentIdx, t);
-                    startIdx = parentIdx; // this is necessary if startIdx == parentIdx
-                } else {
-                    break;
-                }
+        int lastNonLeaf = len / 2 - 1;
+        for (int i = lastNonLeaf; i >= 0; i--) {
+            percolateDown(i, len);
+        }
+    }
+
+    private void percolateDown(int idx, int size) {
+        while (idx < size / 2) {
+            int left = 2 * idx + 1;
+            int right = 2 * idx + 2;
+            int smallest = left;
+            if (right < size && heap.get(right) < heap.get(left)) {
+                smallest = right;
+            }
+            if (heap.get(smallest) < heap.get(idx)) {
+                swap(idx, smallest);
+                idx = smallest;
+            } else {
+                break;
             }
         }
     }
 
+    private void swap(int i, int j) {
+        int t = heap.get(i);
+        heap.set(i, heap.get(j));
+        heap.set(j, t);
+    }
 }

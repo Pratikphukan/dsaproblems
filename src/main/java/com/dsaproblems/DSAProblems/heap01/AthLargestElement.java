@@ -25,11 +25,8 @@ public class AthLargestElement {
             if (minHeap.size() > A) {
                 minHeap.poll();
             }
-            if (i < (A - 1)) {
-                ans.add(-1);
-            } else {
-                ans.add(minHeap.peek());
-            }
+            if (i < (A - 1)) ans.add(-1);
+            else ans.add(minHeap.peek());
         }
         return ans;
     }
