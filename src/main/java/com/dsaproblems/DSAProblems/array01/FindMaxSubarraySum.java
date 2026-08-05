@@ -92,7 +92,7 @@ public class FindMaxSubarraySum {
     private static int findMaxSubarraySum(List<Integer> A) {
         int maxSum = Integer.MIN_VALUE;
         int sum = 0;
-        for (Integer num : A) {
+        for (int num : A) {
             sum += num;
             maxSum = Math.max(sum, maxSum);
             sum = Math.max(sum, 0);

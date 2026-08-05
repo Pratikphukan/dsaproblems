@@ -24,6 +24,12 @@ public class MergeKSortedLists {
 
     //working code
     //use a min-heap (`PriorityQueue`) to merge k lists in O(N log k) time and O(k) extra space
+    //Each node is pushed/popped from heap once at O(log k)
+    //Space: O(k) — heap holds at most one node per list
+    //The heap only holds one node per list at a time
+    //When you poll() a node, you offer() its next node (from the same list)
+    //So heap size never exceeds k
+    //Therefore each push/pop is O(log k), not O(log N)
     private static ListNode mergeKSortedListsv3(ListNode[] lists) {
         PriorityQueue<ListNode> pq = new PriorityQueue<>((a, b) -> Integer.compare(a.val, b.val));
         for (ListNode node : lists) {
@@ -47,7 +53,7 @@ public class MergeKSortedLists {
     }
 
     private static ListNode mergeRange(ListNode[] lists, int left, int right) {
-        if (left == right) return lists[left];
+        if (left == right) return lists[left]; //single sorted list, return it directly
         int mid = left + (right - left) / 2;
         ListNode lNode = mergeRange(lists, left, mid);
         ListNode rNode = mergeRange(lists, mid + 1, right);
@@ -62,12 +68,13 @@ public class MergeKSortedLists {
         return root;
     }
 
+    //O(n+m) time, O(1) space (in-place pointer manipulation, no extra list)
     public static ListNode mergeSortedLinkedLists(ListNode h1, ListNode h2) { // h1 and h2 are sorted in ascending order
         // and head is sorted in ascending order
         if (h1 == null && h2 == null) return null;
         if (h1 == null) return h2;
         if (h2 == null) return h1;
-        ListNode head = null;
+        ListNode head;
         if (h1.val > h2.val) {
             head = h2;
             h2 = h2.next;

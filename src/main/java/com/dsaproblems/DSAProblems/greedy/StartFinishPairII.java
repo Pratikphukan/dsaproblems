@@ -2,38 +2,30 @@ package com.dsaproblems.DSAProblems.greedy;
 
 public class StartFinishPairII {
 
-	private Integer startTime;
+    private Integer startTime;
 
-	private Integer endTime;
+    private Integer endTime;
 
-	public StartFinishPairII() {
-		super();
-	}
+    public StartFinishPairII() {
+        super();
+    }
 
-	public StartFinishPairII(Integer startTime, Integer endTime) {
-		super();
-		this.startTime = startTime;
-		this.endTime = endTime;
-	}
+    public StartFinishPairII(Integer startTime, Integer endTime) {
+        super();
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 
-	public Integer getStartTime() {
-		return startTime;
-	}
+    public Integer getStartTime() {
+        return startTime;
+    }
 
-	public void setStartTime(Integer startTime) {
-		this.startTime = startTime;
-	}
+    public Integer getEndTime() {
+        return endTime;
+    }
 
-	public Integer getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Integer endTime) {
-		this.endTime = endTime;
-	}
-
-	@Override
-	public String toString() {
-		return "[s=" + startTime + ", e=" + endTime + "]";
-	}
+    @Override
+    public String toString() {
+        return "[s=" + startTime + ", e=" + endTime + "]";
+    }
 }

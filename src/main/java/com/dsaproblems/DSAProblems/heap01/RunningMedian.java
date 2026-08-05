@@ -14,7 +14,8 @@ public class RunningMedian {
         // 5,4,1,3,2
         // 9,6,3,10
         // 59,64,10,39
-        ArrayList<Integer> A = new ArrayList<>(List.of(1, 2, 5, 4, 3));
+        //4,6,9,2,1,10,14,7,3,5
+        ArrayList<Integer> A = new ArrayList<>(List.of(4, 6, 9, 2, 1, 10, 14, 7, 3, 5));
         // System.out.println(heapSort1(A));
         // System.out.println(findMediansv1(A));
         System.out.println(findMediansv2(A));
@@ -26,6 +27,8 @@ public class RunningMedian {
     }
 
     //working code
+    //O(n log n) time, O(n) space
+    //Each insertion/rebalance is O(log n)
     private static ArrayList<Integer> findMediansv2(ArrayList<Integer> input) {
         // maxHeap for lower half, minHeap for upper half
         PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
@@ -36,6 +39,8 @@ public class RunningMedian {
         medians.add(median);
         for (int i = 1; i < input.size(); i++) {
             int num = input.get(i);
+            //When heaps are balanced, add new element to one heap (breaks balance)
+            //New median is the top of the unbalanced heap
             if (minHeap.size() == maxHeap.size()) {
                 if (num < median) {
                     maxHeap.offer(num);
@@ -44,6 +49,8 @@ public class RunningMedian {
                     minHeap.offer(num);
                     median = minHeap.peek();
                 }
+                //If heaps are imbalanced, move element from larger to smaller heap to balance them
+                //New median is top of larger heap
             } else {
                 if (maxHeap.size() > minHeap.size()) {
                     if (num < median) {

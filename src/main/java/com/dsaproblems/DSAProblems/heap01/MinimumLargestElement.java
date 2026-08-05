@@ -40,47 +40,51 @@ public class MinimumLargestElement {
     //working code
     private static int findMinimumLargestElementv3(List<Integer> input, int B) {
         Queue<Item> minHeap = new PriorityQueue<>(new ItemComparator());
+        int maxElement = Integer.MIN_VALUE;
+
         for (int item : input) {
             minHeap.add(new Item(item, item));
+            maxElement = Math.max(maxElement, item);
         }
-        Item min = null;
+
         for (int i = 1; i <= B; i++) {
-            min = minHeap.poll();
+            Item min = minHeap.poll();
             min.setModifiedValue(min.getModifiedValue() + min.getOriginalValue());
+            maxElement = Math.max(maxElement, min.getModifiedValue()); // O(1) running max tracking
             minHeap.offer(min);
         }
-        int maxElement = Integer.MIN_VALUE;
-        while (!minHeap.isEmpty()) {
-            maxElement = Math.max(maxElement, minHeap.poll().getModifiedValue());
-        }
+
         return maxElement;
     }
 
     // working code
     private static int findMinimumLargestElementv2(List<Integer> input, int B) {
-        Queue<Item> minHeap = new PriorityQueue<>();
-        for (int item : input) {
-            minHeap.add(new Item(item, item));
+        long low = Integer.MIN_VALUE;
+        long minElement = Integer.MAX_VALUE;
+        for (int num : input) {
+            low = Math.max(low, num);
+            minElement = Math.min(minElement, num);
         }
-        Item min = null;
-        if (minHeap.size() == 1) {
-            while (B-- > 0) {
-                min = minHeap.poll();
-                min.setModifiedValue(min.getOriginalValue() + min.getModifiedValue());
-                minHeap.add(min);
+
+        long high = low + B * minElement;
+        long ans = high;
+
+        while (low <= high) {
+            long mid = low + (high - low) / 2;
+
+            long ops = 0;
+            for (int num : input) {
+                ops += (mid / num) - 1;
             }
-            return minHeap.poll().getModifiedValue();
+
+            if (ops >= B) {
+                ans = mid;
+                high = mid - 1; // Try to minimize the maximum element further
+            } else {
+                low = mid + 1;
+            }
         }
-        while (B-- > 0) {
-            min = minHeap.poll();
-            min.setModifiedValue(min.getOriginalValue() + min.getModifiedValue());
-            minHeap.add(min);
-        }
-        int maxElement = Integer.MIN_VALUE;
-        while (!minHeap.isEmpty()) {
-            maxElement = Math.max(maxElement, minHeap.poll().getModifiedValue());
-        }
-        return maxElement;
+        return (int) ans;
     }
 
     // partially working code

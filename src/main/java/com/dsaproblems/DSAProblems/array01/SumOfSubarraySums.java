@@ -45,5 +45,4 @@ public class SumOfSubarraySums {
         }
         return sum;
     }
-
 }

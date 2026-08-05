@@ -34,6 +34,8 @@ public class ShaggyAndDistances {
         return ans;
     }
 
+    //Time: O(n) — single pass through array, O(1) HashMap ops
+    //Space: O(n) — HashMap stores unique elements
     private static int findSpecialPairWithLessLengthv1(List<Integer> input) {
         if (input.size() == 1) {
             return -1;
@@ -42,6 +44,7 @@ public class ShaggyAndDistances {
         Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < input.size(); i++) { // don't use minLength as the original length, as it is getting updated
             int key = input.get(i);
+            // checks if A[i] has occurred previously(latest)
             if (map.containsKey(key)) {
                 minLength = Math.min(minLength, i - map.get(key));
             }
@@ -49,5 +52,4 @@ public class ShaggyAndDistances {
         }
         return (minLength == input.size()) ? -1 : minLength;
     }
-
 }

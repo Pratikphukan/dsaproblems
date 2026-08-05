@@ -15,11 +15,11 @@ public class FinishMaximumJobs {
 //		List<Integer> A = new ArrayList<>(Arrays.asList(1, 5, 7, 1));
 //		List<Integer> B = new ArrayList<>(Arrays.asList(7, 8, 8, 8));
 
-        List<Integer> A = new ArrayList<>(Arrays.asList(3, 2, 6));
-        List<Integer> B = new ArrayList<>(Arrays.asList(9, 8, 9));
+//        List<Integer> A = new ArrayList<>(Arrays.asList(3, 2, 6));
+//        List<Integer> B = new ArrayList<>(Arrays.asList(9, 8, 9));
 
-//		List<Integer> A = new ArrayList<>(Arrays.asList(4, 4, 8, 15, 6));
-//		List<Integer> B = new ArrayList<>(Arrays.asList(9, 5, 15, 16, 7));
+        List<Integer> A = new ArrayList<>(Arrays.asList(4, 4, 8, 15, 6));
+        List<Integer> B = new ArrayList<>(Arrays.asList(9, 5, 15, 16, 7));
 
         System.out.println(getMaxJobsDoneInGivenTimev1(A, B));
         System.out.println(getMaxJobsDoneInGivenTimev2(A, B));
@@ -28,6 +28,7 @@ public class FinishMaximumJobs {
         System.out.println(getMaxJobsDoneInGivenTimev5(A, B));
     }
 
+    //working code
     private static int getMaxJobsDoneInGivenTimev5(List<Integer> A, List<Integer> B) {
         List<int[]> startFinishPairs = new ArrayList<>();
         for (int i = 0; i < B.size(); i++) {
@@ -51,7 +52,7 @@ public class FinishMaximumJobs {
         for (int i = 0; i < B.size(); i++) {
             startFinishPairs.add(new StartFinishPairII(A.get(i), B.get(i)));
         }
-        Collections.sort(startFinishPairs, (a, b) -> a.getEndTime() - b.getEndTime());
+        startFinishPairs.sort((a, b) -> a.getEndTime() - b.getEndTime());
         int endTimeOfLastEntry = 0;
         int maxJobsDone = 0;
         for (StartFinishPairII startFinishPair : startFinishPairs) {
@@ -84,7 +85,7 @@ public class FinishMaximumJobs {
     // working code
     private static int getMaxJobsDoneInGivenTimev2(List<Integer> A, List<Integer> B) {
         Map<Integer, List<Integer>> finishToStartMap = new TreeMap<>();
-        List<Integer> startTimesForEveryEnd = null;
+        List<Integer> startTimesForEveryEnd;
         for (int i = 0; i < B.size(); i++) {
             if (!finishToStartMap.containsKey(B.get(i))) {
                 startTimesForEveryEnd = new ArrayList<>();
@@ -97,7 +98,6 @@ public class FinishMaximumJobs {
         }
         Integer finishTimeForLastEntry = null;
         int maxJobsDone = 0;
-        startTimesForEveryEnd = null;
         for (Map.Entry<Integer, List<Integer>> entry : finishToStartMap.entrySet()) {
             if (finishTimeForLastEntry == null) {
                 maxJobsDone += 1;
@@ -152,5 +152,4 @@ public class FinishMaximumJobs {
         }
         return maxJobsDone;
     }
-
 }
