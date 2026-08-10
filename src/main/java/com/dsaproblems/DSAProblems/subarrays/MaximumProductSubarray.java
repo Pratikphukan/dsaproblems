@@ -6,6 +6,34 @@ public class MaximumProductSubarray {
         int[] nums = {2, 3, -2, 4, -9, 3, 9, 6, -8, 1};
         System.out.println(maxProductSubarrayv1(nums));
         System.out.println(maxProductSubarrayv2(nums));
+        System.out.println(maxProductSubarrayv3(nums));
+    }
+
+    private static int maxProductSubarrayv3(int[] nums) {
+        // Initialize maxProd as the first element, which represents the maximum product ending at the current index.
+        int maxProd = nums[0];
+        // Initialize minProd as the first element, which represents the minimum product ending at the current index.
+        int minProd = nums[0];
+        //It will store the final maximum product of any subarray.
+        int result = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            int current = nums[i];
+
+            if (current < 0) {
+                if (maxProd > 0) maxProd = current;
+                else maxProd = maxProd * current;
+                if (minProd > 0) minProd = minProd * current;
+                else minProd = current;
+            } else {
+                if (maxProd > 0) maxProd = maxProd * current;
+                else maxProd = current;
+                if (minProd > 0) minProd = current;
+                else minProd = minProd * current;
+            }
+            result = Math.max(result, maxProd);
+        }
+        // Return the overall maximum product subarray.
+        return result;
     }
 
     private static int maxProductSubarrayv2(int[] nums) {
@@ -27,6 +55,7 @@ public class MaximumProductSubarray {
                 maxProd = minProd;
                 minProd = temp;
             }
+
             // Calculate the new maxProd as the maximum among the current element and the product of maxProd with current.
             // This step decides whether to start a new subarray from current or continue with the product.
             maxProd = Math.max(current, maxProd * current);

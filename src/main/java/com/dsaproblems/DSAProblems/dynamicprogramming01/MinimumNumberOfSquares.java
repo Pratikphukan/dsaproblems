@@ -13,7 +13,7 @@ public class MinimumNumberOfSquares {
 
 
         System.out.println(countOfNumbersWhoseSquareSumv1(6, 6));
-        System.out.println(countOfNumbersWhoseSquareSumv3(6));
+        System.out.println(countOfNumbersWhoseSquareSumv3(8));
     }
 
     //working code, throws TLE
@@ -32,6 +32,15 @@ public class MinimumNumberOfSquares {
     //O(n*sqrt(n)) — For each i from 2 to n, the inner loop runs up to sqrt{i} times.
     //Space Complexity (SC):
     //O(n) — The dp array stores results for all numbers up to n.
+
+    //The inner loop tries every perfect square that can be the last picked square for current i.
+    //For each x where xx <= i, it evaluates:
+    //dp[i - xx] + 1
+    //Meaning:
+    //use one square (xx) now,
+    //plus the best answer already known for the remaining value i - xx.
+    //Then it keeps the minimum across all such square choices.
+    // So the inner loop’s purpose is to find the optimal last square choice and compute the minimum count for dp[i]
     private static int countOfNumbersWhoseSquareSumv3(int n) {
         int[] dp = new int[n + 1];
         dp[1] = 1; //dp[0] is 0, and dp[1] = 1 as there is 1 way to get 1

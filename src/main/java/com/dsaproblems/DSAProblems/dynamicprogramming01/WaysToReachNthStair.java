@@ -13,7 +13,8 @@ public class WaysToReachNthStair {
         System.out.println(totalWays2(n));
         System.out.println(totalWays3(n));
 
-        System.out.println(totalWaysof1or2(n));
+        System.out.println(totalWaysof1or2v1(n));
+        System.out.println(totalWaysof1or2v2(n));
 
         System.out.println(totalWaysof1or2or3(n));
 
@@ -64,24 +65,30 @@ public class WaysToReachNthStair {
     // if there are three ways 1, 2 and 3 stesp: then the
     // series->1,1,2,4,7,13,24,.....
     private static int totalWays(int n) {
-        if (n == 0) {
-            return 1;
-        }
-        if (n == 1 || n == 2) {
-            return n;
-        }
+        if (n == 0) return 1;
+        if (n == 1 || n == 2) return n;
         return totalWays(n - 1) + totalWays(n - 2) + totalWays(n - 3);
     }
 
-    // 2 ways->1 or 2 steps
-    private static int totalWaysof1or2(int n) {
-        if (n == 0) {
-            return 1;
+    // 2 ways->1 or 2 steps, working
+    private static int totalWaysof1or2v1(int n) {
+        if (n == 0 || n == 1) return 1;
+        return totalWaysof1or2v1(n - 1) + totalWaysof1or2v1(n - 2);
+    }
+
+    //memoized recursion
+    //Time: O(n)
+    //Space: O(1) ✅ — best possible
+    private static int totalWaysof1or2v2(int n) {
+        if (n == 0) return 1;
+        final int MOD = 1000000007;
+        int a = 1, b = 1;
+        for (int i = 2; i <= n; i++) {
+            int c = (a % MOD + b % MOD) % MOD;
+            a = b;
+            b = c;
         }
-        if (n < 2) {
-            return n;
-        }
-        return totalWaysof1or2(n - 1) + totalWaysof1or2(n - 2);
+        return b;
     }
 
     // 3 ways->1 or 2 or 3 steps
